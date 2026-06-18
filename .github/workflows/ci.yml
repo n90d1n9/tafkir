@@ -1,0 +1,164 @@
+name: Tafkir CI
+
+on:
+  pull_request:
+    paths:
+      - "core/**"
+      - "backend/**"
+      - "buildSrc/**"
+      - "gradle/**"
+      - "ml/**"
+      - "models/**"
+      - "plugins/**"
+      - "provider/**"
+      - "repository/**"
+      - "runner/**"
+      - "runtime/**"
+      - "sdk/**"
+      - "spi/**"
+      - "ui/**"
+      - "scripts/**"
+      - "build.gradle.kts"
+      - "settings.gradle.kts"
+      - "gradle.properties"
+      - "gradlew"
+      - ".github/workflows/ci.yml"
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "core/**"
+      - "backend/**"
+      - "buildSrc/**"
+      - "gradle/**"
+      - "ml/**"
+      - "models/**"
+      - "plugins/**"
+      - "provider/**"
+      - "repository/**"
+      - "runner/**"
+      - "runtime/**"
+      - "sdk/**"
+      - "spi/**"
+      - "ui/**"
+      - "scripts/**"
+      - "build.gradle.kts"
+      - "settings.gradle.kts"
+      - "gradle.properties"
+      - "gradlew"
+      - ".github/workflows/ci.yml"
+  workflow_dispatch:
+
+jobs:
+  build-jvm:
+    name: Build CLI (JVM)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: gradle
+
+      - name: Check product boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./scripts/check-product-boundaries.sh
+
+      - name: Prepare llama.cpp source
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -x ./scripts/prepare-llama-source.sh ]; then
+            echo "ERROR: prepare-llama-source.sh not found at ./scripts/prepare-llama-source.sh"
+            ls -la ./scripts/
+            exit 1
+          fi
+          TAFKIR_LLAMA_SOURCE_DIR="$HOME/.tafkir/source/vendor/llama.cpp" \
+          ./scripts/prepare-llama-source.sh
+
+      - name: Prepare libtorch source
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -x ./scripts/prepare-libtorch-source.sh ]; then
+            echo "ERROR: prepare-libtorch-source.sh not found at ./scripts/prepare-libtorch-source.sh"
+            ls -la ./scripts/
+            exit 1
+          fi
+          TAFKIR_LIBTORCH_SOURCE_DIR="$HOME/.tafkir/source/vendor/libtorch" \
+          ./scripts/prepare-libtorch-source.sh
+
+      - name: Check markdown path hygiene
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -x ./scripts/check-no-local-paths.sh ]; then
+            echo "ERROR: check-no-local-paths.sh not found at ./scripts/check-no-local-paths.sh"
+            ls -la ./scripts/
+            exit 1
+          fi
+          ./scripts/check-no-local-paths.sh
+
+      - name: Build Tafkir CLI (JVM)
+        shell: bash
+        env:
+          GRADLE_OPTS: -Xmx3G
+        run: |
+          set -euo pipefail
+          export TAFKIR_LLAMA_SOURCE_DIR="$HOME/.tafkir/source/vendor/llama.cpp"
+          export TAFKIR_LIBTORCH_SOURCE_DIR="$HOME/.tafkir/source/vendor/libtorch"
+          export TAFKIR_LIBTORCH_LIB_PATH="$HOME/.tafkir/source/vendor/libtorch/lib"
+          ./gradlew --no-daemon --stacktrace :ui:tafkir-cli:quarkusBuild -x test
+
+  build-native:
+    name: Build CLI (Native Smoke)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: graalvm
+          java-version: "25"
+          cache: gradle
+
+      - name: Prepare llama.cpp source
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAFKIR_LLAMA_SOURCE_DIR="$HOME/.tafkir/source/vendor/llama.cpp" \
+          ./scripts/prepare-llama-source.sh
+
+      - name: Prepare libtorch source
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAFKIR_LIBTORCH_SOURCE_DIR="$HOME/.tafkir/source/vendor/libtorch" \
+          ./scripts/prepare-libtorch-source.sh
+
+      - name: Install native build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libssl-dev zlib1g-dev pkg-config
+
+      - name: Build Tafkir CLI (Native)
+        shell: bash
+        env:
+          GRADLE_OPTS: -Xmx3G
+        run: |
+          set -euo pipefail
+          export TAFKIR_LLAMA_SOURCE_DIR="$HOME/.tafkir/source/vendor/llama.cpp"
+          export TAFKIR_LIBTORCH_SOURCE_DIR="$HOME/.tafkir/source/vendor/libtorch"
+          export TAFKIR_LIBTORCH_LIB_PATH="$HOME/.tafkir/source/vendor/libtorch/lib"
+          ./gradlew --no-daemon --stacktrace :ui:tafkir-cli:buildNative -x test

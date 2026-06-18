@@ -1,0 +1,17 @@
+{
+    "argv": [
+        "java",
+        "--enable-preview",
+        "--add-modules=jdk.incubator.vector",
+        "--enable-native-access=ALL-UNNAMED",
+        "--add-opens=jdk.jshell/jdk.jshell=ALL-UNNAMED",
+        "-cp",
+        "/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-sdk-java-remote/0.1.0-SNAPSHOT/tafkir-sdk-java-remote-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-sdk-java-local/0.1.0-SNAPSHOT/tafkir-sdk-java-local-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-sdk/0.1.0-SNAPSHOT/tafkir-sdk-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/io/smallrye/reactive/mutiny/3.1.1/mutiny-3.1.1.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-sdk-core/0.1.0-SNAPSHOT/tafkir-sdk-core-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/org/dflib/jjava/jjava/1.0-a4/jjava-1.0-a4.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-error-code/0.1.0-SNAPSHOT/tafkir-error-code-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-ml-autograd/0.1.0-SNAPSHOT/tafkir-ml-autograd-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-ml-cnn/0.1.0-SNAPSHOT/tafkir-ml-cnn-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-ml-data/0.1.0-SNAPSHOT/tafkir-ml-data-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-ml-hub/0.1.0-SNAPSHOT/tafkir-ml-hub-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-ml-ml/0.1.0-SNAPSHOT/tafkir-ml-ml-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-ml-multimodal/0.1.0-SNAPSHOT/tafkir-ml-multimodal-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-ml-nlp/0.1.0-SNAPSHOT/tafkir-ml-nlp-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-ml-nn/0.1.0-SNAPSHOT/tafkir-ml-nn-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-ml-tensor/0.1.0-SNAPSHOT/tafkir-ml-tensor-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-runtime-tensor/0.1.0-SNAPSHOT/tafkir-runtime-tensor-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-sdk-api/0.1.0-SNAPSHOT/tafkir-sdk-api-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-spi-inference/0.1.0-SNAPSHOT/tafkir-spi-inference-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-spi-model/0.1.0-SNAPSHOT/tafkir-spi-model-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-spi-multimodal/0.1.0-SNAPSHOT/tafkir-spi-multimodal-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-spi-plugin/0.1.0-SNAPSHOT/tafkir-spi-plugin-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-spi-provider/0.1.0-SNAPSHOT/tafkir-spi-provider-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-spi-runtime/0.1.0-SNAPSHOT/tafkir-spi-runtime-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-spi-tensor/0.1.0-SNAPSHOT/tafkir-spi-tensor-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-spi/0.1.0-SNAPSHOT/tafkir-spi-0.1.0-SNAPSHOT.jar:/Users/bhangun/.m2/repository/tech/kayys/tafkir/tafkir-transformer/0.1.0-SNAPSHOT/tafkir-transformer-0.1.0-SNAPSHOT.jar",
+        "org.dflib.jjava.JJava",
+        "{connection_file}"
+    ],
+    "display_name": "Tafkir Java 25",
+    "env": {},
+    "interrupt_mode": "message",
+    "language": "java"
+}

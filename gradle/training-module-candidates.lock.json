@@ -1,0 +1,100 @@
+{
+    "format": "tafkir.training.module-candidates.lock.v1",
+    "schemaVersion": 1,
+    "coverageFormat": "tafkir.training.module-coverage.v2",
+    "candidateFingerprintAlgorithm": "SHA-256",
+    "candidateFingerprint": "5b6edef3c62c14e8d9ce078d0e6010324457ca0cbc02b3b61cd3ad69fa3a856c",
+    "candidateCount": 15,
+    "candidates": [
+        {
+            "label": "api",
+            "projectPath": ":ml:tafkir-ml-api",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-api:test"
+        },
+        {
+            "label": "audio",
+            "projectPath": ":ml:tafkir-ml-audio",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-audio:test"
+        },
+        {
+            "label": "cnn",
+            "projectPath": ":ml:tafkir-ml-cnn",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-cnn:test"
+        },
+        {
+            "label": "data",
+            "projectPath": ":ml:tafkir-ml-data",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-data:test"
+        },
+        {
+            "label": "diffusion-opd",
+            "projectPath": ":ml:tafkir-ml-diffusion-opd",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-diffusion-opd:test"
+        },
+        {
+            "label": "estimator",
+            "projectPath": ":ml:tafkir-ml-estimator",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-estimator:test"
+        },
+        {
+            "label": "examples",
+            "projectPath": ":examples:tafkir-ml-examples",
+            "taskName": "test",
+            "taskPath": ":examples:tafkir-ml-examples:test"
+        },
+        {
+            "label": "multimodal",
+            "projectPath": ":ml:tafkir-ml-multimodal",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-multimodal:test"
+        },
+        {
+            "label": "nlp",
+            "projectPath": ":ml:tafkir-ml-nlp",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-nlp:test"
+        },
+        {
+            "label": "nn",
+            "projectPath": ":ml:tafkir-ml-nn",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-nn:test"
+        },
+        {
+            "label": "optimize",
+            "projectPath": ":ml:tafkir-ml-optimize",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-optimize:test"
+        },
+        {
+            "label": "preprocessing",
+            "projectPath": ":ml:tafkir-ml-preprocessing",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-preprocessing:test"
+        },
+        {
+            "label": "rnn",
+            "projectPath": ":ml:tafkir-ml-rnn",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-rnn:test"
+        },
+        {
+            "label": "serialization",
+            "projectPath": ":ml:tafkir-ml-serialization",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-serialization:test"
+        },
+        {
+            "label": "vision",
+            "projectPath": ":ml:tafkir-ml-vision",
+            "taskName": "test",
+            "taskPath": ":ml:tafkir-ml-vision:test"
+        }
+    ]
+}

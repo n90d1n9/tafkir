@@ -1,0 +1,2 @@
+tech.kayys.tafkir.ml.train.ReportSliceSmoke
+tech.kayys.tafkir.ml.train.SnapshotSliceSmoke

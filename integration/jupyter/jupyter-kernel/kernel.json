@@ -1,0 +1,14 @@
+{
+  "display_name": "Tafkir SDK (Java)",
+  "language": "java",
+  "argv": [
+    "java",
+    "-cp",
+    "${TAFKIR_SDK_CLASSPATH}",
+    "io.github.jupyter.java.kernel.Main",
+    "{connection_file}"
+  ],
+  "env": {
+    "TAFKIR_SDK_CLASSPATH": "${HOME}/.m2/repository/tech/kayys/tafkir-sdk-complete/1.0.0/tafkir-sdk-complete-1.0.0-uber.jar"
+  }
+}

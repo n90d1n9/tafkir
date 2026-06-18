@@ -1,0 +1,20 @@
+{
+  "actualLockSchemaId": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json",
+  "actualSchemaCount": 2,
+  "actualSchemaSetSha256": "0ee19c061c152241861d69323dee15fb539274b41c3121118c0295b7e49ae60d",
+  "code": "ALJABR_LINEAGE_HEALTH_SCHEMA_LOCK_VALID",
+  "expectedLockSchemaId": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json",
+  "expectedSchemaCount": 2,
+  "expectedSchemaSetSha256": "0ee19c061c152241861d69323dee15fb539274b41c3121118c0295b7e49ae60d",
+  "kind": "checkpoint-lineage-health-schema-lock-validation",
+  "message": "checkpoint lineage health schema lock matches current schema set",
+  "mismatchCount": 0,
+  "mismatches": [],
+  "schemaSetMatch": true,
+  "schemaVersion": "aljabr.checkpoint-lineage-health-schema-lock-validation.v1",
+  "status": "valid",
+  "summary": "checkpoint lineage health schema lock valid",
+  "valid": true,
+  "validationSchemaId": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock-validation.v1.schema.json",
+  "validationSchemaResource": "tech/kayys/aljabr/ml/reasoning/schemas/checkpoint-lineage-health-schema-lock-validation.v1.schema.json"
+}
