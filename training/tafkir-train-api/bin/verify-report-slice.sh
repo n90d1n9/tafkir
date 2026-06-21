@@ -5,8 +5,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODULE_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 REPO_DIR="$(cd "${MODULE_DIR}/../.." && pwd)"
 OUT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/aljabr-report-slice.XXXXXX")"
-SOURCE_MANIFEST="training/aljabr-train-api/src/test/resources/smoke/report-slice-sources.txt"
-CLASS_MANIFEST="training/aljabr-train-api/src/test/resources/smoke/report-slice-classes.txt"
+SOURCE_MANIFEST="training/tafkir-train-api/src/test/resources/smoke/report-slice-sources.txt"
+CLASS_MANIFEST="training/tafkir-train-api/src/test/resources/smoke/report-slice-classes.txt"
 
 cleanup() {
   rm -rf "${OUT_DIR}"
@@ -56,8 +56,8 @@ validate_source_manifest() {
   require_manifest "${manifest}"
   validate_unique_entries "${manifest}"
   while IFS= read -r source_file; do
-    if [[ "${source_file}" != training/aljabr-train-api/src/*/java/*.java ]]; then
-      echo "Smoke source must be a Java source under training/aljabr-train-api: ${source_file}" >&2
+    if [[ "${source_file}" != training/tafkir-train-api/src/*/java/*.java ]]; then
+      echo "Smoke source must be a Java source under training/tafkir-train-api: ${source_file}" >&2
       exit 1
     fi
     if [[ ! -f "${source_file}" ]]; then
@@ -103,7 +103,7 @@ validate_class_manifest "${CLASS_MANIFEST}"
 
 javac \
   -d "${OUT_DIR}" \
-  -sourcepath training/aljabr-train-api/src/main/java:training/aljabr-train-api/src/test/java \
+  -sourcepath training/tafkir-train-api/src/main/java:training/tafkir-train-api/src/test/java \
   "@${SOURCE_MANIFEST}"
 
 validate_compiled_smoke_classes "${CLASS_MANIFEST}"
