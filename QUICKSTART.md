@@ -4,43 +4,50 @@ Get started with Tafkir ML framework in 5 minutes.
 
 ---
 
-## 1. Install
+## 1. Prerequisites
 
-### Option A: JBang (No build tools)
+- **JDK 25+** (required for Vector API and Panama FFM features)
+- **JBang** (optional, for scripting examples)
+
+---
+
+## 2. Install
+
+### Option A: JBang (Recommended - No Build Tools Needed)
 
 ```bash
 curl -Ls https://sh.jbang.dev | bash -s -
 ```
 
-### Option B: Maven
+### Option B: Gradle (Build from Source)
+
+```bash
+git clone https://github.com/bhangun/tafkir.git
+cd tafkir
+./gradlew publishToMavenLocal -x test
+```
+
+### Option C: Maven Dependency (Once Published)
 
 ```xml
 <dependency>
     <groupId>tech.kayys.tafkir</groupId>
     <artifactId>tafkir-ml-api</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.3.0</version>
 </dependency>
-```
-
-### Option C: Clone & Build
-
-```bash
-git clone https://github.com/bhangun/tafkir.git
-cd tafkir
-mvn clean install -DskipTests
 ```
 
 ---
 
-## 2. Verify Installation
+## 3. Verify Installation
 
 ```bash
-# Via JBang
-jbang examples/jbang/common/hello_tafkir.java
+# Via JBang (from examples directory)
+cd examples/jbang
+jbang sdk/tafkir-quickstart.java
 
-# Via Maven
-cd framework/lib/tafkir-ml-examples
-mvn exec:java -Dexec.mainClass=tech.kayys.tafkir.train.examples.SimpleFFNExample
+# Or run any JBang example
+jbang common/hello_tafkir.java
 ```
 
 Expected output:
@@ -51,7 +58,7 @@ Expected output:
 
 ---
 
-## 3. Create Your First Model
+## 4. Create Your First Model
 
 ### Using JBang
 
@@ -60,7 +67,7 @@ Create `my_model.java`:
 ```java
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 25
-//DEPS tech.kayys.tafkir:tafkir-ml-ml:0.3.0-SNAPSHOT
+//DEPS tech.kayys.tafkir:tafkir-ml-api:0.3.0-SNAPSHOT
 //COMPILE_OPTIONS --enable-preview --add-modules jdk.incubator.vector
 //RUNTIME_OPTIONS --enable-preview --add-modules jdk.incubator.vector
 //REPOS local,mavencentral,github=https://maven.pkg.github.com/bhangun/tafkir
@@ -100,7 +107,7 @@ jbang my_model.java
 
 ---
 
-## 4. Run Inference
+## 5. Run Inference
 
 ```java
 import tech.kayys.tafkir.ml.runner.*;
@@ -122,7 +129,7 @@ runner.close();
 
 ---
 
-## 5. Explore Examples
+## 6. Explore Examples
 
 ```bash
 # Browse all examples
@@ -140,7 +147,8 @@ jupyter notebook
 
 ## Next Steps
 
-- **[Examples Setup](examples/docs/SETUP.md) - Detailed example setup guide
-- **[SDK Installation](docs/setup/sdk-installation.md) - Full installation guide
-- **[Framework Guide](website/tafkir-ai.github.io/docs/framework/) - ML framework docs
-- **[Inference Guide](website/tafkir-ai.github.io/docs/framework/inference.md) - Model inference docs
+- **[Examples Setup](examples/docs/SETUP.md)** - Detailed example setup guide
+- **[Framework Guide](website/tafkir-ai.github.io/docs/framework/)** - ML framework docs
+- **[Inference Guide](website/tafkir-ai.github.io/docs/framework/inference.md)** - Model inference docs
+- **[CLI Documentation](tafkir-cli/README.md)** - Command-line tool reference
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to Tafkir

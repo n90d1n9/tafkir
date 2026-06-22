@@ -1,0 +1,344 @@
+name: Release Tafkir
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 0.3.0)'
+        required: true
+        type: string
+
+jobs:
+  validate-version:
+    name: Validate Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      is_release: ${{ steps.get_version.outputs.is_release }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Get version from tag or input
+        id: get_version
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            # Extract version from tag (remove 'v' prefix)
+            VERSION="${{ github.ref_name }}"
+            VERSION="${VERSION#v}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_release=true" >> $GITHUB_OUTPUT
+          else
+            # Use input version
+            echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
+            echo "is_release=false" >> $GITHUB_OUTPUT
+          fi
+
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    needs: validate-version
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: gradle
+      
+      - name: Update version in build.gradle.kts
+        shell: bash
+        run: |
+          VERSION="${{ needs.validate-version.outputs.version }}"
+          sed -i "s/extra\[\"tafkirVersion\"\] = \".*\"/extra[\"tafkirVersion\"] = \"$VERSION\"/" build.gradle.kts
+          echo "Updated version to $VERSION"
+          grep "tafkirVersion" build.gradle.kts
+      
+      - name: Build with Gradle
+        shell: bash
+        env:
+          GRADLE_OPTS: -Xmx3G
+        run: |
+          ./gradlew --no-daemon clean build -x test
+      
+      - name: Run Tests
+        shell: bash
+        env:
+          GRADLE_OPTS: -Xmx3G
+        run: |
+          ./gradlew --no-daemon test
+      
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: '**/build/test-results/'
+          retention-days: 7
+
+  publish-javadoc:
+    name: Publish Javadoc
+    runs-on: ubuntu-latest
+    needs: [validate-version, build-and-test]
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: gradle
+      
+      - name: Update version
+        shell: bash
+        run: |
+          VERSION="${{ needs.validate-version.outputs.version }}"
+          sed -i "s/extra\[\"tafkirVersion\"\] = \".*\"/extra[\"tafkirVersion\"] = \"$VERSION\"/" build.gradle.kts
+      
+      - name: Generate Javadoc
+        shell: bash
+        env:
+          GRADLE_OPTS: -Xmx3G
+        run: |
+          ./gradlew --no-daemon javadocJar
+      
+      - name: Upload Javadoc
+        uses: actions/upload-artifact@v4
+        with:
+          name: javadoc
+          path: '**/build/libs/*-javadoc.jar'
+          retention-days: 7
+
+  build-cli-native:
+    name: Build CLI Native Executables
+    runs-on: ${{ matrix.os }}
+    needs: [validate-version, build-and-test]
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            artifact_name: tafkir-linux-x64
+            build_cmd: ./gradlew --no-daemon :ui:tafkir-cli:buildNative -x test
+          - os: macos-latest
+            artifact_name: tafkir-macos-x64
+            build_cmd: ./gradlew --no-daemon :ui:tafkir-cli:buildNative -x test
+          - os: windows-latest
+            artifact_name: tafkir-windows-x64.exe
+            build_cmd: ./gradlew --no-daemon :ui:tafkir-cli:buildNative -x test
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup GraalVM 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: graalvm
+          java-version: "25"
+          cache: gradle
+      
+      - name: Install native dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libssl-dev zlib1g-dev pkg-config
+      
+      - name: Install native dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install openssl
+      
+      - name: Update version
+        shell: bash
+        run: |
+          VERSION="${{ needs.validate-version.outputs.version }}"
+          sed -i.bak "s/extra\[\"tafkirVersion\"\] = \".*\"/extra[\"tafkirVersion\"] = \"$VERSION\"/" build.gradle.kts
+      
+      - name: Build Native CLI
+        shell: bash
+        env:
+          GRADLE_OPTS: -Xmx4G
+        run: ${{ matrix.build_cmd }}
+      
+      - name: Find and Upload Native Binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: |
+            **/tafkir-cli-*-runner
+            **/tafkir-cli-*.exe
+          retention-days: 7
+
+  build-cli-jvm:
+    name: Build CLI JVM Package
+    runs-on: ubuntu-latest
+    needs: [validate-version, build-and-test]
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: gradle
+      
+      - name: Update version
+        shell: bash
+        run: |
+          VERSION="${{ needs.validate-version.outputs.version }}"
+          sed -i "s/extra\[\"tafkirVersion\"\] = \".*\"/extra[\"tafkirVersion\"] = \"$VERSION\"/" build.gradle.kts
+      
+      - name: Build CLI JVM
+        shell: bash
+        env:
+          GRADLE_OPTS: -Xmx3G
+        run: |
+          ./gradlew --no-daemon :ui:tafkir-cli:quarkusBuild -x test
+      
+      - name: Package JVM Distribution
+        shell: bash
+        run: |
+          mkdir -p tafkir-jvm
+          cp -r ui/tafkir-cli/build/quarkus-app/* tafkir-jvm/
+          cp ui/tafkir-cli/build/libs/*.jar tafkir-jvm/bin/ 2>/dev/null || true
+          zip -r tafkir-jvm.zip tafkir-jvm
+      
+      - name: Upload JVM Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: tafkir-jvm-package
+          path: tafkir-jvm.zip
+          retention-days: 7
+
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [validate-version, build-and-test, publish-javadoc, build-cli-native, build-cli-jvm]
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./release-artifacts
+      
+      - name: Prepare release assets
+        shell: bash
+        run: |
+          cd ./release-artifacts
+          ls -la
+          
+          # Rename artifacts for clarity
+          find . -name "tafkir-linux-x64" -exec mv {} tafkir-linux-x64 \;
+          find . -name "tafkir-macos-x64" -exec mv {} tafkir-macos-x64 \;
+          find . -name "tafkir-windows-x64.exe" -exec mv {} tafkir-windows-x64.exe \;
+      
+      - name: Generate Release Notes
+        shell: bash
+        run: |
+          cat > RELEASE_NOTES.md << 'EOF'
+          # Tafkir ${{ needs.validate-version.outputs.version }}
+          
+          ## What's New
+          
+          This release includes improvements to the Tafkir ML/AI training framework.
+          
+          ## Installation
+          
+          ### Native Binaries
+          - **Linux**: `tafkir-linux-x64`
+          - **macOS**: `tafkir-macos-x64`
+          - **Windows**: `tafkir-windows-x64.exe`
+          
+          ### JVM Package
+          Extract `tafkir-jvm.zip` and run:
+          ```bash
+          java -jar bin/quarkus-run.jar --version
+          ```
+          
+          ### JBang (Quick Start)
+          ```bash
+          jbang tafkir@bhangun/tafkir
+          ```
+          
+          ## Requirements
+          - JDK 25+ (required for Vector API and Panama FFM)
+          - For native binaries: No JVM required
+          - For JVM package: Java 25+ runtime
+          
+          ## Documentation
+          - [README](https://github.com/bhangun/tafkir/blob/main/README.md)
+          - [Quickstart Guide](https://github.com/bhangun/tafkir/blob/main/QUICKSTART.md)
+          - [JBang Examples](https://github.com/bhangun/tafkir/tree/main/examples/jbang)
+          
+          EOF
+          cat RELEASE_NOTES.md
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ needs.validate-version.outputs.version }}
+          name: Tafkir v${{ needs.validate-version.outputs.version }}
+          body_path: RELEASE_NOTES.md
+          draft: false
+          prerelease: ${{ needs.validate-version.outputs.is_release == 'false' }}
+          files: |
+            ./release-artifacts/tafkir-linux-x64
+            ./release-artifacts/tafkir-macos-x64
+            ./release-artifacts/tafkir-windows-x64.exe
+            ./release-artifacts/tafkir-jvm-package/tafkir-jvm.zip
+            ./release-artifacts/javadoc/**/*.jar
+
+  publish-to-maven:
+    name: Publish to Maven Central
+    runs-on: ubuntu-latest
+    needs: [validate-version, build-and-test]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: gradle
+      
+      - name: Update version
+        shell: bash
+        run: |
+          VERSION="${{ needs.validate-version.outputs.version }}"
+          sed -i "s/extra\[\"tafkirVersion\"\] = \".*\"/extra[\"tafkirVersion\"] = \"$VERSION\"/" build.gradle.kts
+      
+      - name: Publish to Maven Central
+        shell: bash
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
+        run: |
+          ./gradlew --no-daemon publishToMavenCentral

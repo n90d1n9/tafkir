@@ -1,4 +1,6 @@
-# Production-Ready Tafkir CLI
+# Tafkir CLI - Model Inference & Management Tool
+
+**Note**: The Tafkir CLI evolved from the Gollek inference/serving engine platform. While Gollek continues as a standalone inference/serving engine, Tafkir CLI is now integrated into the Tafkir training framework to provide end-to-end ML workflows—from training to deployment.
 
 Production-ready CLI similar to modern LLM CLIs, integrating with various providers and model registry.
 
@@ -14,7 +16,7 @@ The Tafkir CLI now supports **Dual-Format Serving**, allowing you to run both GG
 
 ## Install (Release Artifacts)
 
-Release workflow: `.github/workflows/golek-cli-release.yml`
+Release workflow: `.github/workflows/gollek-cli-release.yml`
 
 ```bash
 # macOS / Linux (curl installer)
@@ -67,30 +69,51 @@ Assistant: I can help you with coding, writing, and analysis...
 
 ```
 
-## Build
+## Build with Gradle
 
 ```bash
-cd inference-tafkir && mvn clean package -pl ui/tafkir-cli -am -DskipTests
+# Build JVM artifact
+./gradlew :tafkir-cli:quarkusBuild -x test
+
+# Build all artifacts
+./gradlew build -x test
 ```
 
-## Build Native
-```bash
-cd inference-tafkir && mvn clean package -pl ui/tafkir-cli -am -Pnative -DskipTests
-```
-
-Other options to build native:
-
-Option 1: Disable UPX compression (quickest solution) Add this property to skip the compression step:
+## Build Native Executable
 
 ```bash
-mvn clean package -pl ui/tafkir-cli -am -Pnative -DskipTests -Dquarkus.native.compression.disable=true
+# Linux/macOS
+./gradlew :tafkir-cli:buildNative -x test
+
+# Windows
+gradlew.bat :tafkir-cli:buildNative -x test
 ```
-Option 2: Install UPX (for smaller executable) If you want the compressed executable, install UPX manually:
+
+### Native Build Prerequisites
+
+**Linux:**
+```bash
+sudo apt-get install -y build-essential libssl-dev zlib1g-dev pkg-config
+```
+
+**macOS:**
+```bash
+xcode-select --install
+brew install openssl
+```
+
+**Windows:**
+- Visual Studio Build Tools 2022+
+- GraalVM JDK 25+
+
+### Alternative: Disable UPX Compression
+
+If you encounter UPX compression errors:
 
 ```bash
-brew install upx
-mvn clean package -pl ui/tafkir-cli -am -Pnative -DskipTests
+./gradlew :tafkir-cli:buildNative -x test -Dquarkus.native.compression.disable=true
 ```
+
 
 > **Note**: The GGUF provider uses Panama FFM (Foreign Function & Memory API) to interface with llama.cpp. GraalVM native image requires explicit registration of foreign function calls via `reachability-metadata.json` in the `tafkir-ext-runner-gguf` module.
 
@@ -242,28 +265,28 @@ tafkir mcp remove image-downloader
 tafkir run --provider mcp --model any --prompt "hello"
 
 # Build
-cd inference-tafkir && mvn clean package -pl ui/tafkir-cli -am -DskipTests
+./gradlew :tafkir-cli:quarkusBuild -x test
 
 # List providers
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar providers
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar providers
 
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar run --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct --prompt "Hello"
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar run --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct --prompt "Hello"
 
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar run --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct --prompt "Explain quantum entanglement in 2 sentences."
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar run --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct --prompt "Explain quantum entanglement in 2 sentences."
 
 
 
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar chat --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct 
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar chat --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct 
 
 # Minimal output mode (recommended for native GGUF)
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar chat --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct --quiet
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar chat --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct --quiet
 
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar chat --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct 
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar chat --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct 
 
 
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar chat --model google-t5/t5-small
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar chat --model google-t5/t5-small
 
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar chat --model HuggingFaceTB/SmolVLM-256M-Instruct
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar chat --model HuggingFaceTB/SmolVLM-256M-Instruct
 
 HuggingFaceTB/SmolLM2-135M
 meta-llama/Llama-3.2-1B
@@ -272,22 +295,22 @@ google/gemma-2b-it
 
 GGUF_GPU_ENABLED=true GGUF_GPU_LAYERS=-1 GGUF_BATCH_SIZE=1024 \
 GGUF_THREADS=8 \
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar \
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar \
 chat --model meta-llama/Llama-3.2-1B-Instruct
 
 # Run with different providers
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar run \
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar run \
   --provider openai --model gpt-4 --prompt "Hello"
 
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar run \
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar run \
   --provider anthropic --model claude-3-opus --prompt "Hello"
 
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar run \
+java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar run \
   --provider cerebras --model llama-3.1-8b --prompt "Hello"
 ```
 
 ```bash
-tafkir-cli % java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar providers
+tafkir-cli % java -jar tafkir-cli/build/quarkus-app/quarkus-run.jar providers
 ID              NAME                 VERSION    STATUS    
 ------------------------------------------------------------
 cerebras        Cerebras             1.0.0      HEALTHY   
@@ -302,7 +325,7 @@ mistral         Mistral AI           1.0.0      HEALTHY
 
 ### Run native
 ```bash
-./ui/tafkir-cli/target/tafkir-cli-1.0.0-SNAPSHOT-runner chat --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct  
+./tafkir-cli/build/tafkir-cli-runner chat --provider gguf --model Qwen/Qwen2.5-0.5B-Instruct  
 ```
 
 ### Native smoke check
@@ -354,10 +377,7 @@ Downloading: ████░░░░░░░░░░░░░░░░ 20% (9
 ```
 
 ## Build and Run
-```bash
-cd inference-tafkir
-mvn clean package -pl ui/tafkir-cli -am -DskipTests
-java -jar ui/tafkir-cli/target/tafkir-cli-*-runner.jar chat -m <model> --session
+java -jar tafkir-cli/build/libs/tafkir-cli-runner.jar chat -m <model> --session
 
 ```
 
@@ -380,109 +400,3 @@ The CLI leverages a centralized `tech.kayys.tafkir.spi.model.LocalModelRegistry`
 
 Format detection is performed via magic bytes (ModelFormatDetector) to ensure reliable provider routing regardless of file extension.
 a
-
-## Proposed Changes
-
-### Build Configuration
-
-#### [MODIFY] [pom.xml](ui/tafkir-cli/pom.xml)
-Add dependencies for all providers and model repository:
-- `tafkir-sdk-java-local` - Local SDK
-- `tafkir-model-repo-core` - Model repository
-- `tafkir-ext-cloud-gemini` - Gemini provider
-- `tafkir-provider-huggingface` - HuggingFace for model downloads
-- `tafkir-ext-runner-gguf` - Local GGUF inference
-
----
-
-### CLI Commands
-
-#### [MODIFY] [TafkirCommand.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/TafkirCommand.java)
-Update to include all subcommands.
-
-#### [MODIFY] [RunCommand.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/commands/RunCommand.java)
-Enhanced run command with:
-- `--provider` option to select provider (litert, gguf, gemini)
-- `--stream` flag for streaming output
-- `--temperature`, `--max-tokens` options
-
-#### [NEW] [PullCommand.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/commands/PullCommand.java)
-```java
-@Command(name = "pull", description = "Pull a model from registry")
-```
-- Support HuggingFace: `tafkir pull hf:TheBloke/Llama-2-7B-GGUF`
-- Progress bar display
-
-#### [NEW] [ListCommand.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/commands/ListCommand.java)
-```java
-@Command(name = "list", aliases = "ls", description = "List local models")
-```
-- Display: NAME, SIZE, FORMAT, MODIFIED
-
-#### [NEW] [ShowCommand.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/commands/ShowCommand.java)
-Show model details (parameters, license, architecture).
-
-#### [NEW] [ProvidersCommand.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/commands/ProvidersCommand.java)
-List available providers with status (healthy/unhealthy).
-
-#### [NEW] [ChatCommand.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/commands/ChatCommand.java)
-Interactive chat mode with conversation history.
-
-#### [NEW] [ServeCommand.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/commands/ServeCommand.java)
-Start local API server (OpenAI-compatible).
-
----
-
-### Supporting Classes
-
-#### [NEW] [ProgressBar.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/util/ProgressBar.java)
-Console progress bar for downloads.
-
-#### [NEW] [OutputFormatter.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/util/OutputFormatter.java)
-Format output as table, JSON, or plain text.
-
-#### [NEW] [ProviderResolver.java](ui/tafkir-cli/src/main/java/tech/kayys/tafkir/cli/service/ProviderResolver.java)
-Resolve model name to appropriate provider.
-
----
-
-## Implementation Priority
-
-1. **Phase 1** - Core Commands
-   - `run` with provider selection
-   - `list` local models
-   - `show` model info
-   - `providers` list
-
-2. **Phase 2** - Model Management
-   - `pull` from HuggingFace
-   - Progress bar
-
-3. **Phase 3** - Advanced Features
-   - `chat` interactive mode
-   - `serve` API server
-
----
-
-## Verification Plan
-
-### Build & Test
-```bash
-cd inference-tafkir
-mvn clean package -pl ui/tafkir-cli -am
-mvn test -pl ui/tafkir-cli
-```
-
-### Manual Testing
-```bash
-# List providers
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar providers
-
-# List local models
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar list
-
-# Run with GGUF
-java -jar ui/tafkir-cli/target/quarkus-app/quarkus-run.jar run \
-  --provider gguf --model /path/to/model.gguf --prompt "Hello"
-  --provider litert --model /path/to/model.litertlm --prompt "Hello"
-```
