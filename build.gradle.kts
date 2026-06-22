@@ -17,9 +17,10 @@ plugins {
     java
     `maven-publish`
     id("io.quarkus") version "3.32.2" apply false
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0" apply false
 }
 
-extra["tafkirVersion"] = "0.1.0-SNAPSHOT"
+extra["tafkirVersion"] = "0.3.0-SNAPSHOT"
 extra["quarkusVersion"] = "3.32.2"
 
 allprojects {
@@ -153,15 +154,90 @@ subprojects {
         }
     }
 
+    // Apply nexus publishing plugin to root project only
+    if (project == rootProject) {
+        apply(plugin = "io.github.gradle-nexus.publish-plugin")
+        extensions.configure<io.github.gradlenexus.publishplugin.NexusPublishExtension> {
+            repositories {
+                sonatype {
+                    nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+                    snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+                }
+            }
+        }
+    }
+
     afterEvaluate {
         extensions.configure<PublishingExtension>("publishing") {
+            publications {
+                if (publications.findByName("mavenJava") == null) {
+                    create<MavenPublication>("mavenJava") {
+                        from(components["java"])
+                        
+                        // Add POM metadata for Maven Central
+                        pom {
+                            name.set(project.name)
+                            description.set("Tafkir ML/AI Training Framework - ${project.name}")
+                            url.set("https://github.com/bhangun/tafkir")
+                            
+                            licenses {
+                                license {
+                                    name.set("Apache License 2.0")
+                                    url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                                }
+                            }
+                            
+                            developers {
+                                developer {
+                                    id.set("bhangun")
+                                    name.set("Tafkir Contributors")
+                                    email.set("dev@tafkir.tech")
+                                }
+                            }
+                            
+                            scm {
+                                connection.set("scm:git:git://github.com/bhangun/tafkir.git")
+                                developerConnection.set("scm:git:ssh://github.com/bhangun/tafkir.git")
+                                url.set("https://github.com/bhangun/tafkir")
+                            }
+                        }
+                    }
+                }
+            }
+            
             repositories {
+                // Maven Central will be configured via nexus publish plugin
+                // This is kept for local development
                 mavenLocal()
             }
-            if (publications.findByName("mavenJava") == null) {
-                publications.create<MavenPublication>("mavenJava") {
-                    from(components["java"])
-                }
+        }
+        
+        // Add Javadoc and Sources jars
+        val javadocJar = tasks.register<Jar>("javadocJar") {
+            dependsOn(tasks.named("javadoc"))
+            archiveClassifier.set("javadoc")
+            from(tasks.named("javadoc").map { (it as Javadoc).destinationDir })
+        }
+        
+        val sourcesJar = tasks.register<Jar>("sourcesJar") {
+            archiveClassifier.set("sources")
+            from(sourceSets.main.get().allSource)
+        }
+        
+        publishing.publications.withType<MavenPublication>().configureEach {
+            artifact(javadocJar)
+            artifact(sourcesJar)
+        }
+        
+        // Enable signing for release builds
+        if (System.getenv("SIGNING_KEY") != null) {
+            apply(plugin = "signing")
+            extensions.configure<SigningExtension>("signing") {
+                useInMemoryPgpKeys(
+                    System.getenv("SIGNING_KEY"),
+                    System.getenv("SIGNING_PASSWORD")
+                )
+                sign(publishing.publications["mavenJava"])
             }
         }
     }
