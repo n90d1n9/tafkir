@@ -1,57 +1,55 @@
-//DEPS tech.kayys.tafkir:tafkir-sdk-nn:0.1.0-SNAPSHOT
-//REPOS local,mavencentral,github=https://maven.pkg.github.com/bhangun/tafkir
+///usr/bin/env jbang "$0" "$@" ; exit $?
+//JAVA 25
+//DEPS tech.kayys.tafkir:tafkir-ml-aljabr:0.3.0-SNAPSHOT
+//DEPS tech.kayys.tafkir:tafkir-trainer-aljabr:0.3.0-SNAPSHOT
+//COMPILE_OPTIONS --enable-preview --add-modules jdk.incubator.vector
+//RUNTIME_OPTIONS --enable-preview --add-modules jdk.incubator.vector
 
-import tech.kayys.tafkir.ml.nn.*;
-import tech.kayys.tafkir.ml.nn.loss.*;
-import tech.kayys.tafkir.ml.nn.optim.*;
-import tech.kayys.tafkir.ml.autograd.GradTensor;
+import tech.kayys.tafkir.ml.tensor.TafkirTensor;
+import tech.kayys.tafkir.trainer.TafkirTrainer;
+import tech.kayys.tafkir.trainer.loss.TafkirCrossEntropyLoss;
+import tech.kayys.tafkir.trainer.model.*;
+import tech.kayys.tafkir.trainer.optim.TafkirAdam;
 
-/**
- * Simulates a complex Digit Classification setup (like MNIST).
- * Demonstrates deeper networks, parameter counting, and training/eval modes.
- */
 public class mnist_style_setup {
     public static void main(String[] args) {
-        int inputSize = 28 * 28; // 784
+        int inputSize = 28 * 28;   // MNIST image flattened
         int hiddenSize = 256;
         int numClasses = 10;
+        int batchSize = 64;
 
-        // 1. Advanced Model Architecture
-        Sequential model = new Sequential(
-            new Linear(inputSize, hiddenSize),
-            new ReLU(),
-            // new Dropout(0.2), // If supported
-            new Linear(hiddenSize, hiddenSize / 2),
-            new ReLU(),
-            new Linear(hiddenSize / 2, numClasses)
+        // 1. Build model
+        TafkirSequential model = new TafkirSequential(
+            new TafkirLinear(inputSize, hiddenSize),
+            new TafkirReLU(),
+            new TafkirLinear(hiddenSize, hiddenSize / 2),
+            new TafkirReLU(),
+            new TafkirLinear(hiddenSize / 2, numClasses)
         );
 
-        System.out.println("--- Model Summary ---");
         System.out.println(model);
-        System.out.println("Total Parameters: " + model.parameterCountFormatted());
+        System.out.println();
 
-        // 2. Training Components
-        CrossEntropyLoss criterion = new CrossEntropyLoss();
-        Adam optimizer = new Adam(model.parameters(), 0.001f);
+        // 2. Training components
+        TafkirCrossEntropyLoss criterion = new TafkirCrossEntropyLoss();
+        TafkirAdam optimizer = new TafkirAdam(model.parameters(), 0.001f);
 
-        // 3. Batch simulation
-        int batchSize = 32;
-        GradTensor fakeImages = GradTensor.randn(batchSize, inputSize);
-        GradTensor fakeLabels = GradTensor.zeros(batchSize, numClasses); // One-hot labels
+        // 3. Fake MNIST-like data (replace with real data loading)
+        TafkirTensor fakeImages = TafkirTensor.randn(batchSize, inputSize);
+        TafkirTensor fakeLabels = TafkirTensor.zeros(batchSize); // class indices 0-9
 
-        System.out.println("\n--- Step Execution ---");
-        
-        // Train mode
-        model.train();
-        GradTensor output = model.forward(fakeImages);
-        GradTensor loss = criterion.compute(output, fakeLabels);
-        
-        System.out.println("Forward pass batch output shape: " + java.util.Arrays.toString(output.shape()));
-        System.out.println("Current batch loss: " + loss.item());
+        // 4. Train
+        TafkirTrainer trainer = new TafkirTrainer(model, criterion, optimizer, 5);
+        trainer.fit(fakeImages, fakeLabels);
 
-        // Eval mode
+        // 5. Evaluate
         model.eval();
-        GradTensor valOutput = model.forward(fakeImages);
-        System.out.println("Evaluation mode predictions complete.");
+        TafkirTensor valOutput = model.forward(fakeImages);
+        System.out.println("\nEval output shape: " + java.util.Arrays.toString(valOutput.shapeArray()));
+        System.out.println("Sample predictions (first 5):");
+        for (int i = 0; i < 5; i++) {
+            System.out.println("  Image " + i + ": class probabilities shape = " +
+                java.util.Arrays.toString(valOutput.shapeArray()));
+        }
     }
 }

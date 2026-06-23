@@ -1,90 +1,122 @@
 package tech.kayys.tafkir.ml.autograd;
 
+import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.aljabr.core.tensor.Shape;
+import tech.kayys.aljabr.core.tensor.DType;
+import tech.kayys.aljabr.core.tensor.DeviceType;
+import tech.kayys.aljabr.backend.cpu.CpuBackend;
+
 import java.awt.image.BufferedImage;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
 /**
- * Array-backed compatibility tensor for the ML/trainer Gradle migration.
+ * Tafkir-facing tensor API that delegates all computation to Aljabr backends.
  *
- * <p>This is intentionally CPU-only. It restores the legacy
- * {@code tech.kayys.tafkir.ml.autograd.GradTensor} surface so the training-side
- * modules can build coherently in-repo while deeper runtime work continues.</p>
+ * <p>This is a thin wrapper around Aljabr's {@link Tensor} interface, providing
+ * PyTorch-like APIs for tensor operations and autograd. All computation is
+ * performed by Aljabr's {@link CpuBackend} which uses Vector API SIMD for
+ * acceleration.</p>
+ *
+ * <p>Example usage:</p>
+ * <pre>{@code
+ * GradTensor x = GradTensor.randn(2, 3);
+ * GradTensor y = GradTensor.randn(3, 4);
+ * GradTensor z = x.matmul(y);
+ * z.backward();
+ * }</pre>
  */
 public final class GradTensor {
 
     private static final Random RNG = new Random();
+    private static CpuBackend backend;
 
-    private final float[] data;
+    /** Get or create the singleton CPU backend instance. */
+    private static CpuBackend backend() {
+        if (backend == null) {
+            backend = new CpuBackend();
+        }
+        return backend;
+    }
+
+    private final Tensor delegate;
     private final long[] shape;
     private boolean requiresGrad;
     private GradTensor grad;
     private Function gradFn;
 
-    private GradTensor(float[] data, long[] shape) {
-        this.data = Objects.requireNonNull(data, "data");
-        this.shape = normalizeShape(shape);
-        long expected = numel(this.shape);
-        if (data.length != expected) {
-            throw new IllegalArgumentException(
-                    "data length " + data.length + " does not match shape " + Arrays.toString(this.shape));
-        }
+    private GradTensor(Tensor delegate) {
+        this.delegate = Objects.requireNonNull(delegate, "delegate");
+        this.shape = delegate.shape().dims();
+        this.requiresGrad = delegate.requiresGrad();
     }
 
+    /**
+     * Create a tensor from raw float array data.
+     * @param data the float array (will be copied)
+     * @param shape the desired shape
+     * @return a new GradTensor backed by Aljabr off-heap memory
+     */
     public static GradTensor of(float[] data, long... shape) {
-        return new GradTensor(data.clone(), shape.clone());
+        CpuBackend backend = backend();
+        Tensor t = backend.create(new Shape(shape), DType.F32, data);
+        return new GradTensor(t);
     }
 
+    /** Convenience overload for 1D tensor creation. */
     public static GradTensor of(float... data) {
-        return new GradTensor(data.clone(), new long[]{data.length});
+        return of(data, data.length);
     }
 
+    /** Create a tensor filled with zeros. */
     public static GradTensor zeros(long... shape) {
-        return new GradTensor(new float[Math.toIntExact(numel(shape))], shape.clone());
+        return new GradTensor(Tensor.zeros(shape));
     }
 
+    /** Create a tensor filled with ones. */
     public static GradTensor ones(long... shape) {
-        float[] values = new float[Math.toIntExact(numel(shape))];
-        Arrays.fill(values, 1f);
-        return new GradTensor(values, shape.clone());
+        return new GradTensor(Tensor.ones(shape));
     }
 
+    /** Create a tensor filled with a constant value. */
     public static GradTensor full(float value, long... shape) {
-        float[] values = new float[Math.toIntExact(numel(shape))];
-        Arrays.fill(values, value);
-        return new GradTensor(values, shape.clone());
+        return new GradTensor(Tensor.full(value, shape));
     }
 
+    /** Create a 0-dimensional scalar tensor. */
     public static GradTensor scalar(float value) {
-        return new GradTensor(new float[]{value}, new long[0]);
+        return new GradTensor(Tensor.full(value, 1L));
     }
 
+    /** Create a tensor with uniform random values in [0, 1). */
     public static GradTensor rand(long... shape) {
-        float[] values = new float[Math.toIntExact(numel(shape))];
+        // Use Aljabr's random generation when available, fallback to manual
+        float[] values = new float[(int) numel(shape)];
         for (int i = 0; i < values.length; i++) {
             values[i] = RNG.nextFloat();
         }
-        return new GradTensor(values, shape.clone());
+        return of(values, shape);
     }
 
+    /** Create a tensor with standard normal random values. */
     public static GradTensor randn(long... shape) {
-        float[] values = new float[Math.toIntExact(numel(shape))];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = (float) RNG.nextGaussian();
-        }
-        return new GradTensor(values, shape.clone());
+        return new GradTensor(Tensor.randn(shape));
     }
 
+    /** Create a tensor with uniform random values in [lo, hi). */
     public static GradTensor uniform(double lo, double hi, long... shape) {
-        float[] values = new float[Math.toIntExact(numel(shape))];
+        float[] values = new float[(int) numel(shape)];
         double range = hi - lo;
         for (int i = 0; i < values.length; i++) {
             values[i] = (float) (lo + RNG.nextDouble() * range);
         }
-        return new GradTensor(values, shape.clone());
+        return of(values, shape);
     }
 
+    /** Create a 1D tensor with evenly spaced values. */
     public static GradTensor arange(float start, float end, float step) {
         if (step == 0f) {
             throw new IllegalArgumentException("step must not be zero");
@@ -96,15 +128,16 @@ public final class GradTensor {
             values[i] = current;
             current += step;
         }
-        return new GradTensor(values, new long[]{size});
+        return of(values, size);
     }
 
+    /** Create an identity matrix. */
     public static GradTensor eye(int n) {
         float[] values = new float[n * n];
         for (int i = 0; i < n; i++) {
             values[i * n + i] = 1f;
         }
-        return new GradTensor(values, new long[]{n, n});
+        return of(values, n, n);
     }
 
     public static GradTensor where(GradTensor condition, GradTensor x, GradTensor y) {

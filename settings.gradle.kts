@@ -1,6 +1,20 @@
 rootProject.name = "tafkir-engine"
 
-includeBuild("../aljabr")
+// Aljabr is the compute engine — required composite build
+includeBuild("../aljabr") {
+    dependencySubstitution {
+        substitute(module("tech.kayys.aljabr:aljabr-core"))
+            .using(project(":core:aljabr-core"))
+        substitute(module("tech.kayys.aljabr:aljabr-tensor"))
+            .using(project(":core:aljabr-tensor"))
+        substitute(module("tech.kayys.aljabr:aljabr-backend-cpu"))
+            .using(project(":backend:cpu:aljabr-backend-cpu"))
+        substitute(module("tech.kayys.aljabr:aljabr-nn"))
+            .using(project(":core:aljabr-nn"))
+        substitute(module("tech.kayys.aljabr:aljabr-autograd"))
+            .using(project(":autograd"))
+    }
+}
 
 fun includeOptionalProject(projectPath: String, vararg candidatePaths: String) {
     val projectDir = candidatePaths
@@ -18,17 +32,14 @@ val staticallyIncludedModelProjects = setOf<String>()
 
 includeOptionalProject("suling", "../extensions/audio/suling", "stubs/suling")
 
-include("quantizer:tafkir-quantizer-autoround")
-include("quantizer:tafkir-quantizer-awq")
-include("quantizer:tafkir-quantizer-gptq")
-include("quantizer:tafkir-quantizer-quip")
-include("quantizer:tafkir-quantizer-turboquant")
+// New Aljabr-backed ML module (replaces old tafkir-ml-autograd)
+include("ml:tafkir-ml-aljabr")
 
-if (file("sdk/tafkir-sdk-session").isDirectory) {
-//    include("sdk:tafkir-sdk-session")
-}
-
+// Keep old autograd module temporarily for migration
 include("ml:tafkir-ml-autograd")
 
+// New trainer module with real training loop
+include("trainer:tafkir-trainer-aljabr")
+include("trainer:tafkir-trainer-api")
 
 includeOptionalProject("training:tafkir-train-strategy", "training/tafkir-train-strategy")

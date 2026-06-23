@@ -1,19 +1,77 @@
-//DEPS tech.kayys.tafkir:tafkir-sdk-nn:0.1.0-SNAPSHOT
-//REPOS local,mavencentral,github=https://maven.pkg.github.com/bhangun/tafkir
+///usr/bin/env jbang "$0" "$@" ; exit $?
+//JAVA 25
+//DEPS tech.kayys.tafkir:tafkir-ml-aljabr:0.3.0-SNAPSHOT
+//DEPS tech.kayys.tafkir:tafkir-trainer-aljabr:0.3.0-SNAPSHOT
+//COMPILE_OPTIONS --enable-preview --add-modules jdk.incubator.vector
+//RUNTIME_OPTIONS --enable-preview --add-modules jdk.incubator.vector
 
-import tech.kayys.tafkir.ml.nn.*;
+import tech.kayys.tafkir.ml.tensor.TafkirTensor;
+import tech.kayys.tafkir.trainer.TafkirTrainer;
+import tech.kayys.tafkir.trainer.loss.TafkirMSELoss;
+import tech.kayys.tafkir.trainer.model.*;
+import tech.kayys.tafkir.trainer.optim.TafkirAdam;
 
+/**
+ * XOR problem: the "Hello World" of neural networks.
+ * A 2-layer MLP learns the XOR truth table.
+ */
 public class hello_tafkir {
     public static void main(String[] args) {
-        System.out.println("Hello from Tafkir!");
-        
-        // Create a simple model
-        Sequential model = new Sequential(
-            new Linear(10, 5),
-            new ReLU(),
-            new Linear(5, 1)
+        // XOR training data
+        TafkirTensor x = TafkirTensor.of(new float[]{
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 1
+        }, 4, 2);
+
+        TafkirTensor y = TafkirTensor.of(new float[]{
+            0,
+            1,
+            1,
+            0
+        }, 4, 1);
+
+        // 2-2-1 MLP
+        TafkirSequential model = new TafkirSequential(
+            new TafkirLinear(2, 2),
+            new TafkirReLU(),
+            new TafkirLinear(2, 1)
         );
-        
-        System.out.println("Model created successfully!");
+
+        System.out.println("XOR Training with Tafkir + Aljabr");
+        System.out.println(model);
+        System.out.println();
+
+        // Train
+        TafkirTrainer trainer = new TafkirTrainer(
+            model,
+            new TafkirMSELoss(),
+            new TafkirAdam(model.parameters(), 0.1f),
+            1000,
+            false // quiet
+        );
+
+        trainer.fit(x, y);
+
+        // Test
+        model.eval();
+        TafkirTensor pred = model.forward(x);
+        System.out.println("\nFinal predictions:");
+        float[] predictions = pred.data();
+        for (int i = 0; i < 4; i++) {
+            System.out.printf("  XOR(%.0f, %.0f) = %.4f (expected: %.0f)%n",
+                x.data()[i * 2], x.data()[i * 2 + 1], predictions[i], y.data()[i]);
+        }
+
+        // Verify convergence
+        float loss = trainer.evaluate(x, y);
+        System.out.printf("\nFinal loss: %.6f%n", loss);
+        if (loss < 0.01) {
+            System.out.println("SUCCESS: XOR learned!");
+        } else {
+            System.out.println("FAILURE: XOR not learned. Loss too high.");
+            System.exit(1);
+        }
     }
 }
