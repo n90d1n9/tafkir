@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     api("tech.kayys.aljabr:aljabr-tensor:0.1.0-SNAPSHOT")
+    api(project(":ml:tafkir-ml-core"))
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.16.1")
     implementation("org.slf4j:slf4j-api:2.0.12")

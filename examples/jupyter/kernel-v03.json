@@ -1,5 +1,5 @@
 {
-  "display_name": "Tafkir SDK v0.3 (Java 25)",
+  "display_name": "Tafkir SDK v0.1 (Java 25)",
   "language": "java",
   "argv": [
     "/opt/homebrew/bin/jbang",
@@ -20,7 +20,7 @@
   ],
   "env": {
     "JJAVA_REPOS": "local,mavencentral,github=https://maven.pkg.github.com/bhangun/tafkir",
-    "JJAVA_DEPS": "tech.kayys.tafkir:tafkir-ml-api:0.3.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-ml:0.3.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-optimize:0.3.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-onnx:0.3.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-tensor:0.3.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-autograd:0.3.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-nn:0.3.0-SNAPSHOT",
+    "JJAVA_DEPS": "tech.kayys.tafkir:tafkir-ml-api:0.1.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-ml:0.1.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-optimize:0.1.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-onnx:0.1.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-tensor:0.1.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-autograd:0.1.0-SNAPSHOT,tech.kayys.tafkir:tafkir-ml-nn:0.1.0-SNAPSHOT",
     "GITHUB_TOKEN": "${GITHUB_TOKEN}"
   },
   "interrupt_mode": "message"

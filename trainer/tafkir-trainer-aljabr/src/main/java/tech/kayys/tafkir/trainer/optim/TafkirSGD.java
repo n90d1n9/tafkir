@@ -9,10 +9,13 @@ import java.util.Map;
 /**
  * Stochastic Gradient Descent with optional momentum.
  * Uses in-place operations to avoid allocating new tensors.
+ *
+ * <p>Supports mutable learning rate so it can be driven by
+ * {@link tech.kayys.tafkir.trainer.scheduler.TafkirLRScheduler LR schedulers}.
  */
 public final class TafkirSGD implements TafkirOptimizer {
 
-    private final float lr;
+    private float lr;
     private final float momentum;
     private final float weightDecay;
     private final boolean nesterov;
@@ -64,5 +67,15 @@ public final class TafkirSGD implements TafkirOptimizer {
         for (TafkirTensor p : parameters) {
             if (p.requiresGrad()) p.setGrad(null);
         }
+    }
+
+    @Override
+    public float getLearningRate() {
+        return lr;
+    }
+
+    @Override
+    public void setLearningRate(float lr) {
+        this.lr = lr;
     }
 }

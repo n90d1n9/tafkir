@@ -37,8 +37,8 @@ public class ZeroCopyIntegrationTest {
             try (Arena trainingArena = Arena.ofConfined()) {
                 
                 // 4. Fetch zero-copy MemorySegment directly from DB
-                Optional<MemorySegment> optContextSegment = dbStore.getZeroCopy(contextKey, trainingArena);
-                Optional<MemorySegment> optModelSegment = dbStore.getZeroCopy(modelKey, trainingArena);
+                Optional<MemorySegment> optContextSegment = dbStore.getZeroCopy(contextKey, 0L, trainingArena);
+                Optional<MemorySegment> optModelSegment = dbStore.getZeroCopy(modelKey, 0L, trainingArena);
 
                 assertTrue(optContextSegment.isPresent(), "Context segment should be retrieved");
                 assertTrue(optModelSegment.isPresent(), "Model segment should be retrieved");

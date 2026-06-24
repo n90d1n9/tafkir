@@ -1,0 +1,43 @@
+{
+  "name": "tafkir-vscode",
+  "displayName": "Tafkir (Java 25 + AI/ML)",
+  "description": "Seamless integration of the Tafkir Jupyter kernel for VS Code Notebooks.",
+  "version": "0.1.0",
+  "publisher": "bhangun",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bhangun/tafkir"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Notebooks"
+  ],
+  "activationEvents": [
+    "onNotebook:jupyter-notebook",
+    "onCommand:tafkir.reinstallKernel"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "tafkir.reinstallKernel",
+        "title": "Tafkir: Re-install Jupyter Kernel",
+        "category": "Tafkir"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "copy-jar": "cp ../../jupyter/tafkir-jupyter-kernel/build/libs/tafkir-kernel-*.jar ./resources/tafkir-kernel.jar || echo 'No jar found, build tafkir-jupyter-kernel first'"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.1.3"
+  }
+}

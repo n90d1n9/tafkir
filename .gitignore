@@ -1,11 +1,13 @@
 ```
 # Dependencies
 node_modules/
+**/node_modules/**
 .gradle/
 
 # Build artifacts
-build/
-target/
+**/build/**
+**/target/**
+**/bin/**
 
 # Environment
 .env

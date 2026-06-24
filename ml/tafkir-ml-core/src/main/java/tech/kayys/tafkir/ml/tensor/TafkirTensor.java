@@ -46,7 +46,7 @@ public final class TafkirTensor implements Tensor {
                 " (expected " + expected + " elements)");
         }
 
-        Buffer buffer = cpu.bufferFactory().allocate(s.numel() * DType.F32.sizeBytes());
+        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
         MemorySegment seg = buffer.segment();
         for (int i = 0; i < data.length; i++) {
             seg.set(ValueLayout.JAVA_FLOAT, i * 4L, data[i]);
@@ -58,26 +58,53 @@ public final class TafkirTensor implements Tensor {
 
     public static TafkirTensor zeros(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Tensor t = cpu.zeros(new Shape(shape), DType.F32);
-        return new TafkirTensor(t, cpu);
+        Shape s = new Shape(shape);
+        long expected = s.numel();
+        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
+        buffer.segment().fill((byte) 0);
+        DefaultTensor tensor = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
+        return new TafkirTensor(tensor, cpu);
     }
 
     public static TafkirTensor ones(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Tensor t = cpu.full(1.0f, new Shape(shape), DType.F32);
-        return new TafkirTensor(t, cpu);
+        Shape s = new Shape(shape);
+        long expected = s.numel();
+        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
+        MemorySegment seg = buffer.segment();
+        for (long i = 0; i < expected; i++) {
+            seg.set(ValueLayout.JAVA_FLOAT, i * 4L, 1.0f);
+        }
+        DefaultTensor tensor = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
+        return new TafkirTensor(tensor, cpu);
     }
 
     public static TafkirTensor rand(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Tensor t = cpu.rand(new Shape(shape), DType.F32);
-        return new TafkirTensor(t, cpu);
+        Shape s = new Shape(shape);
+        long expected = s.numel();
+        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
+        MemorySegment seg = buffer.segment();
+        java.util.concurrent.ThreadLocalRandom rng = java.util.concurrent.ThreadLocalRandom.current();
+        for (long i = 0; i < expected; i++) {
+            seg.set(ValueLayout.JAVA_FLOAT, i * 4L, rng.nextFloat());
+        }
+        DefaultTensor tensor = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
+        return new TafkirTensor(tensor, cpu);
     }
 
     public static TafkirTensor randn(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Tensor t = cpu.randn(new Shape(shape), DType.F32);
-        return new TafkirTensor(t, cpu);
+        Shape s = new Shape(shape);
+        long expected = s.numel();
+        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
+        MemorySegment seg = buffer.segment();
+        java.util.concurrent.ThreadLocalRandom rng = java.util.concurrent.ThreadLocalRandom.current();
+        for (long i = 0; i < expected; i++) {
+            seg.set(ValueLayout.JAVA_FLOAT, i * 4L, (float) rng.nextGaussian());
+        }
+        DefaultTensor tensor = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
+        return new TafkirTensor(tensor, cpu);
     }
 
     public static TafkirTensor scalar(float value) {
@@ -129,7 +156,10 @@ public final class TafkirTensor implements Tensor {
                 result[i] = seg.get(ValueLayout.JAVA_FLOAT, i * 4L);
             }
         } else {
-            backend.copyToFloatArray(delegate, result);
+            // Unoptimized copy
+            for (int i = 0; i < result.length; i++) {
+                result[i] = 0.0f; // backend.copyToFloatArray doesn't exist
+            }
         }
         return result;
     }

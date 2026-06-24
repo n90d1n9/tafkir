@@ -88,10 +88,20 @@ public class QuipQuantizerService implements AutoCloseable {
         java.nio.file.Files.createDirectories(outputDir);
 
         // Load via SafetensorReader (reuse existing infrastructure)
-        Map<String, float[]> raw = tech.kayys.tafkir.ml.safetensors.SafetensorReader.read(inputSafetensors);
-
+        Map<String, tech.kayys.tafkir.ml.tensor.TafkirTensor> readTensors = tech.kayys.tafkir.ml.safetensors.SafetensorReader.readTensors(inputSafetensors);
+        
+        Map<String, float[]> raw = new LinkedHashMap<>();
         Map<String, int[]> shapes = new LinkedHashMap<>();
-        raw.forEach((name, data) -> shapes.put(name, new int[]{1, data.length}));
+
+        readTensors.forEach((name, tensor) -> {
+            raw.put(name, tensor.data());
+            long[] dims = tensor.shapeArray();
+            int[] intDims = new int[dims.length];
+            for (int i = 0; i < dims.length; i++) {
+                intDims[i] = (int) dims[i];
+            }
+            shapes.put(name, intDims);
+        });
 
         Map<String, QuipTensor> quantized = quantize(raw, shapes);
         writeArchive(quantized, outputDir);

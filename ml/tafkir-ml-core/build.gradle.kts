@@ -17,6 +17,12 @@ repositories {
     mavenLocal()
 }
 
+dependencies {
+    api("tech.kayys.aljabr:aljabr-core:0.1.0-SNAPSHOT")
+    api("tech.kayys.aljabr:aljabr-tensor:0.1.0-SNAPSHOT")
+    api("tech.kayys.aljabr:aljabr-backend-cpu:0.1.0-SNAPSHOT")
+}
+
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {

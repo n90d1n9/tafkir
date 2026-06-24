@@ -8,10 +8,13 @@ import java.util.Map;
 
 /**
  * Adam optimizer with in-place operations.
+ *
+ * <p>Supports mutable learning rate so it can be driven by
+ * {@link tech.kayys.tafkir.trainer.scheduler.TafkirLRScheduler LR schedulers}.
  */
 public final class TafkirAdam implements TafkirOptimizer {
 
-    private final float lr;
+    private float lr;
     private final float beta1;
     private final float beta2;
     private final float eps;
@@ -84,5 +87,15 @@ public final class TafkirAdam implements TafkirOptimizer {
         for (TafkirTensor p : parameters) {
             if (p.requiresGrad()) p.setGrad(null);
         }
+    }
+
+    @Override
+    public float getLearningRate() {
+        return lr;
+    }
+
+    @Override
+    public void setLearningRate(float lr) {
+        this.lr = lr;
     }
 }

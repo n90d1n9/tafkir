@@ -28,7 +28,9 @@ if (file("sdk/tafkir-sdk-session").isDirectory) {
 //    include("sdk:tafkir-sdk-session")
 }
 
+include("ml:tafkir-ml-core")
 include("ml:tafkir-ml-autograd")
 
 
 includeOptionalProject("training:tafkir-train-strategy", "training/tafkir-train-strategy")
+include("integration:jupyter:tafkir-jupyter-kernel")

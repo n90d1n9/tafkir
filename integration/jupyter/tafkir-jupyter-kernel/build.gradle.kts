@@ -25,11 +25,9 @@ dependencies {
     // snippets can import them; source compilation uses reflection.
     runtimeOnly("tech.kayys.aljabr:aljabr-tensor:0.1.0-SNAPSHOT")
     runtimeOnly(project(":ml:tafkir-ml-autograd"))
-    runtimeOnly(project(":ml:tafkir-ml-nn"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("tech.kayys.aljabr:aljabr-tensor:0.1.0-SNAPSHOT")
     testImplementation("tech.kayys.aljabr:aljabr-core:0.1.0-SNAPSHOT")
-    testImplementation(project(":ml:tafkir-ml-nn"))
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

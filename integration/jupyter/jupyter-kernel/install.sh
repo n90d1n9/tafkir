@@ -15,4 +15,4 @@ echo "  legacy IJava kernelspec flow has been replaced by the standalone Tafkir 
 echo "  delegating to: $PY_INSTALLER"
 echo
 
-python3 "$PY_INSTALLER" "$@"
+python3 "$PY_INSTALLER" --allow-stale-jar "$@"

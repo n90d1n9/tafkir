@@ -20,7 +20,7 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0" apply false
 }
 
-extra["tafkirVersion"] = "0.3.0-SNAPSHOT"
+extra["tafkirVersion"] = "0.1.0-SNAPSHOT"
 extra["quarkusVersion"] = "3.32.2"
 
 allprojects {
@@ -209,6 +209,16 @@ subprojects {
                 // Maven Central will be configured via nexus publish plugin
                 // This is kept for local development
                 mavenLocal()
+                
+                // GitHub Packages
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/bhangun/tafkir")
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
             }
         }
         
