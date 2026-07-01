@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     implementation(project(":ml:tafkir-ml-autograd"))
-    implementation(project(":spi:aljabr-spi-model"))
+    implementation(project(":core:aljabr-spi-model"))
     //implementation(project(":spi:aljabr-spi-multimodal"))
     implementation(project(":core:aljabr-tokenizer-core"))
     implementation("com.fasterxml.jackson.core:jackson-databind")

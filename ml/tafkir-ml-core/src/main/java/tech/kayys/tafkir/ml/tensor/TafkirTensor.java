@@ -143,6 +143,11 @@ public final class TafkirTensor implements Tensor {
     // ── Data Access ──────────────────────────────────────────────────────────
 
     public float[] data() {
+        return toFloatArray();
+    }
+
+    @Override
+    public float[] toFloatArray() {
         long n = delegate.numel();
         if (n > Integer.MAX_VALUE) {
             throw new IllegalStateException("Tensor too large for float[]: " + n + " elements");
@@ -156,9 +161,13 @@ public final class TafkirTensor implements Tensor {
                 result[i] = seg.get(ValueLayout.JAVA_FLOAT, i * 4L);
             }
         } else {
-            // Unoptimized copy
+            // Unoptimized copy if backend doesn't provide toFloatArray natively
+            float[] fallback = delegate.toFloatArray();
+            if (fallback != null) {
+                return fallback;
+            }
             for (int i = 0; i < result.length; i++) {
-                result[i] = 0.0f; // backend.copyToFloatArray doesn't exist
+                result[i] = 0.0f; // placeholder
             }
         }
         return result;

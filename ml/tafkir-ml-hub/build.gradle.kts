@@ -25,7 +25,7 @@ dependencies {
     implementation(project(":core:aljabr-model-repo-hf"))
     implementation(project(":core:aljabr-model-repo-local"))
    // implementation(project(":runner:safetensor:aljabr-safetensor-loader"))
-    implementation(project(":spi:aljabr-spi-model"))
+    implementation(project(":core:aljabr-spi-model"))
     implementation("io.smallrye.reactive:mutiny")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1")

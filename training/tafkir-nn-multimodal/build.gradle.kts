@@ -21,7 +21,7 @@ dependencies {
    // implementation(project(":sdk:aljabr-sdk-api"))
     implementation(project(":ml:tafkir-ml-autograd"))
     implementation(project(":ml:tafkir-ml-nn"))
-    implementation(project(":spi:aljabr-spi-model"))
+    implementation(project(":core:aljabr-spi-model"))
   //  implementation(project(":spi:aljabr-spi-multimodal"))
    // implementation(project(":spi:aljabr-spi-inference"))
     implementation(group = "org.slf4j", name = "slf4j-api", version = "2.0.13")

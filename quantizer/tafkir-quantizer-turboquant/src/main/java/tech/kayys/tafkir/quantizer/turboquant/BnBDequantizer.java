@@ -149,8 +149,8 @@ public class BnBDequantizer {
                     int elem = elemBase + i + lane;
                     int byteIdx = elem / 2;
                     int nibble = (elem % 2 == 0)
-                            ? (packedNibbles[byteIdx] & 0xF)
-                            : ((packedNibbles[byteIdx] >> 4) & 0xF);
+                            ? ((packedNibbles[byteIdx] >> 4) & 0xF)
+                            : (packedNibbles[byteIdx] & 0xF);
                     decoded[lane] = NF4_TABLE[nibble];
                 }
                 FloatVector vd = FloatVector.fromArray(FLOAT_SPECIES, decoded, 0);
@@ -163,8 +163,8 @@ public class BnBDequantizer {
                 int elem = elemBase + i;
                 int byteIdx = elem / 2;
                 int nibble = (elem % 2 == 0)
-                        ? (packedNibbles[byteIdx] & 0xF)
-                        : ((packedNibbles[byteIdx] >> 4) & 0xF);
+                        ? ((packedNibbles[byteIdx] >> 4) & 0xF)
+                        : (packedNibbles[byteIdx] & 0xF);
                 output[elem] = NF4_TABLE[nibble] * scale;
             }
         }
@@ -285,8 +285,8 @@ public class BnBDequantizer {
             int b = i / blockSize;
             int byteIdx = i / 2;
             int nibble = (i % 2 == 0)
-                    ? (packedNibbles[byteIdx] & 0xF)
-                    : ((packedNibbles[byteIdx] >> 4) & 0xF);
+                    ? ((packedNibbles[byteIdx] >> 4) & 0xF)
+                    : (packedNibbles[byteIdx] & 0xF);
             output[i] = FP4_TABLE[nibble] * absmax[b];
         }
     }
@@ -321,9 +321,9 @@ public class BnBDequantizer {
                 int nibble = nearestNF4(normalized);
                 int byteIdx = i / 2;
                 if (i % 2 == 0) {
-                    packedOut[byteIdx] = (byte) (nibble & 0xF);
+                    packedOut[byteIdx] = (byte) ((nibble & 0xF) << 4);
                 } else {
-                    packedOut[byteIdx] |= (byte) ((nibble & 0xF) << 4);
+                    packedOut[byteIdx] |= (byte) (nibble & 0xF);
                 }
             }
         }
