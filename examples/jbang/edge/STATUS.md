@@ -124,7 +124,7 @@ Create a Maven project and copy the example code:
 
 ```bash
 # Create a test project
-mvn archetype:generate -DgroupId=com.example -DartifactId=litert-test
+mvn archetype:generate -DgroupId=tech.kayys -DartifactId=litert-test
 cd litert-test
 
 # Add dependency to pom.xml
