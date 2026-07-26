@@ -269,6 +269,86 @@ public class Conv2d extends NNModule {
     public boolean hasBias() {
         return bias != null;
     }
+    
+    /**
+     * Functional API for 2D convolution.
+     * <p>
+     * This is the stateless functional version that can be used without creating
+     * a Conv2d instance.
+     * 
+     * @param input input tensor [batch, inChannels, height, width]
+     * @param weight weight tensor [outChannels, inChannels/groups, kernelH, kernelW]
+     * @param bias optional bias tensor [outChannels] or null
+     * @param stride vertical and horizontal stride
+     * @param padding vertical and horizontal padding
+     * @param dilation vertical and horizontal dilation
+     * @param groups number of grouped connections
+     * @return convolved tensor [batch, outChannels, outHeight, outWidth]
+     */
+    public static GradTensor functionalConv2d(GradTensor input, GradTensor weight, GradTensor bias,
+                                              int stride, int padding, int dilation, int groups) {
+        long[] s = input.shape();
+        if (s.length != 4) {
+            throw new IllegalArgumentException("Input must be 4D [N, C, H, W], got: " + java.util.Arrays.toString(s));
+        }
+        
+        int N = (int) s[0];
+        int C = (int) s[1];
+        int H = (int) s[2];
+        int W = (int) s[3];
+        
+        long[] ws = weight.shape();
+        int outChannels = (int) ws[0];
+        int inChannelsPerGroup = (int) ws[1];
+        int kernelH = (int) ws[2];
+        int kernelW = (int) ws[3];
+        
+        int outH = (H + 2 * padding - dilation * (kernelH - 1) - 1) / stride + 1;
+        int outW = (W + 2 * padding - dilation * (kernelW - 1) - 1) / stride + 1;
+        
+        float[] inputData = input.data();
+        float[] weightData = weight.data();
+        float[] biasData = (bias != null) ? bias.data() : null;
+        float[] output = new float[N * outChannels * outH * outW];
+        
+        // Perform convolution
+        for (int n = 0; n < N; n++) {
+            for (int oc = 0; oc < outChannels; oc++) {
+                int group = oc / (outChannels / groups);
+                
+                for (int oh = 0; oh < outH; oh++) {
+                    for (int ow = 0; ow < outW; ow++) {
+                        int hStart = oh * stride - padding;
+                        int wStart = ow * stride - padding;
+                        
+                        float sum = (biasData != null) ? biasData[oc] : 0.0f;
+                        
+                        for (int ic = 0; ic < inChannelsPerGroup; ic++) {
+                            int inputChannel = group * inChannelsPerGroup + ic;
+                            
+                            for (int kh = 0; kh < kernelH; kh++) {
+                                for (int kw = 0; kw < kernelW; kw++) {
+                                    int ih = hStart + kh * dilation;
+                                    int iw = wStart + kw * dilation;
+                                    
+                                    if (ih >= 0 && ih < H && iw >= 0 && iw < W) {
+                                        int inputIdx = ((n * C + inputChannel) * H + ih) * W + iw;
+                                        int weightIdx = (((oc * inChannelsPerGroup + ic) * kernelH + kh) * kernelW + kw);
+                                        sum += inputData[inputIdx] * weightData[weightIdx];
+                                    }
+                                }
+                            }
+                        }
+                        
+                        int outputIdx = (((n * outChannels + oc) * outH + oh) * outW + ow);
+                        output[outputIdx] = sum;
+                    }
+                }
+            }
+        }
+        
+        return GradTensor.of(output, N, outChannels, outH, outW);
+    }
 
     @Override
     public String toString() {

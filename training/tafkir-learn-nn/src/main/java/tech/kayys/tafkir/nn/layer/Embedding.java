@@ -158,6 +158,48 @@ public class Embedding extends NNModule {
     public int getEmbeddingDim() {
         return embeddingDim;
     }
+    
+    /**
+     * Functional API for embedding lookup.
+     * <p>
+     * This is the stateless functional version that can be used without creating
+     * an Embedding instance.
+     * 
+     * @param input indices tensor of shape [...] with values in [0, numEmbeddings-1]
+     * @param weight embedding matrix of shape [numEmbeddings, embeddingDim]
+     * @return embedded tensor of shape [..., embeddingDim]
+     */
+    public static GradTensor functionalEmbedding(GradTensor input, GradTensor weight) {
+        long[] inputShape = input.shape();
+        int numEmbeddings = (int) weight.shape()[0];
+        int embeddingDim = (int) weight.shape()[1];
+        
+        // Flatten input to 1D for easier indexing
+        GradTensor flatInput = input.flatten();
+        long[] flatShape = flatInput.shape();
+        int numElements = (int) flatShape[0];
+        
+        // Gather embeddings for each index
+        float[] outputData = new float[numElements * embeddingDim];
+        float[] inputData = flatInput.data();
+        float[] weightData = weight.data();
+        
+        for (int i = 0; i < numElements; i++) {
+            int idx = (int) inputData[i];
+            if (idx < 0 || idx >= numEmbeddings) {
+                throw new IllegalArgumentException(
+                    "Embedding index out of range: " + idx + " (valid range: [0, " + (numEmbeddings - 1) + "])");
+            }
+            System.arraycopy(weightData, idx * embeddingDim, outputData, i * embeddingDim, embeddingDim);
+        }
+        
+        // Reshape to [..., embeddingDim]
+        long[] outputShape = new long[inputShape.length + 1];
+        System.arraycopy(inputShape, 0, outputShape, 0, inputShape.length);
+        outputShape[inputShape.length] = embeddingDim;
+        
+        return GradTensor.of(outputData, outputShape);
+    }
 
     @Override
     public String toString() {
