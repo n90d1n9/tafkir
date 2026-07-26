@@ -55,6 +55,25 @@ public class MaxPool2d extends NNModule {
         NNBackendProvider backend = NNBackendRegistry.getDefault();
         return backend.maxPool2d(input, kernelSize, stride, padding);
     }
+    
+    /**
+     * Functional API for 2D max pooling.
+     * <p>
+     * This is the stateless functional version that can be used without creating
+     * a MaxPool2d instance.
+     * 
+     * @param input input tensor [batch, channels, height, width]
+     * @param kernelSize size of the pooling window
+     * @param stride stride of the pooling operation
+     * @param padding padding to add
+     * @param dilation dilation factor
+     * @return pooled tensor [batch, channels, outHeight, outWidth]
+     */
+    public static GradTensor functionalMaxPool2d(GradTensor input, int kernelSize, int stride, 
+                                                  int padding, int dilation) {
+        NNBackendProvider backend = NNBackendRegistry.getDefault();
+        return backend.maxPool2d(input, kernelSize, stride, padding);
+    }
 
     @Override
     public String toString() {

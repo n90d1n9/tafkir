@@ -55,6 +55,25 @@ public class AvgPool2d extends NNModule {
         NNBackendProvider backend = NNBackendRegistry.getDefault();
         return backend.avgPool2d(input, kernelSize, stride, padding);
     }
+    
+    /**
+     * Functional API for 2D average pooling.
+     * <p>
+     * This is the stateless functional version that can be used without creating
+     * an AvgPool2d instance.
+     * 
+     * @param input input tensor [batch, channels, height, width]
+     * @param kernelSize size of the pooling window
+     * @param stride stride of the pooling operation
+     * @param padding padding to add
+     * @param countIncludePad whether to include padding in averaging
+     * @return pooled tensor [batch, channels, outHeight, outWidth]
+     */
+    public static GradTensor functionalAvgPool2d(GradTensor input, int kernelSize, int stride,
+                                                  int padding, boolean countIncludePad) {
+        NNBackendProvider backend = NNBackendRegistry.getDefault();
+        return backend.avgPool2d(input, kernelSize, stride, padding);
+    }
 
     @Override
     public String toString() {
