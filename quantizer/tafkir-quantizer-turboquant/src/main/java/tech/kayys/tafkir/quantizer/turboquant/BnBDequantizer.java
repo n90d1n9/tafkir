@@ -329,6 +329,50 @@ public class BnBDequantizer {
         }
     }
 
+    /**
+     * Quantizes a chunk of FP32 weights into a pre-allocated global packed/absmax array.
+     * Allows large tensors to be quantized incrementally without allocating the full F32
+     * copy all at once.
+     *
+     * @param chunkWeights  the FP32 weights for this chunk
+     * @param packedOut     the global output packed-nibble array (whole tensor)
+     * @param absmaxOut     the global output absmax array (whole tensor)
+     * @param elemOffset    the element index in the full tensor where this chunk starts
+     */
+    public void quantizeNF4Chunk(float[] chunkWeights, byte[] packedOut, float[] absmaxOut, int elemOffset) {
+        int chunkLen = chunkWeights.length;
+        int numBlocks = (chunkLen + blockSize - 1) / blockSize;
+
+        for (int b = 0; b < numBlocks; b++) {
+            int localBase = b * blockSize;
+            int localEnd = Math.min(localBase + blockSize, chunkLen);
+
+            // Compute global element and block indices
+            int globalBase = elemOffset + localBase;
+            int globalBlockIdx = globalBase / blockSize;
+
+            // Find absmax for this block
+            float amax = 0f;
+            for (int i = localBase; i < localEnd; i++)
+                amax = Math.max(amax, Math.abs(chunkWeights[i]));
+            absmaxOut[globalBlockIdx] = amax;
+            float scale = amax > 0 ? 1.0f / amax : 1.0f;
+
+            // Pack each element into the global output nibble array
+            for (int i = localBase; i < localEnd; i++) {
+                float normalized = chunkWeights[i] * scale;
+                int nibble = nearestNF4(normalized);
+                int globalElem = elemOffset + i;
+                int byteIdx = globalElem / 2;
+                if (globalElem % 2 == 0) {
+                    packedOut[byteIdx] = (byte) ((nibble & 0xF) << 4);
+                } else {
+                    packedOut[byteIdx] |= (byte) (nibble & 0xF);
+                }
+            }
+        }
+    }
+
     /** Finds the nearest NF4 table index for a normalized value ∈ [-1, 1]. */
     private static int nearestNF4(float v) {
         int best = 0;

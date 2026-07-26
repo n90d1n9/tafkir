@@ -143,7 +143,7 @@ public class MyScript {
 ```java
 // Use specific Maven repository
 // REPOS https://repo.maven.apache.org/maven2
-// DEPS com.example:artifact:1.0.0
+// DEPS tech.kayys:artifact:1.0.0
 ```
 
 ### Script Options
@@ -451,7 +451,7 @@ jbang https://github.com/user/repo/blob/main/script.java
 - Publish your application as Maven artifact
 - Reference in jbang scripts:
   ```java
-  // DEPS com.example:my-app:1.0.0
+  // DEPS tech.kayys:my-app:1.0.0
   ```
 
 ## Next Steps
