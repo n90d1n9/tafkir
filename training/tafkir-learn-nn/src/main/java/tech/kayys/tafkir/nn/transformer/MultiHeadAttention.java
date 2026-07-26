@@ -253,6 +253,57 @@ public class MultiHeadAttention extends NNModule {
     private GradTensor applyMask(GradTensor attnWeights, GradTensor mask) {
         return GradTensor.where(mask, attnWeights, GradTensor.full(-1e9f, attnWeights.shape()));
     }
+    
+    /**
+     * Functional API for scaled dot-product attention.
+     * <p>
+     * This is the stateless functional version that can be used without creating
+     * a MultiHeadAttention instance.
+     * 
+     * @param query query tensor [batchSize, seqLenQ, numHeads, headDim]
+     * @param key key tensor [batchSize, seqLenK, numHeads, headDim]
+     * @param value value tensor [batchSize, seqLenV, numHeads, headDim]
+     * @param mask optional attention mask [seqLenQ, seqLenK] or broadcastable
+     * @param dropoutP dropout probability (0.0 = no dropout)
+     * @param isCausal whether to apply causal masking
+     * @param scale scaling factor (if null, uses 1/sqrt(headDim))
+     * @return attention output [batchSize, seqLenQ, numHeads, headDim]
+     */
+    public static GradTensor functionalAttention(
+            GradTensor query, GradTensor key, GradTensor value,
+            GradTensor mask, double dropoutP, boolean isCausal, Double scale) {
+        
+        int batchSize = (int) query.shape()[0];
+        int seqQ = (int) query.shape()[1];
+        int numHeads = (int) query.shape()[2];
+        int headDim = (int) query.shape()[3];
+        
+        // Compute scale if not provided
+        float s = (scale != null) ? scale.floatValue() : (float) (1.0 / Math.sqrt(headDim));
+        
+        // Compute attention scores: Q @ K^T * scale
+        GradTensor scores = query.matmul(key.transpose(2, 3)).mul(s);
+        
+        // Apply causal mask if needed
+        if (isCausal) {
+            GradTensor causalMask = createCausalMask(seqQ, (int) key.shape()[1]);
+            scores = scores.mul(causalMask);
+        }
+        
+        // Apply custom mask if provided
+        if (mask != null) {
+            scores = scores.mul(mask);
+        }
+        
+        // Apply softmax and dropout
+        GradTensor attnWeights = scores.softmax(3);
+        if (dropoutP > 0.0) {
+            attnWeights = attnWeights.dropout((float) dropoutP);
+        }
+        
+        // Attend to values
+        return attnWeights.matmul(value);
+    }
 
     /**
      * Get the embedding dimension.

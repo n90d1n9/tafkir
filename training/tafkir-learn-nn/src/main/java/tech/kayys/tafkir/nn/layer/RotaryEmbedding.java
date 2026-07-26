@@ -156,6 +156,53 @@ public final class RotaryEmbedding extends NNModule {
     public GradTensor forward(GradTensor x) {
         return apply(x);
     }
+    
+    /**
+     * Functional API for applying rotary positional embeddings.
+     * <p>
+     * This is the stateless functional version that can be used without creating
+     * a RotaryEmbedding instance.
+     * 
+     * @param input input tensor of shape [batch, seqLen, numHeads, headDim]
+     * @param cosPre precomputed cosine values of shape [maxSeqLen, headDim/2]
+     * @param sinPre precomputed sine values of shape [maxSeqLen, headDim/2]
+     * @return tensor with rotary embeddings applied, same shape as input
+     */
+    public static GradTensor functionalRotaryEmbed(GradTensor input, GradTensor cosPre, GradTensor sinPre) {
+        long[] s = input.shape();
+        if (s.length != 4) {
+            throw new IllegalArgumentException("Input must be 4D [batch, seq, heads, dim], got: " + java.util.Arrays.toString(s));
+        }
+        
+        int B = (int) s[0];
+        int T = (int) s[1];
+        int H = (int) s[2];
+        int D = (int) s[3];
+        
+        float[] xData = input.data();
+        float[] cosData = cosPre.data();
+        float[] sinData = sinPre.data();
+        int half = D / 2;
+        
+        float[] result = new float[xData.length];
+        
+        // Apply rotary embedding: rotate pairs of dimensions
+        for (int b = 0; b < B; b++)
+            for (int h = 0; h < H; h++)
+                for (int t = 0; t < T; t++) {
+                    int offset = b * H * T * D + h * T * D + t * D;
+                    for (int i = 0; i < half; i++) {
+                        float cos = cosData[t * half + i];
+                        float sin = sinData[t * half + i];
+                        float x0 = xData[offset + 2 * i];
+                        float x1 = xData[offset + 2 * i + 1];
+                        result[offset + 2 * i] = x0 * cos - x1 * sin;
+                        result[offset + 2 * i + 1] = x0 * sin + x1 * cos;
+                    }
+                }
+        
+        return GradTensor.of(result, s);
+    }
 
     @Override
     public String toString() {
