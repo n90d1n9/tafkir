@@ -18,10 +18,12 @@ import java.util.Objects;
  * Tafkir-facing tensor API. Wraps Aljabr's {@link Tensor} with a PyTorch-like
  * convenience layer, including factory methods suitable for JBang scripts.
  *
- * <p>All computation delegates to the underlying Aljabr {@link ComputeBackend},
+ * <p>
+ * All computation delegates to the underlying Aljabr {@link ComputeBackend},
  * which uses Panama FFM off-heap memory and Vector API SIMD on CPU.
  *
- * <p>Implements {@link Tensor} directly so it can be passed to Aljabr's own
+ * <p>
+ * Implements {@link Tensor} directly so it can be passed to Aljabr's own
  * layers and backends without unwrapping.
  */
 public final class TafkirTensor implements Tensor {
@@ -42,11 +44,11 @@ public final class TafkirTensor implements Tensor {
         long expected = s.numel();
         if (data.length != expected) {
             throw new IllegalArgumentException(
-                "Data length " + data.length + " does not match shape " + Arrays.toString(shape) +
-                " (expected " + expected + " elements)");
+                    "Data length " + data.length + " does not match shape " + Arrays.toString(shape) +
+                            " (expected " + expected + " elements)");
         }
 
-        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
+        Buffer buffer = cpu.bufferFactory().allocate(s.numel() * DType.F32.sizeBytes());
         MemorySegment seg = buffer.segment();
         for (int i = 0; i < data.length; i++) {
             seg.set(ValueLayout.JAVA_FLOAT, i * 4L, data[i]);
@@ -58,57 +60,30 @@ public final class TafkirTensor implements Tensor {
 
     public static TafkirTensor zeros(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Shape s = new Shape(shape);
-        long expected = s.numel();
-        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
-        buffer.segment().fill((byte) 0);
-        DefaultTensor tensor = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
-        return new TafkirTensor(tensor, cpu);
+        Tensor t = cpu.zeros(new Shape(shape), DType.F32);
+        return new TafkirTensor(t, cpu);
     }
 
     public static TafkirTensor ones(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Shape s = new Shape(shape);
-        long expected = s.numel();
-        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
-        MemorySegment seg = buffer.segment();
-        for (long i = 0; i < expected; i++) {
-            seg.set(ValueLayout.JAVA_FLOAT, i * 4L, 1.0f);
-        }
-        DefaultTensor tensor = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
-        return new TafkirTensor(tensor, cpu);
+        Tensor t = cpu.full(1.0f, new Shape(shape), DType.F32);
+        return new TafkirTensor(t, cpu);
     }
 
     public static TafkirTensor rand(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Shape s = new Shape(shape);
-        long expected = s.numel();
-        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
-        MemorySegment seg = buffer.segment();
-        java.util.concurrent.ThreadLocalRandom rng = java.util.concurrent.ThreadLocalRandom.current();
-        for (long i = 0; i < expected; i++) {
-            seg.set(ValueLayout.JAVA_FLOAT, i * 4L, rng.nextFloat());
-        }
-        DefaultTensor tensor = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
-        return new TafkirTensor(tensor, cpu);
+        Tensor t = cpu.rand(new Shape(shape), DType.F32);
+        return new TafkirTensor(t, cpu);
     }
 
     public static TafkirTensor randn(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Shape s = new Shape(shape);
-        long expected = s.numel();
-        Buffer buffer = new tech.kayys.aljabr.core.memory.CpuBuffer(DType.F32.memoryFootprintBytes(expected));
-        MemorySegment seg = buffer.segment();
-        java.util.concurrent.ThreadLocalRandom rng = java.util.concurrent.ThreadLocalRandom.current();
-        for (long i = 0; i < expected; i++) {
-            seg.set(ValueLayout.JAVA_FLOAT, i * 4L, (float) rng.nextGaussian());
-        }
-        DefaultTensor tensor = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
-        return new TafkirTensor(tensor, cpu);
+        Tensor t = cpu.randn(new Shape(shape), DType.F32);
+        return new TafkirTensor(t, cpu);
     }
 
     public static TafkirTensor scalar(float value) {
-        return of(new float[]{value});
+        return of(new float[] { value });
     }
 
     public static TafkirTensor fromAljabr(Tensor tensor) {
@@ -118,24 +93,34 @@ public final class TafkirTensor implements Tensor {
     // ── Shape & Properties ───────────────────────────────────────────────────
 
     @Override
-    public Shape shape() { return delegate.shape(); }
+    public Shape shape() {
+        return delegate.shape();
+    }
 
-    public long[] shapeArray() { return delegate.shape().dims(); }
-
-    @Override
-    public DType dtype() { return delegate.dtype(); }
-
-    @Override
-    public DeviceType device() { return delegate.device(); }
+    public long[] shapeArray() {
+        return delegate.shape().dims();
+    }
 
     @Override
-    public long numel() { return delegate.numel(); }
+    public DType dtype() {
+        return delegate.dtype();
+    }
+
+    @Override
+    public DeviceType device() {
+        return delegate.device();
+    }
+
+    @Override
+    public long numel() {
+        return delegate.numel();
+    }
 
     @Override
     public float item() {
         if (delegate.numel() != 1) {
             throw new IllegalStateException(
-                "Cannot call item() on tensor with " + delegate.numel() + " elements.");
+                    "Cannot call item() on tensor with " + delegate.numel() + " elements.");
         }
         return delegate.item();
     }
@@ -143,11 +128,6 @@ public final class TafkirTensor implements Tensor {
     // ── Data Access ──────────────────────────────────────────────────────────
 
     public float[] data() {
-        return toFloatArray();
-    }
-
-    @Override
-    public float[] toFloatArray() {
         long n = delegate.numel();
         if (n > Integer.MAX_VALUE) {
             throw new IllegalStateException("Tensor too large for float[]: " + n + " elements");
@@ -259,7 +239,9 @@ public final class TafkirTensor implements Tensor {
     // ── Gradients ────────────────────────────────────────────────────────────
 
     @Override
-    public boolean requiresGrad() { return delegate.requiresGrad(); }
+    public boolean requiresGrad() {
+        return delegate.requiresGrad();
+    }
 
     public TafkirTensor requiresGrad(boolean requiresGrad) {
         delegate.setRequiresGrad(requiresGrad);
@@ -267,7 +249,9 @@ public final class TafkirTensor implements Tensor {
     }
 
     @Override
-    public Tensor grad() { return delegate.grad(); }
+    public Tensor grad() {
+        return delegate.grad();
+    }
 
     public TafkirTensor gradTensor() {
         Tensor g = delegate.grad();
@@ -275,161 +259,314 @@ public final class TafkirTensor implements Tensor {
     }
 
     @Override
-    public void setGrad(Tensor grad) { delegate.setGrad(grad); }
+    public void setGrad(Tensor grad) {
+        delegate.setGrad(grad);
+    }
 
     @Override
-    public void setRequiresGrad(boolean requiresGrad) { delegate.setRequiresGrad(requiresGrad); }
+    public void setRequiresGrad(boolean requiresGrad) {
+        delegate.setRequiresGrad(requiresGrad);
+    }
 
     @Override
-    public void backward() { delegate.backward(); }
+    public void backward() {
+        delegate.backward();
+    }
 
     // ── Tensor Operations ────────────────────────────────────────────────────
 
     @Override
-    public Tensor add(Tensor t) { return wrap(delegate.add(t)); }
-    public TafkirTensor add(TafkirTensor t) { return wrap(delegate.add(t.delegate)); }
+    public Tensor add(Tensor t) {
+        return wrap(delegate.add(t));
+    }
+
+    public TafkirTensor add(TafkirTensor t) {
+        return wrap(delegate.add(t.delegate));
+    }
 
     @Override
-    public Tensor sub(Tensor t) { return wrap(delegate.sub(t)); }
-    public TafkirTensor sub(TafkirTensor t) { return wrap(delegate.sub(t.delegate)); }
+    public Tensor sub(Tensor t) {
+        return wrap(delegate.sub(t));
+    }
+
+    public TafkirTensor sub(TafkirTensor t) {
+        return wrap(delegate.sub(t.delegate));
+    }
 
     @Override
-    public Tensor mul(Tensor t) { return wrap(delegate.mul(t)); }
-    public TafkirTensor mul(TafkirTensor t) { return wrap(delegate.mul(t.delegate)); }
+    public Tensor mul(Tensor t) {
+        return wrap(delegate.mul(t));
+    }
+
+    public TafkirTensor mul(TafkirTensor t) {
+        return wrap(delegate.mul(t.delegate));
+    }
 
     @Override
-    public Tensor div(Tensor t) { return wrap(delegate.div(t)); }
+    public Tensor div(Tensor t) {
+        return wrap(delegate.div(t));
+    }
 
     @Override
-    public Tensor add(float scalar) { return wrap(delegate.add(scalar)); }
-    @Override
-    public Tensor mul(float scalar) { return wrap(delegate.mul(scalar)); }
-    @Override
-    public Tensor div(float scalar) { return wrap(delegate.div(scalar)); }
+    public Tensor add(float scalar) {
+        return wrap(delegate.add(scalar));
+    }
 
     @Override
-    public Tensor matmul(Tensor t) { return wrap(delegate.matmul(t)); }
-    public TafkirTensor matmul(TafkirTensor t) { return wrap(delegate.matmul(t.delegate)); }
+    public Tensor mul(float scalar) {
+        return wrap(delegate.mul(scalar));
+    }
 
     @Override
-    public Tensor reshape(long... newShape) { return wrap(delegate.reshape(newShape)); }
+    public Tensor div(float scalar) {
+        return wrap(delegate.div(scalar));
+    }
+
     @Override
-    public Tensor transpose() { return wrap(delegate.transpose()); }
+    public Tensor matmul(Tensor t) {
+        return wrap(delegate.matmul(t));
+    }
+
+    public TafkirTensor matmul(TafkirTensor t) {
+        return wrap(delegate.matmul(t.delegate));
+    }
+
     @Override
-    public Tensor transpose(int dim0, int dim1) { return wrap(delegate.transpose(dim0, dim1)); }
+    public Tensor reshape(long... newShape) {
+        return wrap(delegate.reshape(newShape));
+    }
+
     @Override
-    public Tensor relu() { return wrap(delegate.relu()); }
+    public Tensor transpose() {
+        return wrap(delegate.transpose());
+    }
+
     @Override
-    public Tensor gelu() { return wrap(delegate.gelu()); }
+    public Tensor transpose(int dim0, int dim1) {
+        return wrap(delegate.transpose(dim0, dim1));
+    }
+
     @Override
-    public Tensor sigmoid() { return wrap(delegate.sigmoid()); }
+    public Tensor relu() {
+        return wrap(delegate.relu());
+    }
+
     @Override
-    public Tensor tanh() { return wrap(delegate.tanh()); }
+    public Tensor gelu() {
+        return wrap(delegate.gelu());
+    }
+
     @Override
-    public Tensor silu() { return wrap(delegate.silu()); }
+    public Tensor sigmoid() {
+        return wrap(delegate.sigmoid());
+    }
+
     @Override
-    public Tensor softmax() { return wrap(delegate.softmax()); }
+    public Tensor tanh() {
+        return wrap(delegate.tanh());
+    }
+
     @Override
-    public Tensor softmax(int dim) { return wrap(delegate.softmax(dim)); }
+    public Tensor silu() {
+        return wrap(delegate.silu());
+    }
+
     @Override
-    public Tensor logSoftmax(int dim) { return wrap(delegate.logSoftmax(dim)); }
+    public Tensor softmax() {
+        return wrap(delegate.softmax());
+    }
+
     @Override
-    public Tensor mean() { return wrap(delegate.mean()); }
+    public Tensor softmax(int dim) {
+        return wrap(delegate.softmax(dim));
+    }
+
     @Override
-    public Tensor mean(int dim, boolean keepDim) { return wrap(delegate.mean(dim, keepDim)); }
+    public Tensor logSoftmax(int dim) {
+        return wrap(delegate.logSoftmax(dim));
+    }
+
     @Override
-    public Tensor sum() { return wrap(delegate.sum()); }
+    public Tensor mean() {
+        return wrap(delegate.mean());
+    }
+
     @Override
-    public Tensor sum(int dim, boolean keepDim) { return wrap(delegate.sum(dim, keepDim)); }
+    public Tensor mean(int dim, boolean keepDim) {
+        return wrap(delegate.mean(dim, keepDim));
+    }
+
     @Override
-    public Tensor pow(float exponent) { return wrap(delegate.pow(exponent)); }
+    public Tensor sum() {
+        return wrap(delegate.sum());
+    }
+
     @Override
-    public Tensor sqrt() { return wrap(delegate.sqrt()); }
+    public Tensor sum(int dim, boolean keepDim) {
+        return wrap(delegate.sum(dim, keepDim));
+    }
+
     @Override
-    public Tensor abs() { return wrap(delegate.abs()); }
+    public Tensor pow(float exponent) {
+        return wrap(delegate.pow(exponent));
+    }
+
     @Override
-    public Tensor exp() { return wrap(delegate.exp()); }
+    public Tensor sqrt() {
+        return wrap(delegate.sqrt());
+    }
+
     @Override
-    public Tensor log() { return wrap(delegate.log()); }
+    public Tensor abs() {
+        return wrap(delegate.abs());
+    }
+
     @Override
-    public Tensor flatten() { return wrap(delegate.flatten()); }
+    public Tensor exp() {
+        return wrap(delegate.exp());
+    }
+
     @Override
-    public Tensor unsqueeze(int dim) { return wrap(delegate.unsqueeze(dim)); }
+    public Tensor log() {
+        return wrap(delegate.log());
+    }
+
     @Override
-    public Tensor squeeze() { return wrap(delegate.squeeze()); }
+    public Tensor flatten() {
+        return wrap(delegate.flatten());
+    }
+
     @Override
-    public Tensor crossEntropy(Tensor target) { return wrap(delegate.crossEntropy(target)); }
+    public Tensor unsqueeze(int dim) {
+        return wrap(delegate.unsqueeze(dim));
+    }
+
     @Override
-    public Tensor binaryCrossEntropy(Tensor target) { return wrap(delegate.binaryCrossEntropy(target)); }
+    public Tensor squeeze() {
+        return wrap(delegate.squeeze());
+    }
+
     @Override
-    public Tensor dropout(float p, boolean training) { return wrap(delegate.dropout(p, training)); }
+    public Tensor crossEntropy(Tensor target) {
+        return wrap(delegate.crossEntropy(target));
+    }
+
+    @Override
+    public Tensor binaryCrossEntropy(Tensor target) {
+        return wrap(delegate.binaryCrossEntropy(target));
+    }
+
+    @Override
+    public Tensor dropout(float p, boolean training) {
+        return wrap(delegate.dropout(p, training));
+    }
+
     @Override
     public Tensor layerNorm(long[] normalizedShape, Tensor weight, Tensor bias, float eps) {
         return wrap(delegate.layerNorm(normalizedShape, weight, bias, eps));
     }
+
     @Override
-    public Tensor rmsNorm(Tensor weight, float eps) { return wrap(delegate.rmsNorm(weight, eps)); }
+    public Tensor rmsNorm(Tensor weight, float eps) {
+        return wrap(delegate.rmsNorm(weight, eps));
+    }
+
     @Override
-    public Tensor batchNorm(Tensor weight, Tensor bias, Tensor runningMean, Tensor runningVar, boolean training, float momentum, float eps) {
+    public Tensor batchNorm(Tensor weight, Tensor bias, Tensor runningMean, Tensor runningVar, boolean training,
+            float momentum, float eps) {
         return wrap(delegate.batchNorm(weight, bias, runningMean, runningVar, training, momentum, eps));
     }
+
     @Override
     public Tensor conv2d(Tensor weight, Tensor bias, int stride, int padding, int dilation, int groups) {
         return wrap(delegate.conv2d(weight, bias, stride, padding, dilation, groups));
     }
+
     @Override
     public Tensor maxPool2d(int kernelSize, int stride, int padding) {
         return wrap(delegate.maxPool2d(kernelSize, stride, padding));
     }
+
     @Override
     public Tensor adaptiveAvgPool2d(int outputH, int outputW) {
         return wrap(delegate.adaptiveAvgPool2d(outputH, outputW));
     }
+
     @Override
-    public Tensor attention(Tensor K, Tensor V) { return wrap(delegate.attention(K, V)); }
+    public Tensor attention(Tensor K, Tensor V) {
+        return wrap(delegate.attention(K, V));
+    }
+
     @Override
     public Tensor embedding(Tensor weight, long paddingIdx) {
         return wrap(delegate.embedding(weight, paddingIdx));
     }
+
     @Override
-    public Tensor slice(long[] offsets, long[] sizes) { return wrap(delegate.slice(offsets, sizes)); }
+    public Tensor slice(long[] offsets, long[] sizes) {
+        return wrap(delegate.slice(offsets, sizes));
+    }
+
     @Override
-    public java.util.List<Tensor> split(int axis, int parts) { return delegate.split(axis, parts); }
+    public java.util.List<Tensor> split(int axis, int parts) {
+        return delegate.split(axis, parts);
+    }
+
     @Override
-    public Tensor cast(DType dtype) { return wrap(delegate.cast(dtype)); }
+    public Tensor cast(DType dtype) {
+        return wrap(delegate.cast(dtype));
+    }
+
     @Override
-    public Tensor to(DeviceType device) { return wrap(delegate.to(device)); }
+    public Tensor to(DeviceType device) {
+        return wrap(delegate.to(device));
+    }
+
     @Override
-    public Tensor zerosLike() { return wrap(delegate.zerosLike()); }
+    public Tensor zerosLike() {
+        return wrap(delegate.zerosLike());
+    }
+
     @Override
-    public Tensor eval() { return wrap(delegate.eval()); }
+    public Tensor eval() {
+        return wrap(delegate.eval());
+    }
 
     // ── Backend & Internal ─────────────────────────────────────────────────
 
     @Override
-    public ComputeBackend backend() { return delegate.backend(); }
+    public ComputeBackend backend() {
+        return delegate.backend();
+    }
 
-    public Tensor unwrap() { return delegate; }
+    public Tensor unwrap() {
+        return delegate;
+    }
 
     private TafkirTensor wrap(Tensor t) {
-        if (t == delegate) return this;
+        if (t == delegate)
+            return this;
         return new TafkirTensor(t, backend);
     }
 
     @Override
     public String toString() {
         return "TafkirTensor{shape=" + Arrays.toString(shapeArray()) +
-               ", dtype=" + dtype() + ", device=" + device() +
-               ", requiresGrad=" + requiresGrad() + ", numel=" + numel() + "}";
+                ", dtype=" + dtype() + ", device=" + device() +
+                ", requiresGrad=" + requiresGrad() + ", numel=" + numel() + "}";
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TafkirTensor other)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof TafkirTensor other))
+            return false;
         return delegate.equals(other.delegate);
     }
 
     @Override
-    public int hashCode() { return delegate.hashCode(); }
+    public int hashCode() {
+        return delegate.hashCode();
+    }
 }
