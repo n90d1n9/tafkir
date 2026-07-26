@@ -7,10 +7,12 @@ import java.util.List;
 /**
  * Base interface for all Tafkir optimizers.
  *
- * <p>Implementations must update parameters in-place via
+ * <p>
+ * Implementations must update parameters in-place via
  * {@link TafkirTensor}'s in-place operations (e.g. {@code sub_}, {@code mul_}).
  *
  * <h3>Example</h3>
+ * 
  * <pre>{@code
  * TafkirOptimizer opt = new TafkirAdam(params, 1e-3f);
  * // training loop
