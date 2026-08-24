@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.ModalityType;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 import tech.kayys.tafkir.train.data.Dataset;
 
 import java.util.ArrayList;
@@ -122,7 +122,8 @@ public final class MultimodalDatasetValidator {
         }
 
         if (duplicateSourcePathPolicy != IssuePolicy.IGNORE && report.hasDuplicateSourcePaths()) {
-            Map<String, List<Integer>> duplicateSamples = duplicateSourcePathSamples(samples, report.duplicateSourcePaths());
+            Map<String, List<Integer>> duplicateSamples = duplicateSourcePathSamples(samples,
+                    report.duplicateSourcePaths());
             issues.add(policyIssue(
                     duplicateSourcePathPolicy,
                     CODE_DUPLICATE_SOURCE_PATH,

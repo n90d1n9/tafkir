@@ -20,8 +20,8 @@ public record DiscreteTokenDatasetFingerprint(
         int exampleCount) {
 
     public static final String ALGORITHM = "SHA-256";
-    public static final String DATASET_VERSION = "aljabr.discrete-token-dataset.v1";
-    public static final String PLAN_VERSION = "aljabr.discrete-token-dataset-plan.v1";
+    public static final String DATASET_VERSION = "alkhawarizm.discrete-token-dataset.v1";
+    public static final String PLAN_VERSION = "alkhawarizm.discrete-token-dataset-plan.v1";
     public static final String METADATA_KEY = "fingerprint";
     public static final int DEFAULT_SHORT_LENGTH = 12;
 
@@ -39,7 +39,8 @@ public record DiscreteTokenDatasetFingerprint(
         updateString(digest, DATASET_VERSION);
         updateInt(digest, examples.size());
         for (int index = 0; index < examples.size(); index++) {
-            updateExample(digest, Objects.requireNonNull(examples.get(index), "examples[" + index + "] must not be null"));
+            updateExample(digest,
+                    Objects.requireNonNull(examples.get(index), "examples[" + index + "] must not be null"));
         }
         return new DiscreteTokenDatasetFingerprint(ALGORITHM, hex(digest.digest()), examples.size());
     }
@@ -212,7 +213,8 @@ public record DiscreteTokenDatasetFingerprint(
             }
             return;
         }
-        if (value instanceof Number || value instanceof Boolean || value instanceof CharSequence || value instanceof Enum<?>) {
+        if (value instanceof Number || value instanceof Boolean || value instanceof CharSequence
+                || value instanceof Enum<?>) {
             updateString(digest, value.getClass().getName());
             updateString(digest, String.valueOf(value));
             return;

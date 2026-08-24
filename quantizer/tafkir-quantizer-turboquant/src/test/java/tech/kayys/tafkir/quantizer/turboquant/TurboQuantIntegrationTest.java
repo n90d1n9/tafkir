@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import tech.kayys.aljabr.spi.tensor.weights.Dequantizer;
+import tech.kayys.alkhawarizm.spi.tensor.weights.Dequantizer;
 
 /**
  * Comprehensive tests for TurboQuant multi-format quantizer.
@@ -41,7 +41,7 @@ class TurboQuantIntegrationTest {
     @DisplayName("Test TurboQuantConfig MSE preset")
     void testTurboQuantConfigMsePreset() {
         TurboQuantConfig config = TurboQuantConfig.mse4bit(4096);
-        
+
         assertEquals(4, config.bits());
         assertEquals(4096, config.dimension());
         assertEquals(TurboQuantConfig.Variant.MSE, config.variant());
@@ -59,7 +59,7 @@ class TurboQuantIntegrationTest {
     @DisplayName("Test TurboQuantConfig Prod preset")
     void testTurboQuantConfigProdPreset() {
         TurboQuantConfig config = TurboQuantConfig.prod4bit(4096);
-        
+
         assertEquals(4, config.bits());
         assertEquals(TurboQuantConfig.Variant.INNER_PRODUCT, config.variant());
         assertEquals(3, config.mseStageBits()); // b-1 for prod
@@ -75,7 +75,7 @@ class TurboQuantIntegrationTest {
         assertEquals(2, config2bit.bits());
         assertTrue(config2bit.splitOutliers());
         assertEquals(32, config2bit.outlierChannels());
-        
+
         TurboQuantConfig config3bit = TurboQuantConfig.prod3bitKvCache(128);
         assertEquals(3, config3bit.bits());
         assertTrue(config3bit.splitOutliers());
@@ -86,21 +86,21 @@ class TurboQuantIntegrationTest {
     @DisplayName("Test TurboQuantConfig derived properties")
     void testTurboQuantConfigDerivedProperties() {
         TurboQuantConfig config = TurboQuantConfig.mse4bit(4096);
-        
+
         assertEquals(16, config.numLevels());
         assertEquals(4, config.mseStageBits());
-        
+
         // MSE bound: (√(3π)/2) · 4^(-b)
         double mseBound = config.mseBound();
         assertTrue(mseBound > 0);
         assertTrue(mseBound < 1);
-        
+
         // Empirical MSE for b=4 should be ~0.009
         assertEquals(0.009, config.empiricalMse(), 0.001);
-        
+
         // Optimality gap should be ≤ √(3π)/2 ≈ 2.72
         assertEquals(Math.sqrt(3 * Math.PI) / 2.0, config.optimalityGap(), 0.001);
-        
+
         // Lower bound: 4^(-b)
         double lowerBound = config.lowerBound();
         assertTrue(lowerBound > 0);
@@ -112,7 +112,7 @@ class TurboQuantIntegrationTest {
     @DisplayName("Test TurboQuantConfig effective bits with outlier split")
     void testTurboQuantConfigEffectiveBits() {
         TurboQuantConfig config = TurboQuantConfig.prod2bitKvCache(128);
-        
+
         // 32 outlier channels at 3 bits + 96 normal at 2 bits
         // Effective = (32*3 + 96*2) / 128 = 2.25 bits
         double effectiveBits = config.effectiveBitsPerChannel(128);
@@ -126,7 +126,7 @@ class TurboQuantIntegrationTest {
     @DisplayName("Test service initialization")
     void testServiceInitialization() {
         assertTrue(service.isInitialized());
-        
+
         TurboQuantService anotherService = new TurboQuantService();
         assertTrue(anotherService.isInitialized());
         anotherService.close();
@@ -160,7 +160,7 @@ class TurboQuantIntegrationTest {
     void testTurboQuantEngineCreation() {
         TurboQuantConfig config = TurboQuantConfig.mse4bit(128);
         TurboQuantEngine engine = service.createEngine(config);
-        
+
         assertNotNull(engine);
     }
 
@@ -253,22 +253,22 @@ class TurboQuantIntegrationTest {
         Object bnbDequantizer = service.createDequantizer(QuantizerRegistry.QuantFormat.BNB_NF4);
         assertNotNull(bnbDequantizer);
         assertInstanceOf(BnBDequantizer.class, bnbDequantizer);
-        
+
         // HQQ
         Object hqqDequantizer = service.createDequantizer(QuantizerRegistry.QuantFormat.HQQ);
         assertNotNull(hqqDequantizer);
         assertInstanceOf(HQQDequantizer.class, hqqDequantizer);
-        
+
         // SqueezeLLM
         Object squeezeDequantizer = service.createDequantizer(QuantizerRegistry.QuantFormat.SQUEEZELLM);
         assertNotNull(squeezeDequantizer);
         assertInstanceOf(SqueezeLLMDequantizer.class, squeezeDequantizer);
-        
+
         // GGUF
         Object ggufDequantizer = service.createDequantizer(QuantizerRegistry.QuantFormat.GGUF);
         assertNotNull(ggufDequantizer);
         assertInstanceOf(Dequantizer.class, ggufDequantizer);
-        
+
         // GPTQ/AWQ return null (use their own modules)
         assertNull(service.createDequantizer(QuantizerRegistry.QuantFormat.GPTQ));
         assertNull(service.createDequantizer(QuantizerRegistry.QuantFormat.AWQ));
@@ -315,10 +315,10 @@ class TurboQuantIntegrationTest {
     @DisplayName("Test QuantizerRegistry supported formats")
     void testQuantizerRegistryFormats() {
         QuantizerRegistry.QuantFormat[] formats = QuantizerRegistry.QuantFormat.values();
-        
+
         // Should have 9 formats (including UNKNOWN)
         assertEquals(9, formats.length);
-        
+
         // Check specific formats exist
         assertTrue(java.util.Arrays.asList(formats).contains(QuantizerRegistry.QuantFormat.GPTQ));
         assertTrue(java.util.Arrays.asList(formats).contains(QuantizerRegistry.QuantFormat.AWQ));
@@ -335,9 +335,8 @@ class TurboQuantIntegrationTest {
         QuantizerRegistry.Detection detection = new QuantizerRegistry.Detection(
                 QuantizerRegistry.QuantFormat.GPTQ,
                 QuantizerRegistry.Detection.Confidence.HIGH,
-                "test evidence"
-        );
-        
+                "test evidence");
+
         assertEquals(QuantizerRegistry.QuantFormat.GPTQ, detection.format());
         assertEquals(QuantizerRegistry.Detection.Confidence.HIGH, detection.confidence());
         assertEquals("test evidence", detection.evidence());
@@ -362,13 +361,11 @@ class TurboQuantIntegrationTest {
         QuantizerRegistry.Detection detection = new QuantizerRegistry.Detection(
                 QuantizerRegistry.QuantFormat.GPTQ,
                 QuantizerRegistry.Detection.Confidence.HIGH,
-                "test"
-        );
-        
+                "test");
+
         TurboQuantService.ModelInspectionResult result = new TurboQuantService.ModelInspectionResult(
-                detection, tempDir, 4_000_000_000L
-        );
-        
+                detection, tempDir, 4_000_000_000L);
+
         String str = result.toString();
         assertNotNull(str);
         assertTrue(str.contains("ModelInspectionResult"));
@@ -386,7 +383,8 @@ class TurboQuantIntegrationTest {
         }
         // Normalize to unit sphere
         float norm = 0;
-        for (float v : vector) norm += v * v;
+        for (float v : vector)
+            norm += v * v;
         norm = (float) Math.sqrt(norm);
         for (int i = 0; i < dimension; i++) {
             vector[i] /= norm;

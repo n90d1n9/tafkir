@@ -219,13 +219,12 @@ public record DiscreteTokenDatasetTrainerProvenanceSpec(
         private long seed;
         private long checkpointStep;
         private long createdAtEpochMillis = System.currentTimeMillis();
-        private String createdBy = "aljabr";
+        private String createdBy = "alkhawarizm";
         private Map<String, Object> attributes = Map.of();
         private DiscreteTokenDatasetCheckpointLineage lineage;
-        private DiscreteTokenDatasetCheckpointResumeExpectation resumeExpectation =
-                DiscreteTokenDatasetCheckpointResumeExpectation.none();
-        private DiscreteTokenDatasetCheckpointResumeCompatibilityMode resumeCompatibilityMode =
-                DiscreteTokenDatasetCheckpointResumeCompatibilityMode.STRICT;
+        private DiscreteTokenDatasetCheckpointResumeExpectation resumeExpectation = DiscreteTokenDatasetCheckpointResumeExpectation
+                .none();
+        private DiscreteTokenDatasetCheckpointResumeCompatibilityMode resumeCompatibilityMode = DiscreteTokenDatasetCheckpointResumeCompatibilityMode.STRICT;
         private boolean exactResumeExpectation;
         private boolean failOnResumeRejection = true;
         private boolean writeManifestOnStart = true;
@@ -399,15 +398,13 @@ public record DiscreteTokenDatasetTrainerProvenanceSpec(
                             : lineage)
                     .attributes(attributes)
                     .build();
-            DiscreteTokenDatasetCheckpointResumeExpectation expectation =
-                    exactResumeExpectation
-                            ? DiscreteTokenDatasetCheckpointResumeExpectation.exactFromManifest(manifest)
-                            : resumeExpectation;
-            DiscreteTokenDatasetCheckpointResumePolicy resumePolicy =
-                    new DiscreteTokenDatasetCheckpointResumePolicy(
-                            resumeGate == null ? gate : resumeGate,
-                            expectation,
-                            resumeCompatibilityMode);
+            DiscreteTokenDatasetCheckpointResumeExpectation expectation = exactResumeExpectation
+                    ? DiscreteTokenDatasetCheckpointResumeExpectation.exactFromManifest(manifest)
+                    : resumeExpectation;
+            DiscreteTokenDatasetCheckpointResumePolicy resumePolicy = new DiscreteTokenDatasetCheckpointResumePolicy(
+                    resumeGate == null ? gate : resumeGate,
+                    expectation,
+                    resumeCompatibilityMode);
             return new DiscreteTokenDatasetTrainerProvenanceSpec(
                     checkpointDir,
                     plan,

@@ -4,7 +4,7 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.lang.foreign.Arena;
 import java.util.List;
-import tech.kayys.aljabr.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
 
 /**
  * A compiled fused computation graph that can be executed as a single kernel.

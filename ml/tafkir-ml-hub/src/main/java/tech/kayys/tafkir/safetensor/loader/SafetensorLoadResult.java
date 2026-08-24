@@ -1,4 +1,4 @@
-package tech.kayys.aljabr.safetensor.loader;
+package tech.kayys.alkhawarizm.safetensor.loader;
 
 import java.lang.foreign.MemorySegment;
 import java.util.Set;
@@ -21,4 +21,3 @@ public interface SafetensorLoadResult extends AutoCloseable {
     @Override
     void close();
 }
-

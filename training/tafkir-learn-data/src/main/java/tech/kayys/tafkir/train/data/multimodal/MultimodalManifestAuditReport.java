@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 import tech.kayys.tafkir.train.data.Dataset;
 
 import java.util.ArrayList;
@@ -9,7 +9,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Non-throwing compatibility report for replaying a persisted multimodal split manifest.
+ * Non-throwing compatibility report for replaying a persisted multimodal split
+ * manifest.
  */
 public record MultimodalManifestAuditReport(
         int expectedSampleCount,
@@ -37,8 +38,8 @@ public record MultimodalManifestAuditReport(
         List<SampleMismatch> mismatches = new ArrayList<>();
         for (int index = 0; index < checkedSamples; index++) {
             MultimodalSplitManifest.SampleFingerprint expected = expectedSamples.get(index);
-            MultimodalSplitManifest.SampleFingerprint actual =
-                    MultimodalSplitManifest.fingerprint(index, dataset.get(index));
+            MultimodalSplitManifest.SampleFingerprint actual = MultimodalSplitManifest.fingerprint(index,
+                    dataset.get(index));
             if (!expected.equals(actual)) {
                 mismatches.add(SampleMismatch.from(expected, actual));
             }

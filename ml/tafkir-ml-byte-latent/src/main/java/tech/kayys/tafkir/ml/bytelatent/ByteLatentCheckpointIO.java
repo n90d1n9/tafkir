@@ -142,7 +142,7 @@ final class ByteLatentCheckpointIO {
             List<ByteLatentHistoryRow> historyRows,
             Path checkpointDir) {
         Map<String, Object> payload = new LinkedHashMap<>();
-        payload.put("schema", "aljabr.byte-latent.report.v1");
+        payload.put("schema", "alkhawarizm.byte-latent.report.v1");
         payload.put("summary", summaryMap(summary));
         payload.put("history", historyRows.stream().map(ByteLatentCheckpointIO::historyMap).toList());
         payload.put("historyCount", historyRows.size());

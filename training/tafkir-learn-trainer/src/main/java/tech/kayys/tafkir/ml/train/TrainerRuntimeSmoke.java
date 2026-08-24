@@ -78,7 +78,7 @@ public final class TrainerRuntimeSmoke {
                 (resolvedResult.firstRun().durationMs() + resolvedResult.resumedRun().durationMs()) / 1000.0);
         StringBuilder xml = new StringBuilder();
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-        xml.append("<testsuite name=\"aljabr.trainer.runtime.smoke\" tests=\"")
+        xml.append("<testsuite name=\"alkhawarizm.trainer.runtime.smoke\" tests=\"")
                 .append(resolvedResult.checks().size())
                 .append("\" failures=\"")
                 .append(failures)
@@ -97,7 +97,7 @@ public final class TrainerRuntimeSmoke {
                 .append("\"/>\n");
         xml.append("  </properties>\n");
         for (Check check : resolvedResult.checks()) {
-            xml.append("  <testcase classname=\"aljabr.trainer.runtime.smoke\" name=\"")
+            xml.append("  <testcase classname=\"alkhawarizm.trainer.runtime.smoke\" name=\"")
                     .append(xml(check.name()))
                     .append("\" time=\"0.000\"");
             if (check.passed()) {
@@ -126,10 +126,14 @@ public final class TrainerRuntimeSmoke {
         markdown.append("- Checkpoint dir: `").append(resolvedResult.checkpointDir()).append("`\n");
         markdown.append("- First run epochs: ").append(resolvedResult.firstRun().epochCount()).append('\n');
         markdown.append("- Resumed run epochs: ").append(resolvedResult.resumedRun().epochCount()).append('\n');
-        markdown.append("- Requested device: ").append(markdownCell(value(resumedMetadata, "requestedDevice"))).append('\n');
-        markdown.append("- Execution backend: ").append(markdownCell(value(resumedMetadata, "executionBackend"))).append('\n');
-        markdown.append("- Execution accelerated: ").append(markdownCell(value(resumedMetadata, "executionAccelerated"))).append('\n');
-        markdown.append("- Execution fallback: ").append(markdownCell(value(resumedMetadata, "executionFallback"))).append("\n\n");
+        markdown.append("- Requested device: ").append(markdownCell(value(resumedMetadata, "requestedDevice")))
+                .append('\n');
+        markdown.append("- Execution backend: ").append(markdownCell(value(resumedMetadata, "executionBackend")))
+                .append('\n');
+        markdown.append("- Execution accelerated: ")
+                .append(markdownCell(value(resumedMetadata, "executionAccelerated"))).append('\n');
+        markdown.append("- Execution fallback: ").append(markdownCell(value(resumedMetadata, "executionFallback")))
+                .append("\n\n");
 
         markdown.append("## Checks\n\n");
         markdown.append("| Check | Status | Detail |\n");
@@ -420,7 +424,7 @@ public final class TrainerRuntimeSmoke {
 
     private static Path resolvedCheckpointDir(Path checkpointDir) throws IOException {
         Path resolved = checkpointDir == null
-                ? Files.createTempDirectory("aljabr-trainer-runtime-smoke")
+                ? Files.createTempDirectory("alkhawarizm-trainer-runtime-smoke")
                 : checkpointDir.toAbsolutePath().normalize();
         Files.createDirectories(resolved);
         return resolved;
@@ -428,12 +432,12 @@ public final class TrainerRuntimeSmoke {
 
     private static List<Batch> regressionTrainBatches() {
         return List.of(
-                batch(new float[] {1f, 2f}, new float[] {2f, 4f}, 2),
-                batch(new float[] {3f, 4f}, new float[] {6f, 8f}, 2));
+                batch(new float[] { 1f, 2f }, new float[] { 2f, 4f }, 2),
+                batch(new float[] { 3f, 4f }, new float[] { 6f, 8f }, 2));
     }
 
     private static List<Batch> regressionValidationBatches() {
-        return List.of(batch(new float[] {1.5f, 2.5f}, new float[] {3f, 5f}, 2));
+        return List.of(batch(new float[] { 1.5f, 2.5f }, new float[] { 3f, 5f }, 2));
     }
 
     private static Batch batch(float[] inputs, float[] targets, int rows) {

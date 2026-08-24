@@ -15,13 +15,13 @@ public record TrainingReportComparisonActionPlanExport(
         TrainingReportActionPlan actionPlan,
         TrainingReportRuntimeRegressionSummary runtimeRegression,
         String markdown) {
-    public static final String SCHEMA = "aljabr.training.report.comparison-action-plan.v1";
-    public static final String ARTIFACT_MANIFEST_SCHEMA =
-            "aljabr.training.report.comparison-action-plan-artifacts.v1";
+    public static final String SCHEMA = "alkhawarizm.training.report.comparison-action-plan.v1";
+    public static final String ARTIFACT_MANIFEST_SCHEMA = "alkhawarizm.training.report.comparison-action-plan-artifacts.v1";
 
     public TrainingReportComparisonActionPlanExport {
         actionPlan = Objects.requireNonNull(actionPlan, "actionPlan must not be null");
-        runtimeRegression = runtimeRegression == null ? TrainingReportRuntimeRegressionSummary.empty() : runtimeRegression;
+        runtimeRegression = runtimeRegression == null ? TrainingReportRuntimeRegressionSummary.empty()
+                : runtimeRegression;
         markdown = markdown == null ? "" : markdown;
     }
 
@@ -42,10 +42,10 @@ public record TrainingReportComparisonActionPlanExport(
         if (schema != null && !SCHEMA.equals(String.valueOf(schema))) {
             throw new IllegalArgumentException("Unsupported comparison action-plan export schema: " + schema);
         }
-        TrainingReportActionPlan actionPlan =
-                TrainingReportActionPlan.fromMap(TrainingReportValues.mapValue(map, "actionPlan"));
-        TrainingReportRuntimeRegressionSummary runtimeRegression =
-                TrainingReportRuntimeRegressionSummary.fromMap(TrainingReportValues.mapValue(map, "runtimeRegression"));
+        TrainingReportActionPlan actionPlan = TrainingReportActionPlan
+                .fromMap(TrainingReportValues.mapValue(map, "actionPlan"));
+        TrainingReportRuntimeRegressionSummary runtimeRegression = TrainingReportRuntimeRegressionSummary
+                .fromMap(TrainingReportValues.mapValue(map, "runtimeRegression"));
         return new TrainingReportComparisonActionPlanExport(
                 actionPlan,
                 runtimeRegression,

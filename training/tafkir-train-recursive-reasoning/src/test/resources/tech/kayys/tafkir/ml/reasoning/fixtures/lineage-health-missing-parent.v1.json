@@ -8,7 +8,7 @@
     "dominantSeverity": "critical",
     "failed": 1,
     "failingCodes": [
-      "ALJABR_LINEAGE_MISSING_PARENT"
+      "ALKHAWARIZM_LINEAGE_MISSING_PARENT"
     ],
     "failingNames": [
       "parentExists"
@@ -23,7 +23,7 @@
     "hasInfoFailures": false,
     "hasWarningFailures": false,
     "issueCodes": [
-      "ALJABR_LINEAGE_MISSING_PARENT"
+      "ALKHAWARIZM_LINEAGE_MISSING_PARENT"
     ],
     "passRate": 0.0,
     "passed": 0,
@@ -34,7 +34,7 @@
         "run-child"
       ],
       "blocking": true,
-      "code": "ALJABR_LINEAGE_MISSING_PARENT",
+      "code": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
       "count": 1,
       "detail": "One or more non-root checkpoints reference a missing parent run id.",
       "label": "Parent exists",
@@ -47,12 +47,12 @@
       "status": "fail",
       "type": "missing-parent"
     },
-    "primaryFailingCode": "ALJABR_LINEAGE_MISSING_PARENT",
+    "primaryFailingCode": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
     "primaryFailingMessage": "One or more non-root checkpoints reference a missing parent run id.",
     "primaryFailingName": "parentExists",
     "primaryFailingSeverity": "critical",
     "primaryFailingType": "missing-parent",
-    "primaryIssueCode": "ALJABR_LINEAGE_MISSING_PARENT",
+    "primaryIssueCode": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
     "recommendedAction": "Restore the parent checkpoint into the same root or select a checkpoint whose ancestry is complete.",
     "severityCounts": {
       "critical": 1,
@@ -70,7 +70,7 @@
         "run-child"
       ],
       "blocking": true,
-      "code": "ALJABR_LINEAGE_MISSING_PARENT",
+      "code": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
       "count": 1,
       "detail": "One or more non-root checkpoints reference a missing parent run id.",
       "label": "Parent exists",
@@ -94,7 +94,7 @@
         "run-child"
       ],
       "blocking": true,
-      "code": "ALJABR_LINEAGE_MISSING_PARENT",
+      "code": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
       "count": 1,
       "detail": "One or more non-root checkpoints reference a missing parent run id.",
       "label": "Parent exists",
@@ -113,10 +113,10 @@
     "checkStatus": "fail",
     "label": "Unhealthy",
     "primaryCheckAction": "Restore the parent checkpoint into the same root or select a checkpoint whose ancestry is complete.",
-    "primaryCheckCode": "ALJABR_LINEAGE_MISSING_PARENT",
+    "primaryCheckCode": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
     "primaryCheckSeverity": "critical",
     "primaryCheckType": "missing-parent",
-    "primaryIssueCode": "ALJABR_LINEAGE_MISSING_PARENT",
+    "primaryIssueCode": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
     "recommendedAction": "Restore the parent checkpoint into the same root or select a checkpoint whose ancestry is complete.",
     "score": 0.0,
     "status": "unhealthy",
@@ -127,7 +127,7 @@
   "healthScore": 0.0,
   "healthy": false,
   "issueCodes": [
-    "ALJABR_LINEAGE_MISSING_PARENT"
+    "ALKHAWARIZM_LINEAGE_MISSING_PARENT"
   ],
   "issueCount": 1,
   "issueDetailCount": 1,
@@ -135,8 +135,8 @@
     {
       "action": "Restore the parent checkpoint into the same root or select a checkpoint whose ancestry is complete.",
       "blocking": true,
-      "checkpointDir": "/tmp/aljabr-lineage-missing-parent/child",
-      "code": "ALJABR_LINEAGE_MISSING_PARENT",
+      "checkpointDir": "/tmp/alkhawarizm-lineage-missing-parent/child",
+      "code": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
       "detail": "parent run id was not found under checkpoint root",
       "parentRunId": "run-parent",
       "runId": "run-child",
@@ -159,7 +159,7 @@
       "run-child"
     ],
     "blocking": true,
-    "code": "ALJABR_LINEAGE_MISSING_PARENT",
+    "code": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
     "count": 1,
     "detail": "One or more non-root checkpoints reference a missing parent run id.",
     "label": "Parent exists",
@@ -173,7 +173,7 @@
     "type": "missing-parent"
   },
   "primaryFailingCheckAction": "Restore the parent checkpoint into the same root or select a checkpoint whose ancestry is complete.",
-  "primaryFailingCheckCode": "ALJABR_LINEAGE_MISSING_PARENT",
+  "primaryFailingCheckCode": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
   "primaryFailingCheckMessage": "One or more non-root checkpoints reference a missing parent run id.",
   "primaryFailingCheckName": "parentExists",
   "primaryFailingCheckSeverity": "critical",
@@ -181,8 +181,8 @@
   "primaryIssue": {
     "action": "Restore the parent checkpoint into the same root or select a checkpoint whose ancestry is complete.",
     "blocking": true,
-    "checkpointDir": "/tmp/aljabr-lineage-missing-parent/child",
-    "code": "ALJABR_LINEAGE_MISSING_PARENT",
+    "checkpointDir": "/tmp/alkhawarizm-lineage-missing-parent/child",
+    "code": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
     "detail": "parent run id was not found under checkpoint root",
     "parentRunId": "run-parent",
     "runId": "run-child",
@@ -190,11 +190,11 @@
     "type": "missing-parent"
   },
   "primaryIssueAction": "Restore the parent checkpoint into the same root or select a checkpoint whose ancestry is complete.",
-  "primaryIssueCode": "ALJABR_LINEAGE_MISSING_PARENT",
+  "primaryIssueCode": "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
   "primaryIssueType": "missing-parent",
   "recommendedAction": "Restore the parent checkpoint into the same root or select a checkpoint whose ancestry is complete.",
-  "rootDir": "/tmp/aljabr-lineage-missing-parent",
-  "schemaVersion": "aljabr.checkpoint-lineage-health.v1",
+  "rootDir": "/tmp/alkhawarizm-lineage-missing-parent",
+  "schemaVersion": "alkhawarizm.checkpoint-lineage-health.v1",
   "status": "unhealthy",
   "summary": "checkpoint lineage graph unhealthy: missing-parent",
   "summaryMessage": "checkpoint lineage graph unhealthy: missing-parent",

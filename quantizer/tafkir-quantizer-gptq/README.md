@@ -78,10 +78,10 @@ A ready-to-run example is available in the `examples/jbang` directory:
 
 ```bash
 # Run with synthetic demo data
-jbang aljabr/examples/jbang/quantizer/tafkir-quantizer-gptq.java --demo
+jbang alkhawarizm/examples/jbang/quantizer/tafkir-quantizer-gptq.java --demo
 
 # Quantize a real model
-jbang aljabr/examples/jbang/quantizer/tafkir-quantizer-gptq.java \
+jbang alkhawarizm/examples/jbang/quantizer/tafkir-quantizer-gptq.java \
   --model /path/to/model/dir \
   --bits 4 --group-size 128
 ```

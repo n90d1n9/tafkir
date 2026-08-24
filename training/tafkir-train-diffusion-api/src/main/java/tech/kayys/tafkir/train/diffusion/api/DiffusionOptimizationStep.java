@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.train.diffusion.api;
 
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 /**
  * Applies a backend-specific optimization step for a computed loss tensor.

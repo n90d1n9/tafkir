@@ -15,7 +15,7 @@ public final class TrainingReportRuntimeProfileBudgetGateJUnitXml {
         String markdown = result.markdown();
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.runtime.profile\" tests=\"1\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.runtime.profile\" tests=\"1\" failures=\""
                 + (result.passed() ? "0" : "1")
                 + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
@@ -34,7 +34,7 @@ public final class TrainingReportRuntimeProfileBudgetGateJUnitXml {
         property(xml, "policy.maxWallClockOverheadMillis",
                 Double.toString(result.policy().maxWallClockOverheadMillis()));
         appendLine(xml, "  </properties>");
-        appendLine(xml, "  <testcase classname=\"aljabr.training.runtime.profile\" "
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.runtime.profile\" "
                 + "name=\"validate runtime profile budget\" time=\"0\">");
         if (!result.passed()) {
             appendLine(xml, "    <failure type=\"" + escapeXml(failureType(result))

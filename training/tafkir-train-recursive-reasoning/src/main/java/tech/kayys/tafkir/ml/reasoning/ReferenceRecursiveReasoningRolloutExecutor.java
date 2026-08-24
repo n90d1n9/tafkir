@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 /**
  * Small reference executor for GRAM-style recursive rollouts.
@@ -40,8 +40,8 @@ public final class ReferenceRecursiveReasoningRolloutExecutor {
             for (int supervisionStep = 0; supervisionStep < supervisionSteps; supervisionStep++) {
                 for (int transitionIndex = 1; transitionIndex <= transitionsPerStep; transitionIndex++) {
                     RecursiveReasoningTransitionResult sampled = transition.sample(current, context);
-                    RecursiveReasoningState sampledState =
-                            Objects.requireNonNull(sampled.nextState(), "transition returned null nextState");
+                    RecursiveReasoningState sampledState = Objects.requireNonNull(sampled.nextState(),
+                            "transition returned null nextState");
                     Map<String, Object> metadata = new HashMap<>(sampledState.metadata());
                     metadata.put("sampleIndex", sampleIndex);
                     metadata.put("supervisionStep", supervisionStep);

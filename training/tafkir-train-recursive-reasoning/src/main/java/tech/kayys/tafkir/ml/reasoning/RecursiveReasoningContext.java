@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.ml.reasoning;
 
 import java.util.Objects;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 /**
  * Input-conditioned context shared across recursive reasoning transitions.

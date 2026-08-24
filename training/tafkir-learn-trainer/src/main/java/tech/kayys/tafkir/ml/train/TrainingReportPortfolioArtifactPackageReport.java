@@ -24,7 +24,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * Renders and persists CI-friendly reports for portfolio package verification.
  */
 public final class TrainingReportPortfolioArtifactPackageReport {
-    public static final String FORMAT = "aljabr.training.report.portfolio-package-verification.v1";
+    public static final String FORMAT = "alkhawarizm.training.report.portfolio-package-verification.v1";
     public static final int SCHEMA_VERSION = 1;
     public static final String DEFAULT_JSON_FILE_NAME = "portfolio-package-verification.json";
     public static final String DEFAULT_MARKDOWN_FILE_NAME = "portfolio-package-verification.md";
@@ -414,8 +414,8 @@ public final class TrainingReportPortfolioArtifactPackageReport {
 
     public static String renderMarkdown(
             TrainingReportPortfolioArtifactManifest.ManifestVerification verification) {
-        TrainingReportPortfolioArtifactManifest.ManifestVerification resolved =
-                Objects.requireNonNull(verification, "verification must not be null");
+        TrainingReportPortfolioArtifactManifest.ManifestVerification resolved = Objects.requireNonNull(verification,
+                "verification must not be null");
         TrainingReportPortfolioArtifactManifest.ManifestInspection inspection = resolved.inspection();
         StringBuilder markdown = new StringBuilder();
         appendLine(markdown, "# Aljabr Training Portfolio Package Verification");
@@ -451,8 +451,8 @@ public final class TrainingReportPortfolioArtifactPackageReport {
 
     public static String renderJunitXml(
             TrainingReportPortfolioArtifactManifest.ManifestVerification verification) {
-        TrainingReportPortfolioArtifactManifest.ManifestVerification resolved =
-                Objects.requireNonNull(verification, "verification must not be null");
+        TrainingReportPortfolioArtifactManifest.ManifestVerification resolved = Objects.requireNonNull(verification,
+                "verification must not be null");
         TrainingReportPortfolioArtifactManifest.ManifestInspection inspection = resolved.inspection();
         String markdown = renderMarkdown(resolved);
         int failures = (resolved.manifestSha256Matches() ? 0 : 1)
@@ -462,7 +462,7 @@ public final class TrainingReportPortfolioArtifactPackageReport {
 
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.portfolio.package\" tests=\"4\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.portfolio.package\" tests=\"4\" failures=\""
                 + failures + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
         property(xml, "package.directory", inspection.directory().toString());
@@ -531,8 +531,8 @@ public final class TrainingReportPortfolioArtifactPackageReport {
         Path resolvedDirectory = Objects.requireNonNull(directory, "directory must not be null")
                 .toAbsolutePath()
                 .normalize();
-        TrainingReportPortfolioArtifactManifest.ManifestVerification resolvedVerification =
-                Objects.requireNonNull(verification, "verification must not be null");
+        TrainingReportPortfolioArtifactManifest.ManifestVerification resolvedVerification = Objects
+                .requireNonNull(verification, "verification must not be null");
         Options resolvedOptions = options == null ? Options.defaults() : options;
         Path jsonFile = resolvedDirectory.resolve(resolvedOptions.jsonFileName());
         Path markdownFile = resolvedDirectory.resolve(resolvedOptions.markdownFileName());
@@ -568,8 +568,8 @@ public final class TrainingReportPortfolioArtifactPackageReport {
             Path packageDirectory,
             Path reportDirectory,
             Options options) throws IOException {
-        TrainingReportPortfolioArtifactManifest.ManifestVerification verification =
-                TrainingReportPortfolioArtifactPackage.verify(packageDirectory);
+        TrainingReportPortfolioArtifactManifest.ManifestVerification verification = TrainingReportPortfolioArtifactPackage
+                .verify(packageDirectory);
         return write(reportDirectory, verification, options);
     }
 
@@ -609,12 +609,11 @@ public final class TrainingReportPortfolioArtifactPackageReport {
             throw new IOException("Portfolio package verification report JSON must be an object: "
                     + resolvedJsonFile);
         }
-        TrainingReportArtifactFingerprint jsonFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedJsonFile);
-        TrainingReportArtifactFingerprint markdownFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedMarkdownFile);
-        TrainingReportArtifactFingerprint junitXmlFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedJunitXmlFile);
+        TrainingReportArtifactFingerprint jsonFingerprint = TrainingReportArtifactFingerprint.of(resolvedJsonFile);
+        TrainingReportArtifactFingerprint markdownFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedMarkdownFile);
+        TrainingReportArtifactFingerprint junitXmlFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedJunitXmlFile);
         return new ReportInspection(
                 commonDirectory(resolvedJsonFile, resolvedMarkdownFile, resolvedJunitXmlFile),
                 resolvedJsonFile,
@@ -669,8 +668,8 @@ public final class TrainingReportPortfolioArtifactPackageReport {
             String expectedMarkdownSha256,
             String expectedJunitXmlSha256) {
         ReportInspection resolved = Objects.requireNonNull(inspection, "inspection must not be null");
-        TrainingReportArtifactDescriptor.ChecksumMatch checksums =
-                resolved.artifact().checksumMatch(expectedJsonSha256, expectedMarkdownSha256, expectedJunitXmlSha256);
+        TrainingReportArtifactDescriptor.ChecksumMatch checksums = resolved.artifact().checksumMatch(expectedJsonSha256,
+                expectedMarkdownSha256, expectedJunitXmlSha256);
         boolean formatMatches = FORMAT.equals(resolved.format());
         boolean schemaVersionMatches = resolved.schemaVersion() == SCHEMA_VERSION;
         boolean junitXmlWellFormed = isWellFormedXml(resolved.junitXml());
@@ -754,10 +753,10 @@ public final class TrainingReportPortfolioArtifactPackageReport {
     public static ReportPackageConsistency verifyAgainstPackage(
             ReportVerification reportVerification,
             TrainingReportPortfolioArtifactManifest.ManifestVerification packageVerification) {
-        ReportVerification resolvedReport =
-                Objects.requireNonNull(reportVerification, "reportVerification must not be null");
-        TrainingReportPortfolioArtifactManifest.ManifestVerification resolvedPackage =
-                Objects.requireNonNull(packageVerification, "packageVerification must not be null");
+        ReportVerification resolvedReport = Objects.requireNonNull(reportVerification,
+                "reportVerification must not be null");
+        TrainingReportPortfolioArtifactManifest.ManifestVerification resolvedPackage = Objects
+                .requireNonNull(packageVerification, "packageVerification must not be null");
         List<String> failures = new ArrayList<>(resolvedReport.failures());
         boolean matchesPackage = reportMatchesPackage(resolvedReport.inspection(), resolvedPackage, failures);
         if (!matchesPackage) {
@@ -780,8 +779,8 @@ public final class TrainingReportPortfolioArtifactPackageReport {
 
     private static Map<String, Object> reportPayloadMap(
             TrainingReportPortfolioArtifactManifest.ManifestVerification verification) {
-        TrainingReportPortfolioArtifactManifest.ManifestVerification resolved =
-                Objects.requireNonNull(verification, "verification must not be null");
+        TrainingReportPortfolioArtifactManifest.ManifestVerification resolved = Objects.requireNonNull(verification,
+                "verification must not be null");
         TrainingReportPortfolioArtifactManifest.ManifestInspection inspection = resolved.inspection();
         Map<String, Object> manifest = new LinkedHashMap<>();
         manifest.put("file", inspection.manifestFile().toString());
@@ -814,8 +813,7 @@ public final class TrainingReportPortfolioArtifactPackageReport {
             List<String> failures) {
         Map<String, Object> report = inspection.report();
         Map<String, Object> manifest = objectMap(report.get("manifest"));
-        TrainingReportPortfolioArtifactManifest.ManifestInspection packageInspection =
-                packageVerification.inspection();
+        TrainingReportPortfolioArtifactManifest.ManifestInspection packageInspection = packageVerification.inspection();
         boolean matches = true;
         matches &= compareField(
                 failures,
@@ -972,8 +970,8 @@ public final class TrainingReportPortfolioArtifactPackageReport {
             validateReportInspectionShape(reportInspection, failures);
         }
         if (report.containsKey("artifactVerification")) {
-            Map<String, Object> artifactVerification =
-                    requireObject(report, "artifactVerification", "verification report", failures);
+            Map<String, Object> artifactVerification = requireObject(report, "artifactVerification",
+                    "verification report", failures);
             if (artifactVerification != null) {
                 validateArtifactVerificationShape(artifactVerification, failures);
             }
@@ -1428,7 +1426,7 @@ public final class TrainingReportPortfolioArtifactPackageReport {
         Element root = document.getDocumentElement();
         boolean matches = true;
         matches &= compareReportArtifactField(failures, "name", root.getAttribute("name"),
-                "aljabr.training.portfolio.package", "JUnit XML");
+                "alkhawarizm.training.portfolio.package", "JUnit XML");
         matches &= compareReportArtifactField(failures, "tests", root.getAttribute("tests"), "4", "JUnit XML");
         matches &= compareReportArtifactField(
                 failures,
@@ -1607,7 +1605,7 @@ public final class TrainingReportPortfolioArtifactPackageReport {
             String message,
             List<String> failures,
             String markdown) {
-        appendLine(xml, "  <testcase classname=\"aljabr.training.portfolio.package\" name=\""
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.portfolio.package\" name=\""
                 + escapeXml(name) + "\" time=\"0\">");
         if (!passed) {
             appendLine(xml, "    <failure type=\"" + escapeXml(failureType)

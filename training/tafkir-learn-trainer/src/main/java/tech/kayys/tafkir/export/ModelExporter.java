@@ -1,4 +1,4 @@
-package tech.kayys.aljabr.export;
+package tech.kayys.alkhawarizm.export;
 
 import tech.kayys.tafkir.ml.nn.NNModule;
 
@@ -8,7 +8,8 @@ import java.util.Map;
 
 /**
  * @deprecated Use {@link tech.kayys.tafkir.ml.export.ModelExporter} or
- *             {@link tech.kayys.tafkir.ml.Aljabr.Export#model(NNModule)} instead.
+ *             {@link tech.kayys.tafkir.ml.Aljabr.Export#model(NNModule)}
+ *             instead.
  */
 @Deprecated(since = "0.1.1", forRemoval = true)
 public class ModelExporter {
@@ -70,8 +71,8 @@ public class ModelExporter {
     }
 
     public static class Builder {
-        private final tech.kayys.tafkir.ml.export.ModelExporter.Builder delegate =
-                tech.kayys.tafkir.ml.export.ModelExporter.builder();
+        private final tech.kayys.tafkir.ml.export.ModelExporter.Builder delegate = tech.kayys.tafkir.ml.export.ModelExporter
+                .builder();
 
         public Builder model(NNModule model) {
             delegate.model(model);

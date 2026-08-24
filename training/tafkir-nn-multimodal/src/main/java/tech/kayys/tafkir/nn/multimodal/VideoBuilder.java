@@ -1,9 +1,9 @@
 package tech.kayys.tafkir.ml.multimodal;
 
-import tech.kayys.aljabr.spi.model.MultimodalProcessor;
-import tech.kayys.aljabr.spi.model.ModalityType;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
-import tech.kayys.aljabr.spi.model.MultimodalRequest;
+import tech.kayys.alkhawarizm.spi.model.MultimodalProcessor;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.MultimodalRequest;
 
 import java.io.IOException;
 import java.nio.file.Path;

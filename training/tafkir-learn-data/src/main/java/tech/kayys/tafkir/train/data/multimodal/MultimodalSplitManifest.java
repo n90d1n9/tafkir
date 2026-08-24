@@ -2,7 +2,7 @@ package tech.kayys.tafkir.train.data.multimodal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 import tech.kayys.tafkir.train.data.Dataset;
 
 import java.io.IOException;
@@ -21,7 +21,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Persistable membership manifest for reproducible multimodal train/validation/test experiments.
+ * Persistable membership manifest for reproducible multimodal
+ * train/validation/test experiments.
  */
 public record MultimodalSplitManifest(
         int sampleCount,

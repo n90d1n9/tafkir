@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.ModalityType;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 import tech.kayys.tafkir.train.data.Dataset;
 
 import java.io.IOException;
@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Builds validated, leakage-aware multimodal train/validation plans for trainers.
+ * Builds validated, leakage-aware multimodal train/validation plans for
+ * trainers.
  */
 public final class MultimodalTrainValidationPlanner {
     private static final long DEFAULT_SEED = 0x51A7E5EEDL;

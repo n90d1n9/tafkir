@@ -21,7 +21,7 @@ public record DiscreteTokenDatasetCheckpointManifest(
         DiscreteTokenDatasetCheckpointLineage lineage,
         Map<String, Object> attributes) {
 
-    public static final String SCHEMA_VERSION = "aljabr.discrete-token-checkpoint-manifest.v1";
+    public static final String SCHEMA_VERSION = "alkhawarizm.discrete-token-checkpoint-manifest.v1";
     public static final String DATASET_PLAN_REPORT_METADATA_KEY = "datasetPlanReport";
 
     public DiscreteTokenDatasetCheckpointManifest {
@@ -145,7 +145,7 @@ public record DiscreteTokenDatasetCheckpointManifest(
         private long seed;
         private long checkpointStep;
         private long createdAtEpochMillis = System.currentTimeMillis();
-        private String createdBy = "aljabr";
+        private String createdBy = "alkhawarizm";
         private final DiscreteTokenDatasetPlanReport datasetPlanReport;
         private DiscreteTokenDatasetCheckpointLineage lineage;
         private Map<String, Object> attributes = Map.of();

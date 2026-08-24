@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
 
 import java.io.IOException;
 import java.net.URI;
@@ -33,7 +33,8 @@ final class MultimodalManifestAssetResolver {
         this.options = Objects.requireNonNull(options, "options must not be null");
     }
 
-    Asset resolvePath(String rawPath, ModalityType modality, String mimeType, String documentFormat) throws IOException {
+    Asset resolvePath(String rawPath, ModalityType modality, String mimeType, String documentFormat)
+            throws IOException {
         Objects.requireNonNull(modality, "modality must not be null");
         String value = requireText(rawPath, "asset path");
         Path path = Path.of(value);

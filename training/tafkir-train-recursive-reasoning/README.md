@@ -117,9 +117,9 @@ Future family split:
 
 - `ml:tafkir-ml-reasoning-core`
 - `ml:tafkir-ml-recursive-reasoning`
-- `trainer:aljabr-trainer-recursive-reasoning`
+- `trainer:alkhawarizm-trainer-recursive-reasoning`
 - `examples:tafkir-ml-examples` entries for GRAM-style probes and reports
 
 See:
 
-- `aljabr/docs/GENERATIVE_RECURSIVE_REASONING_INTEGRATION_PLAN.md`
+- `alkhawarizm/docs/GENERATIVE_RECURSIVE_REASONING_INTEGRATION_PLAN.md`

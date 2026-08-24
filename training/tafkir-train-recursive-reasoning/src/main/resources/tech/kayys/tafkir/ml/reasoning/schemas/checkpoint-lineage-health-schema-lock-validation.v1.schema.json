@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock-validation.v1.schema.json",
+  "$id": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock-validation.v1.schema.json",
   "title": "Aljabr checkpoint lineage health schema lock validation report",
   "description": "Stable valid/invalid report emitted when a recursive-reasoning checkpoint lineage health schema lock is compared with the current schema set.",
   "type": "object",
@@ -30,13 +30,13 @@
       "const": "checkpoint-lineage-health-schema-lock-validation"
     },
     "schemaVersion": {
-      "const": "aljabr.checkpoint-lineage-health-schema-lock-validation.v1"
+      "const": "alkhawarizm.checkpoint-lineage-health-schema-lock-validation.v1"
     },
     "validationSchemaId": {
-      "const": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock-validation.v1.schema.json"
+      "const": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock-validation.v1.schema.json"
     },
     "validationSchemaResource": {
-      "const": "tech/kayys/aljabr/ml/reasoning/schemas/checkpoint-lineage-health-schema-lock-validation.v1.schema.json"
+      "const": "tech/kayys/alkhawarizm/ml/reasoning/schemas/checkpoint-lineage-health-schema-lock-validation.v1.schema.json"
     },
     "status": {
       "enum": [
@@ -49,8 +49,8 @@
     },
     "code": {
       "enum": [
-        "ALJABR_LINEAGE_HEALTH_SCHEMA_LOCK_VALID",
-        "ALJABR_LINEAGE_HEALTH_SCHEMA_LOCK_MISMATCH"
+        "ALKHAWARIZM_LINEAGE_HEALTH_SCHEMA_LOCK_VALID",
+        "ALKHAWARIZM_LINEAGE_HEALTH_SCHEMA_LOCK_MISMATCH"
       ]
     },
     "message": {
@@ -77,7 +77,7 @@
       "minLength": 1
     },
     "actualLockSchemaId": {
-      "const": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json"
+      "const": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json"
     },
     "mismatchCount": {
       "$ref": "#/$defs/nonNegativeInteger"
@@ -111,7 +111,7 @@
             "const": "valid"
           },
           "code": {
-            "const": "ALJABR_LINEAGE_HEALTH_SCHEMA_LOCK_VALID"
+            "const": "ALKHAWARIZM_LINEAGE_HEALTH_SCHEMA_LOCK_VALID"
           },
           "schemaSetMatch": {
             "const": true
@@ -142,7 +142,7 @@
             "const": "invalid"
           },
           "code": {
-            "const": "ALJABR_LINEAGE_HEALTH_SCHEMA_LOCK_MISMATCH"
+            "const": "ALKHAWARIZM_LINEAGE_HEALTH_SCHEMA_LOCK_MISMATCH"
           },
           "mismatchCount": {
             "minimum": 1

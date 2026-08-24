@@ -7,13 +7,14 @@ import java.util.Map;
 import java.util.OptionalDouble;
 
 /**
- * Portable leaderboard and comparison-table export for multi-run training portfolios.
+ * Portable leaderboard and comparison-table export for multi-run training
+ * portfolios.
  */
 public record TrainingReportPortfolioExport(
         List<Map<String, Object>> leaderboardRows,
         List<Map<String, Object>> comparisonMetricRows,
         List<Map<String, Object>> comparisonFindingRows) {
-    public static final String SCHEMA = "aljabr.training.report.portfolio-export.v1";
+    public static final String SCHEMA = "alkhawarizm.training.report.portfolio-export.v1";
 
     private static final List<String> LEADERBOARD_COLUMNS = List.of(
             "rank",
@@ -82,8 +83,8 @@ public record TrainingReportPortfolioExport(
             if (candidate.name().equals(baseline.name())) {
                 continue;
             }
-            TrainingReportComparisonExport comparisonExport =
-                    TrainingReportComparison.compare(baseline.report(), candidate.report()).export();
+            TrainingReportComparisonExport comparisonExport = TrainingReportComparison
+                    .compare(baseline.report(), candidate.report()).export();
             for (Map<String, Object> row : comparisonExport.metricRows()) {
                 comparisonMetrics.add(comparisonRow(baseline.name(), candidate.name(), row));
             }

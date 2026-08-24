@@ -1,4 +1,4 @@
-package tech.kayys.aljabr.hub;
+package tech.kayys.alkhawarizm.hub;
 
 import tech.kayys.tafkir.ml.autograd.GradTensor;
 import tech.kayys.tafkir.ml.nn.NNModule;

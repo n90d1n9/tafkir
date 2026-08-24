@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "tech.kayys.aljabr"
+group = "tech.kayys.alkhawarizm"
 version = "0.1.0-SNAPSHOT"
 
 java {
@@ -19,11 +19,11 @@ repositories {
 
 dependencies {
     api(project(":ml:tafkir-ml-diffusion-api"))
-   /*  implementation(project(":core:aljabr-core"))
-    implementation(project(":runner:aljabr-diffusion"))
-    implementation(project(":runner:safetensor:aljabr-runner-stable-diffusion"))
-    implementation(project(":runner:safetensor:aljabr-safetensor-core")) */
-    implementation(project(":backend:metal:aljabr-backend-metal"))
+   /*  implementation(project(":core:alkhawarizm-core"))
+    implementation(project(":runner:alkhawarizm-diffusion"))
+    implementation(project(":runner:safetensor:alkhawarizm-runner-stable-diffusion"))
+    implementation(project(":runner:safetensor:alkhawarizm-safetensor-core")) */
+    implementation(project(":backend:metal:alkhawarizm-backend-metal"))
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter")
     testRuntimeOnly(group = "org.junit.platform", name = "junit-platform-launcher", version = "1.10.2")

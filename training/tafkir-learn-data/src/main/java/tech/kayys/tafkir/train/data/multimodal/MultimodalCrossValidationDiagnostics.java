@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 import tech.kayys.tafkir.train.data.Dataset;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.ml.runner;
 
-import tech.kayys.aljabr.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
 
 /**
  * User-facing device selector for unified model runners.

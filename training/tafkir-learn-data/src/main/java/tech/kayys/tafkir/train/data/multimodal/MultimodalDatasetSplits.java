@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.ModalityType;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 import tech.kayys.tafkir.train.data.Dataset;
 
 import java.util.ArrayDeque;
@@ -117,13 +117,14 @@ public final class MultimodalDatasetSplits {
         for (Group group : groups) {
             GroupProfile profile = profile(dataset, group);
             ordered.add(profile);
-            profile.signatureCounts().forEach((signature, count) ->
-                    totalSignatureCounts.merge(signature, count, Integer::sum));
+            profile.signatureCounts()
+                    .forEach((signature, count) -> totalSignatureCounts.merge(signature, count, Integer::sum));
         }
         Collections.shuffle(ordered, new Random(seed));
         ordered.sort((left, right) -> {
             int bySize = Integer.compare(right.size(), left.size());
-            return bySize != 0 ? bySize : Integer.compare(right.signatureCounts().size(), left.signatureCounts().size());
+            return bySize != 0 ? bySize
+                    : Integer.compare(right.signatureCounts().size(), left.signatureCounts().size());
         });
 
         int trainTarget = trainTarget(dataset.size(), trainFraction);
@@ -196,13 +197,14 @@ public final class MultimodalDatasetSplits {
         for (Group group : groups) {
             GroupProfile profile = profile(dataset, group);
             ordered.add(profile);
-            profile.signatureCounts().forEach((signature, count) ->
-                    totalSignatureCounts.merge(signature, count, Integer::sum));
+            profile.signatureCounts()
+                    .forEach((signature, count) -> totalSignatureCounts.merge(signature, count, Integer::sum));
         }
         Collections.shuffle(ordered, new Random(seed));
         ordered.sort((left, right) -> {
             int bySize = Integer.compare(right.size(), left.size());
-            return bySize != 0 ? bySize : Integer.compare(right.signatureCounts().size(), left.signatureCounts().size());
+            return bySize != 0 ? bySize
+                    : Integer.compare(right.signatureCounts().size(), left.signatureCounts().size());
         });
 
         int[] targets = threeWayTargets(dataset.size(), trainFraction, validationFraction);
@@ -225,7 +227,8 @@ public final class MultimodalDatasetSplits {
         SplitPartition validation = partitions.get(1);
         SplitPartition test = partitions.get(2);
         if (train.indices().isEmpty() || validation.indices().isEmpty() || test.indices().isEmpty()) {
-            throw new IllegalArgumentException("split could not create non-empty train, validation, and test partitions");
+            throw new IllegalArgumentException(
+                    "split could not create non-empty train, validation, and test partitions");
         }
         Collections.shuffle(train.indices(), new Random(seed ^ TRAIN_SHUFFLE_SEED));
         Collections.shuffle(validation.indices(), new Random(seed ^ VALIDATION_SHUFFLE_SEED));
@@ -312,13 +315,14 @@ public final class MultimodalDatasetSplits {
         for (Group group : groups) {
             GroupProfile profile = profile(dataset, group);
             ordered.add(profile);
-            profile.signatureCounts().forEach((signature, count) ->
-                    totalSignatureCounts.merge(signature, count, Integer::sum));
+            profile.signatureCounts()
+                    .forEach((signature, count) -> totalSignatureCounts.merge(signature, count, Integer::sum));
         }
         Collections.shuffle(ordered, new Random(seed));
         ordered.sort((left, right) -> {
             int bySize = Integer.compare(right.size(), left.size());
-            return bySize != 0 ? bySize : Integer.compare(right.signatureCounts().size(), left.signatureCounts().size());
+            return bySize != 0 ? bySize
+                    : Integer.compare(right.signatureCounts().size(), left.signatureCounts().size());
         });
 
         List<List<Integer>> validationFolds = emptyFoldBuckets(folds);
@@ -337,8 +341,8 @@ public final class MultimodalDatasetSplits {
             }
             validationFolds.get(targetFold).addAll(profile.group().indices());
             Map<String, Integer> signatureBucket = foldSignatureCounts.get(targetFold);
-            profile.signatureCounts().forEach((signature, count) ->
-                    signatureBucket.merge(signature, count, Integer::sum));
+            profile.signatureCounts()
+                    .forEach((signature, count) -> signatureBucket.merge(signature, count, Integer::sum));
             foldSizes[targetFold] += profile.size();
             foldGroupCounts[targetFold]++;
         }
@@ -382,7 +386,8 @@ public final class MultimodalDatasetSplits {
         Objects.requireNonNull(dataset, "dataset must not be null");
         return new Dataset.Split<>(
                 new IndexedMultimodalDataset(dataset, validateIndices(dataset, trainIndices, "trainIndices")),
-                new IndexedMultimodalDataset(dataset, validateIndices(dataset, validationIndices, "validationIndices")));
+                new IndexedMultimodalDataset(dataset,
+                        validateIndices(dataset, validationIndices, "validationIndices")));
     }
 
     static Dataset.Fold<List<MultimodalContent>> foldByIndices(
@@ -396,7 +401,8 @@ public final class MultimodalDatasetSplits {
                 foldIndex,
                 foldCount,
                 new IndexedMultimodalDataset(dataset, validateIndices(dataset, trainIndices, "trainIndices")),
-                new IndexedMultimodalDataset(dataset, validateIndices(dataset, validationIndices, "validationIndices")));
+                new IndexedMultimodalDataset(dataset,
+                        validateIndices(dataset, validationIndices, "validationIndices")));
     }
 
     public static String signature(List<MultimodalContent> sample) {
@@ -547,7 +553,7 @@ public final class MultimodalDatasetSplits {
         int validationTarget = Math.max(1, (int) Math.round(size * validationFraction));
         validationTarget = Math.min(validationTarget, size - trainTarget - 1);
         int testTarget = size - trainTarget - validationTarget;
-        return new int[] {trainTarget, validationTarget, testTarget};
+        return new int[] { trainTarget, validationTarget, testTarget };
     }
 
     private static void requireFolds(int folds, int sampleCount) {

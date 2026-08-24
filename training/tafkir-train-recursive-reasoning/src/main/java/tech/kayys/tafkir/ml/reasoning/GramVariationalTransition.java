@@ -2,10 +2,11 @@ package tech.kayys.tafkir.ml.reasoning;
 
 import java.util.Map;
 import java.util.Objects;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 /**
- * Backend-neutral orchestration for GRAM prior/posterior stochastic transitions.
+ * Backend-neutral orchestration for GRAM prior/posterior stochastic
+ * transitions.
  */
 public final class GramVariationalTransition {
     private final GramDeterministicTransition deterministicTransition;
@@ -20,8 +21,8 @@ public final class GramVariationalTransition {
             GramTransitionDistributionHead posteriorHead,
             GramNoiseSampler noiseSampler,
             GramNextStateFactory nextStateFactory) {
-        this.deterministicTransition =
-                Objects.requireNonNull(deterministicTransition, "deterministicTransition must not be null");
+        this.deterministicTransition = Objects.requireNonNull(deterministicTransition,
+                "deterministicTransition must not be null");
         this.priorHead = Objects.requireNonNull(priorHead, "priorHead must not be null");
         this.posteriorHead = posteriorHead;
         this.noiseSampler = Objects.requireNonNull(noiseSampler, "noiseSampler must not be null");

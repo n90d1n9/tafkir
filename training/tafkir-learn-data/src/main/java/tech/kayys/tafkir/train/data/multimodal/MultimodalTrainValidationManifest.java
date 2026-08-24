@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 import tech.kayys.tafkir.train.data.Dataset;
 
 import java.io.IOException;
@@ -13,7 +13,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Persistable membership manifest for reproducible multimodal train/validation experiments.
+ * Persistable membership manifest for reproducible multimodal train/validation
+ * experiments.
  */
 public record MultimodalTrainValidationManifest(
         int sampleCount,

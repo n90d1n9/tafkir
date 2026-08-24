@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.train.diffusion.api;
 
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 /**
  * Resolves model conditioning tensors for a prompt sample.

@@ -21,7 +21,7 @@ Complete optimizer suite for neural network training with Adam, AdamW, SGD, and 
 ### Adam Optimizer
 
 ```java
-import tech.kayys.aljabr.lib.optimize.Adam;
+import tech.kayys.alkhawarizm.lib.optimize.Adam;
 import tech.kayys.tafkir.ml.autograd.GradTensor;
 
 List<GradTensor> parameters = model.parameters();
@@ -49,7 +49,7 @@ for (int epoch = 0; epoch < 100; epoch++) {
 ### AdamW (Recommended for Transformers)
 
 ```java
-import tech.kayys.aljabr.lib.optimize.AdamW;
+import tech.kayys.alkhawarizm.lib.optimize.AdamW;
 
 Optimizer optimizer = AdamW.builder(parameters, 0.001)
     .betas(0.9, 0.999)
@@ -60,7 +60,7 @@ Optimizer optimizer = AdamW.builder(parameters, 0.001)
 ### SGD with Momentum
 
 ```java
-import tech.kayys.aljabr.lib.optimize.SGD;
+import tech.kayys.alkhawarizm.lib.optimize.SGD;
 
 Optimizer optimizer = SGD.builder(parameters, 0.01)
     .momentum(0.9)
@@ -72,7 +72,7 @@ Optimizer optimizer = SGD.builder(parameters, 0.01)
 ### RMSprop
 
 ```java
-import tech.kayys.aljabr.lib.optimize.RMSprop;
+import tech.kayys.alkhawarizm.lib.optimize.RMSprop;
 
 Optimizer optimizer = RMSprop.builder(parameters, 0.01)
     .alpha(0.99)
@@ -173,7 +173,7 @@ payloads during resume.
 
 ```xml
 <dependency>
-    <groupId>tech.kayys.aljabr</groupId>
+    <groupId>tech.kayys.alkhawarizm</groupId>
     <artifactId>tafkir-ml-optimize</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 </dependency>
@@ -182,8 +182,8 @@ payloads during resume.
 ## Integration with Trainer
 
 ```java
-import tech.kayys.aljabr.lib.train.Trainer;
-import tech.kayys.aljabr.lib.optimize.AdamW;
+import tech.kayys.alkhawarizm.lib.train.Trainer;
+import tech.kayys.alkhawarizm.lib.optimize.AdamW;
 
 Trainer trainer = Trainer.builder()
     .model(model)

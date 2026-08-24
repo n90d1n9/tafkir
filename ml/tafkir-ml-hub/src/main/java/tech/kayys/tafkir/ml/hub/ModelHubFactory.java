@@ -1,14 +1,14 @@
 package tech.kayys.tafkir.ml.hub;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import tech.kayys.aljabr.model.core.ModelRepository;
-import tech.kayys.aljabr.model.core.ModelRepositoryProvider;
-import tech.kayys.aljabr.model.core.RepositoryContext;
-import tech.kayys.aljabr.model.local.LocalModelRepository;
-import tech.kayys.aljabr.model.repo.hf.HuggingFaceClient;
-import tech.kayys.aljabr.model.repo.hf.HuggingFaceConfig;
-import tech.kayys.aljabr.model.repo.hf.HuggingFaceRepository;
-import tech.kayys.aljabr.model.repo.local.ManifestStore;
+import tech.kayys.alkhawarizm.model.core.ModelRepository;
+import tech.kayys.alkhawarizm.model.core.ModelRepositoryProvider;
+import tech.kayys.alkhawarizm.model.core.RepositoryContext;
+import tech.kayys.alkhawarizm.model.local.LocalModelRepository;
+import tech.kayys.alkhawarizm.model.repo.hf.HuggingFaceClient;
+import tech.kayys.alkhawarizm.model.repo.hf.HuggingFaceConfig;
+import tech.kayys.alkhawarizm.model.repo.hf.HuggingFaceRepository;
+import tech.kayys.alkhawarizm.model.repo.local.ManifestStore;
 
 import java.time.Duration;
 import java.util.Map;
@@ -85,7 +85,7 @@ public final class ModelHubFactory {
 
             @Override
             public String userAgent() {
-                return "aljabr-sdk/" + revision();
+                return "alkhawarizm-sdk/" + revision();
             }
 
             @Override

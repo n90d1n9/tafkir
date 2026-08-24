@@ -44,11 +44,9 @@ public record DiscreteTokenDatasetCheckpointLineageHealthSnapshot(
         String summary) {
 
     public static final String KIND = "checkpoint-lineage-health";
-    public static final String SCHEMA_VERSION = "aljabr.checkpoint-lineage-health.v1";
-    public static final String JSON_SCHEMA_ID =
-            "https://aljabr.ai/schemas/training/checkpoint-lineage-health.v1.schema.json";
-    public static final String JSON_SCHEMA_RESOURCE =
-            "tech/kayys/aljabr/ml/reasoning/schemas/checkpoint-lineage-health.v1.schema.json";
+    public static final String SCHEMA_VERSION = "alkhawarizm.checkpoint-lineage-health.v1";
+    public static final String JSON_SCHEMA_ID = "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health.v1.schema.json";
+    public static final String JSON_SCHEMA_RESOURCE = "tech/kayys/alkhawarizm/ml/reasoning/schemas/checkpoint-lineage-health.v1.schema.json";
 
     public DiscreteTokenDatasetCheckpointLineageHealthSnapshot {
         kind = DiscreteTokenDatasetMetadataSupport.requireText(kind, "kind");
@@ -71,8 +69,8 @@ public record DiscreteTokenDatasetCheckpointLineageHealthSnapshot(
         healthBadge = DiscreteTokenDatasetMetadataSupport.immutableMetadataMap(healthBadge, "healthBadge");
         checks = DiscreteTokenDatasetMetadataSupport.immutableMetadataMapList(checks, "checks");
         failingChecks = DiscreteTokenDatasetMetadataSupport.immutableMetadataMapList(failingChecks, "failingChecks");
-        primaryFailingCheck =
-                DiscreteTokenDatasetMetadataSupport.immutableMetadataMap(primaryFailingCheck, "primaryFailingCheck");
+        primaryFailingCheck = DiscreteTokenDatasetMetadataSupport.immutableMetadataMap(primaryFailingCheck,
+                "primaryFailingCheck");
         checkSummary = DiscreteTokenDatasetMetadataSupport.immutableMetadataMap(checkSummary, "checkSummary");
         summary = DiscreteTokenDatasetMetadataSupport.requireText(summary, "summary");
         verifyConsistency(

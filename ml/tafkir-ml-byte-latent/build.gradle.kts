@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "tech.kayys.aljabr"
+group = "tech.kayys.alkhawarizm"
 version = "0.1.0-SNAPSHOT"
 
 java {
@@ -18,8 +18,8 @@ repositories {
 }
 
 dependencies {
-    api(project(":core:aljabr-tensor"))
-    api(project(":trainer:aljabr-trainer-api"))
+    api(project(":core:alkhawarizm-tensor"))
+    api(project(":trainer:alkhawarizm-trainer-api"))
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter")
     testRuntimeOnly(group = "org.junit.platform", name = "junit-platform-launcher", version = "1.10.2")
 }

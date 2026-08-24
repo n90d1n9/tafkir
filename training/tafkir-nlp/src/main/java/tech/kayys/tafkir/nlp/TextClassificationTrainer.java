@@ -6,8 +6,8 @@ import tech.kayys.tafkir.ml.nn.NNModule;
 import tech.kayys.tafkir.ml.nn.loss.CrossEntropyLoss;
 import tech.kayys.tafkir.ml.optim.Optimizer;
 import tech.kayys.tafkir.ml.optim.WarmupCosineScheduler;
-import tech.kayys.aljabr.tokenizer.spi.Tokenizer;
-import tech.kayys.aljabr.tokenizer.spi.EncodeOptions;
+import tech.kayys.alkhawarizm.tokenizer.spi.Tokenizer;
+import tech.kayys.alkhawarizm.tokenizer.spi.EncodeOptions;
 
 import java.util.List;
 

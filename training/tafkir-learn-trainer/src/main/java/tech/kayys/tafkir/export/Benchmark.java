@@ -1,8 +1,9 @@
-package tech.kayys.aljabr.export;
+package tech.kayys.alkhawarizm.export;
 
 /**
  * @deprecated Use {@link tech.kayys.tafkir.ml.export.Benchmark} or
- *             {@link tech.kayys.tafkir.ml.Aljabr.Export#benchmark(Object)} instead.
+ *             {@link tech.kayys.tafkir.ml.Aljabr.Export#benchmark(Object)}
+ *             instead.
  */
 @Deprecated(since = "0.1.1", forRemoval = true)
 public class Benchmark {

@@ -13,7 +13,7 @@ final class DiscreteTokenDatasetCheckpointLineageHealth {
 
     private static final String PAYLOAD_KIND = DiscreteTokenDatasetCheckpointLineageHealthSnapshot.KIND;
     private static final String SCHEMA_VERSION = DiscreteTokenDatasetCheckpointLineageHealthSnapshot.SCHEMA_VERSION;
-    private static final String HEALTHY_CODE = "ALJABR_LINEAGE_HEALTHY";
+    private static final String HEALTHY_CODE = "ALKHAWARIZM_LINEAGE_HEALTHY";
     private static final String NO_LINEAGE_ACTION = "No lineage action required.";
     private static final String NO_CHECK_ACTION = "No action required.";
     private static final String STATUS_HEALTHY = "healthy";
@@ -34,31 +34,32 @@ final class DiscreteTokenDatasetCheckpointLineageHealth {
     private static final String CHECKS_PASSED_MESSAGE = "Lineage health checks passed.";
     private static final IssueDefinition DUPLICATE_RUN_ID = new IssueDefinition(
             "duplicate-run-id",
-            "ALJABR_LINEAGE_DUPLICATE_RUN_ID",
+            "ALKHAWARIZM_LINEAGE_DUPLICATE_RUN_ID",
             10,
             "Keep one checkpoint for this run id or rewrite one manifest with a unique run id before resuming.");
     private static final IssueDefinition CYCLE = new IssueDefinition(
             "cycle",
-            "ALJABR_LINEAGE_CYCLE",
+            "ALKHAWARIZM_LINEAGE_CYCLE",
             20,
             "Fix checkpoint lineage parentRunId values so ancestry reaches a root without loops.");
     private static final IssueDefinition MISSING_PARENT = new IssueDefinition(
             "missing-parent",
-            "ALJABR_LINEAGE_MISSING_PARENT",
+            "ALKHAWARIZM_LINEAGE_MISSING_PARENT",
             30,
             "Restore the parent checkpoint into the same root or select a checkpoint whose ancestry is complete.");
     private static final IssueDefinition AMBIGUOUS_PARENT = new IssueDefinition(
             "ambiguous-parent",
-            "ALJABR_LINEAGE_AMBIGUOUS_PARENT",
+            "ALKHAWARIZM_LINEAGE_AMBIGUOUS_PARENT",
             40,
             "Remove duplicate parent run ids or move unrelated checkpoints out of the checkpoint root.");
     private static final IssueDefinition PARENT_MISMATCH = new IssueDefinition(
             "parent-mismatch",
-            "ALJABR_LINEAGE_PARENT_MISMATCH",
+            "ALKHAWARIZM_LINEAGE_PARENT_MISMATCH",
             50,
             "Regenerate the child lineage from the resolved parent snapshot or resume from the matching parent checkpoint.");
 
-    private DiscreteTokenDatasetCheckpointLineageHealth() {}
+    private DiscreteTokenDatasetCheckpointLineageHealth() {
+    }
 
     static Map<String, Object> healthMetadata(DiscreteTokenDatasetCheckpointLineageGraph graph) {
         graph = requireGraph(graph);
@@ -363,8 +364,8 @@ final class DiscreteTokenDatasetCheckpointLineageHealth {
                 details.add(Collections.unmodifiableMap(new LinkedHashMap<>(issue)));
             }
             if (node.parentAmbiguous()) {
-                List<DiscreteTokenDatasetCheckpointLineageGraph.Node> parents =
-                        nodesByRunId.getOrDefault(node.parentRunId(), List.of());
+                List<DiscreteTokenDatasetCheckpointLineageGraph.Node> parents = nodesByRunId
+                        .getOrDefault(node.parentRunId(), List.of());
                 Map<String, Object> issue = issueDetail(AMBIGUOUS_PARENT, node);
                 issue.put("parentRunId", node.parentRunId());
                 issue.put("parentCheckpointDirs", parents.stream()
@@ -617,5 +618,6 @@ final class DiscreteTokenDatasetCheckpointLineageHealth {
         return Objects.requireNonNull(graph, "graph must not be null");
     }
 
-    private record IssueDefinition(String type, String code, int priority, String action) {}
+    private record IssueDefinition(String type, String code, int priority, String action) {
+    }
 }

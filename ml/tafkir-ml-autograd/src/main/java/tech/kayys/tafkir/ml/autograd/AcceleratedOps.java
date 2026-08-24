@@ -152,20 +152,20 @@ final class AcceleratedOps {
             return preferred;
         }
         for (String property : List.of(
-                "aljabr.ml.device",
-                "aljabr.ml.acceleration",
-                "aljabr.device",
-                "aljabr.kernel.platform")) {
+                "alkhawarizm.ml.device",
+                "alkhawarizm.ml.acceleration",
+                "alkhawarizm.device",
+                "alkhawarizm.kernel.platform")) {
             String value = normalizeDevice(System.getProperty(property));
             if (!AUTO.equals(value)) {
                 return value;
             }
         }
         for (String env : List.of(
-                "ALJABR_ML_DEVICE",
-                "ALJABR_ML_ACCELERATION",
-                "ALJABR_DEVICE",
-                "ALJABR_ACCELERATOR")) {
+                "ALKHAWARIZM_ML_DEVICE",
+                "ALKHAWARIZM_ML_ACCELERATION",
+                "ALKHAWARIZM_DEVICE",
+                "ALKHAWARIZM_ACCELERATOR")) {
             String value = normalizeDevice(System.getenv(env));
             if (!AUTO.equals(value)) {
                 return value;
@@ -280,21 +280,21 @@ final class AcceleratedOps {
     private static List<Path> cudaLibraryCandidates() {
         List<Path> candidates = new ArrayList<>();
         for (String key : List.of(
-                "aljabr.cuda.library",
-                "aljabr.cuda.library.path",
-                "aljabr.kernel.cuda.library")) {
+                "alkhawarizm.cuda.library",
+                "alkhawarizm.cuda.library.path",
+                "alkhawarizm.kernel.cuda.library")) {
             addCudaCandidate(candidates, System.getProperty(key));
         }
         for (String key : List.of(
-                "ALJABR_CUDA_LIBRARY",
+                "ALKHAWARIZM_CUDA_LIBRARY",
                 "CUDA_LIBRARY_PATH",
                 "CUDA_PATH",
                 "CUDA_HOME")) {
             addCudaCandidate(candidates, System.getenv(key));
         }
-        candidates.add(Path.of("/usr/local/cuda/lib64/libaljabr_cuda.so"));
-        candidates.add(Path.of("/usr/local/lib/libaljabr_cuda.so"));
-        candidates.add(Path.of("/opt/cuda/lib64/libaljabr_cuda.so"));
+        candidates.add(Path.of("/usr/local/cuda/lib64/libalkhawarizm_cuda.so"));
+        candidates.add(Path.of("/usr/local/lib/libalkhawarizm_cuda.so"));
+        candidates.add(Path.of("/opt/cuda/lib64/libalkhawarizm_cuda.so"));
         return candidates;
     }
 
@@ -305,9 +305,9 @@ final class AcceleratedOps {
         Path path = Path.of(rawPath.trim());
         candidates.add(path);
         if (Files.isDirectory(path)) {
-            candidates.add(path.resolve("libaljabr_cuda.so"));
-            candidates.add(path.resolve("lib64/libaljabr_cuda.so"));
-            candidates.add(path.resolve("bin/aljabr_cuda.dll"));
+            candidates.add(path.resolve("libalkhawarizm_cuda.so"));
+            candidates.add(path.resolve("lib64/libalkhawarizm_cuda.so"));
+            candidates.add(path.resolve("bin/alkhawarizm_cuda.dll"));
         }
     }
 
@@ -496,7 +496,7 @@ final class AcceleratedOps {
 
         static Optional<Backend> tryCreate() {
             try {
-                Class<?> type = Class.forName("tech.kayys.aljabr.metal.binding.MetalBinding");
+                Class<?> type = Class.forName("tech.kayys.alkhawarizm.metal.binding.MetalBinding");
                 Method initialize = type.getMethod("initialize");
                 Object loaded = initialize.invoke(null);
                 if (!(loaded instanceof Boolean bool) || !bool) {
@@ -564,7 +564,7 @@ final class AcceleratedOps {
                 if (library.isEmpty()) {
                     return Optional.empty();
                 }
-                Class<?> type = Class.forName("tech.kayys.aljabr.cuda.binding.CudaBinding");
+                Class<?> type = Class.forName("tech.kayys.alkhawarizm.cuda.binding.CudaBinding");
                 Method initialize = type.getMethod("initialize", Path.class);
                 Object loaded = initialize.invoke(null, library.get());
                 if (!(loaded instanceof Boolean bool) || !bool) {

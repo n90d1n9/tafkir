@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODULE_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 REPO_DIR="$(cd "${MODULE_DIR}/../.." && pwd)"
-OUT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/aljabr-report-slice.XXXXXX")"
+OUT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/alkhawarizm-report-slice.XXXXXX")"
 SOURCE_MANIFEST="training/tafkir-train-api/src/test/resources/smoke/report-slice-sources.txt"
 CLASS_MANIFEST="training/tafkir-train-api/src/test/resources/smoke/report-slice-classes.txt"
 

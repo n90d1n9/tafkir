@@ -26,8 +26,8 @@ class TrainerRuntimeArtifactWriterTest {
         row.put("trainLoss", 0.5);
         row.put("validationLoss", 0.4);
 
-        TrainerRuntimeArtifactWriter.WriteResult result =
-                TrainerRuntimeArtifactWriter.writeHistory(history, List.of(row));
+        TrainerRuntimeArtifactWriter.WriteResult result = TrainerRuntimeArtifactWriter.writeHistory(history,
+                List.of(row));
 
         assertTrue(result.written());
         assertNull(result.error());
@@ -57,7 +57,7 @@ class TrainerRuntimeArtifactWriterTest {
         assertNull(result.error());
         String json = Files.readString(report);
         assertTrue(json.endsWith("\n"));
-        assertTrue(json.contains("\"schema\":\"aljabr.canonical-trainer.report.v1\""));
+        assertTrue(json.contains("\"schema\":\"alkhawarizm.canonical-trainer.report.v1\""));
         assertTrue(json.contains("\"generatedAt\":\"2026-05-18T00:00:00Z\""));
         assertTrue(json.contains("\"device\":\"metal\""));
     }
@@ -84,8 +84,7 @@ class TrainerRuntimeArtifactWriterTest {
 
     @Test
     void skippedWhenTargetIsAbsent() {
-        TrainerRuntimeArtifactWriter.WriteResult result =
-                TrainerRuntimeArtifactWriter.writeHistory(null, List.of());
+        TrainerRuntimeArtifactWriter.WriteResult result = TrainerRuntimeArtifactWriter.writeHistory(null, List.of());
 
         assertFalse(result.written());
         assertNull(result.error());

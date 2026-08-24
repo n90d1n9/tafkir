@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.ml.export;
 
-import tech.kayys.aljabr.gguf.core.GgufExporter;
+import tech.kayys.alkhawarizm.gguf.core.GgufExporter;
 import tech.kayys.tafkir.ml.export.litert.LiteRTExporter;
 import tech.kayys.tafkir.ml.export.onnx.OnnxExporter;
 import tech.kayys.tafkir.ml.nn.NNModule;

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionConditioningResolver;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionDenoiser;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionOpdConfig;
@@ -27,16 +27,20 @@ import tech.kayys.tafkir.trainer.api.TrainingSummary;
 /**
  * Java-first scaffold for diffusion on-policy distillation.
  *
- * <p>This implementation intentionally focuses on stable module boundaries:
+ * <p>
+ * This implementation intentionally focuses on stable module boundaries:
  * task routing, rollout orchestration, transition-mean supervision, and a
  * top-level builder native to Aljabr's training API. It is designed to evolve
- * into the full DiffusionOPD algorithm without forcing Python-side orchestration.
+ * into the full DiffusionOPD algorithm without forcing Python-side
+ * orchestration.
  *
- * <p>The trainer now keeps the orchestration loop in one place and delegates
+ * <p>
+ * The trainer now keeps the orchestration loop in one place and delegates
  * persistence, runtime coordination, and adaptive weighting details to focused
  * package-private helpers so the main session class stays readable.
  *
- * <p>Algorithm reference:
+ * <p>
+ * Algorithm reference:
  * Quanhao Li et al., "DiffusionOPD: A Unified Perspective of On-Policy
  * Distillation in Diffusion Models", arXiv:2605.15055, 2026.
  */
@@ -98,8 +102,10 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
         this.adaptiveStageWeightMinFactor = builder.adaptiveStageWeightMinFactor;
         this.adaptiveStageWeightMaxFactor = builder.adaptiveStageWeightMaxFactor;
         this.latentShape = builder.latentShape.clone();
-        this.summaryFile = config.checkpointDir() == null ? null : config.checkpointDir().resolve(SUMMARY_JSON_FILE_NAME);
-        this.historyFile = config.checkpointDir() == null ? null : config.checkpointDir().resolve(HISTORY_CSV_FILE_NAME);
+        this.summaryFile = config.checkpointDir() == null ? null
+                : config.checkpointDir().resolve(SUMMARY_JSON_FILE_NAME);
+        this.historyFile = config.checkpointDir() == null ? null
+                : config.checkpointDir().resolve(HISTORY_CSV_FILE_NAME);
         this.reportFile = config.checkpointDir() == null ? null : config.checkpointDir().resolve(REPORT_JSON_FILE_NAME);
         this.metadata = Map.copyOf(builder.metadata);
         this.roundHistoryMetadata = Map.copyOf(builder.roundHistoryMetadata);
@@ -123,7 +129,8 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
     }
 
     /**
-     * Creates a builder for configuring one Java-native DiffusionOPD training session.
+     * Creates a builder for configuring one Java-native DiffusionOPD training
+     * session.
      */
     public static Builder builder() {
         return new Builder();
@@ -148,8 +155,8 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
         Map<String, Double> weightedStageLoss = new LinkedHashMap<>();
         Map<String, Integer> taskStageUsage = new LinkedHashMap<>();
         Map<String, Double> taskStageWeightedLoss = new LinkedHashMap<>();
-        Map<String, Double> adaptiveTaskStageFactors =
-                DefaultDiffusionOpdTrainerAdaptiveSupport.initializeAdaptiveTaskStageFactors(config.tasks());
+        Map<String, Double> adaptiveTaskStageFactors = DefaultDiffusionOpdTrainerAdaptiveSupport
+                .initializeAdaptiveTaskStageFactors(config.tasks());
         DefaultDiffusionOpdTrainerRuntimeSupport.notifyTrainingStart(this, listeners);
 
         for (int round = 0; round < config.maxRounds() && !stopped.get(); round++) {
@@ -180,25 +187,29 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
                     try {
                         for (int tIndex = 0; tIndex < scheduler.timesteps().length && !stopped.get(); tIndex++) {
                             int timestep = scheduler.timesteps()[tIndex];
-                            StageAwareTeacherSelector.ResolvedTeacher resolvedTeacher =
-                                    teacherSelector.resolve(task, tIndex, teachers);
+                            StageAwareTeacherSelector.ResolvedTeacher resolvedTeacher = teacherSelector.resolve(task,
+                                    tIndex, teachers);
                             Tensor studentPrediction = student.predict(latents, conditioning, timestep);
-                            Tensor teacherPrediction = resolvedTeacher.teacher().predict(latents, conditioning, timestep);
-                            Tensor studentMean = transitionMeanAdapter.transitionMean(latents, studentPrediction, tIndex);
-                            Tensor teacherMean = transitionMeanAdapter.transitionMean(latents, teacherPrediction, tIndex);
+                            Tensor teacherPrediction = resolvedTeacher.teacher().predict(latents, conditioning,
+                                    timestep);
+                            Tensor studentMean = transitionMeanAdapter.transitionMean(latents, studentPrediction,
+                                    tIndex);
+                            Tensor teacherMean = transitionMeanAdapter.transitionMean(latents, teacherPrediction,
+                                    tIndex);
                             Tensor stepLoss = DiffusionOpdLosses.meanMatchingLoss(
                                     studentMean,
                                     teacherMean,
                                     config.samplerType(),
                                     transitionMeanAdapter.stepVariance(tIndex));
                             double baseStepLossValue = stepLoss.item();
-                            String taskStageKey =
-                                    DefaultDiffusionOpdTrainerAdaptiveSupport.taskStageKey(task.id(), resolvedTeacher.stageName());
-                            double effectiveStageWeight = DefaultDiffusionOpdTrainerAdaptiveSupport.effectiveStageWeight(
-                                    adaptiveStageWeighting,
-                                    taskStageKey,
-                                    resolvedTeacher,
-                                    adaptiveTaskStageFactors);
+                            String taskStageKey = DefaultDiffusionOpdTrainerAdaptiveSupport.taskStageKey(task.id(),
+                                    resolvedTeacher.stageName());
+                            double effectiveStageWeight = DefaultDiffusionOpdTrainerAdaptiveSupport
+                                    .effectiveStageWeight(
+                                            adaptiveStageWeighting,
+                                            taskStageKey,
+                                            resolvedTeacher,
+                                            adaptiveTaskStageFactors);
                             double weightedStepLossValue = baseStepLossValue * effectiveStageWeight;
                             optimizationStep.update(stepLoss.mul((float) effectiveStageWeight));
                             totalLoss += weightedStepLossValue;
@@ -286,7 +297,8 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
         metadata.put("adaptiveStageFactors",
                 DefaultDiffusionOpdTrainerAdaptiveSupport.aggregateStageFactors(adaptiveTaskStageFactors));
         metadata.put("adaptiveTaskStageFactors", Map.copyOf(adaptiveTaskStageFactors));
-        metadata.put("teacherBindings", DefaultDiffusionOpdTrainerRuntimeSupport.describeTeacherBindings(config.tasks()));
+        metadata.put("teacherBindings",
+                DefaultDiffusionOpdTrainerRuntimeSupport.describeTeacherBindings(config.tasks()));
         metadata.put("stopped", stopped.get());
         metadata.put("checkpointDir", String.valueOf(config.checkpointDir()));
         metadata.put("summaryFile", summaryFile == null ? null : summaryFile.toString());
@@ -341,7 +353,8 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
         }
     }
 
-    private static DiffusionPromptSample pickSample(List<DiffusionPromptSample> samples, Random random, int fallbackIndex) {
+    private static DiffusionPromptSample pickSample(List<DiffusionPromptSample> samples, Random random,
+            int fallbackIndex) {
         if (samples.size() == 1) {
             return samples.getFirst();
         }
@@ -353,8 +366,10 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
     }
 
     /**
-     * Fluent configuration surface for one DiffusionOPD trainer session, covering model wiring,
-     * task routing, runtime observers, checkpoint outputs, and adaptive weighting policy.
+     * Fluent configuration surface for one DiffusionOPD trainer session, covering
+     * model wiring,
+     * task routing, runtime observers, checkpoint outputs, and adaptive weighting
+     * policy.
      */
     public static final class Builder {
         private final List<DiffusionTask> tasks = new ArrayList<>();
@@ -372,7 +387,7 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
         private int maxRounds = 1;
         private long seed = 42L;
         private Path checkpointDir;
-        private long[] latentShape = new long[] {1, 4, 64, 64};
+        private long[] latentShape = new long[] { 1, 4, 64, 64 };
         private boolean adaptiveStageWeighting;
         private double adaptiveStageWeightMomentum = 0.5d;
         private double adaptiveStageWeightMinFactor = 0.75d;
@@ -468,13 +483,14 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
         }
 
         public Builder adaptiveStageWeightMomentum(double adaptiveStageWeightMomentum) {
-            this.adaptiveStageWeightMomentum =
-                    DefaultDiffusionOpdTrainerAdaptiveSupport.clamp(adaptiveStageWeightMomentum, 0.0d, 0.999d);
+            this.adaptiveStageWeightMomentum = DefaultDiffusionOpdTrainerAdaptiveSupport
+                    .clamp(adaptiveStageWeightMomentum, 0.0d, 0.999d);
             return this;
         }
 
         public Builder adaptiveStageWeightRange(double minFactor, double maxFactor) {
-            if (!Double.isFinite(minFactor) || !Double.isFinite(maxFactor) || minFactor <= 0.0d || maxFactor < minFactor) {
+            if (!Double.isFinite(minFactor) || !Double.isFinite(maxFactor) || minFactor <= 0.0d
+                    || maxFactor < minFactor) {
                 throw new IllegalArgumentException("adaptive stage weight range must be finite, > 0, and max >= min");
             }
             this.adaptiveStageWeightMinFactor = minFactor;
@@ -520,7 +536,8 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
         }
 
         public Builder roundHistoryMetadata(Map<String, Object> metadata) {
-            this.roundHistoryMetadata.putAll(Objects.requireNonNull(metadata, "round history metadata must not be null"));
+            this.roundHistoryMetadata
+                    .putAll(Objects.requireNonNull(metadata, "round history metadata must not be null"));
             return this;
         }
 
@@ -530,7 +547,8 @@ public final class DefaultDiffusionOpdTrainer implements DiffusionOpdSession {
         }
 
         /**
-         * Materializes the configured trainer session using the current builder state and defaulted
+         * Materializes the configured trainer session using the current builder state
+         * and defaulted
          * helper boundaries.
          */
         public DefaultDiffusionOpdTrainer build() {

@@ -1,11 +1,14 @@
-package tech.kayys.aljabr.core.memory;
+package tech.kayys.alkhawarizm.core.memory;
 
 import java.lang.foreign.MemorySegment;
 
 /** Buffer SPI — minimal contract used by CpuBuffer. */
 public interface Buffer {
     MemorySegment segment();
+
     long sizeBytes();
+
     void retain();
+
     void release();
 }

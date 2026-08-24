@@ -36,9 +36,10 @@ import java.util.List;
  * - Training time: ~5-10 minutes on CPU
  *
  * <h3>Usage</h3>
+ * 
  * <pre>{@code
  * // Run training
- * $ mvn exec:java -Dexec.mainClass="tech.kayys.aljabr.examples.MNISTCNNExample"
+ * $ mvn exec:java -Dexec.mainClass="tech.kayys.alkhawarizm.examples.MNISTCNNExample"
  *
  * // Expected output:
  * // Epoch 1/10 | Loss: 0.287 | Acc: 91.2% | Val Loss: 0.112 | Val Acc: 96.5%
@@ -126,11 +127,11 @@ public class MNISTCNNExample {
         System.out.println("╚════════════════════════════════════════════════════╝\n");
 
         TrainingConfig config = new TrainingConfig();
-        
+
         System.out.println("📚 Creating MNIST dataset...");
         MNISTDataset trainDataset = new MNISTDataset(true);
         MNISTDataset testDataset = new MNISTDataset(false);
-        
+
         System.out.printf("   Training samples: %d\n", trainDataset.size());
         System.out.printf("   Test samples: %d\n", testDataset.size());
         System.out.printf("   Batch size: %d\n", config.batchSize);
@@ -146,7 +147,7 @@ public class MNISTCNNExample {
                 .build();
         CosineAnnealingLR scheduler = new CosineAnnealingLR(optimizer, config.numEpochs, 1e-5f);
         CrossEntropyLoss criterion = new CrossEntropyLoss();
-        
+
         System.out.printf("   Model parameters: %d\n", countParameters(model));
         System.out.printf("   Optimizer: Adam (lr=%.4f)\n", config.learningRate);
         System.out.printf("   LR Scheduler: CosineAnnealing\n\n");
@@ -159,67 +160,67 @@ public class MNISTCNNExample {
             float trainLoss = 0f;
             int trainCorrect = 0;
             int totalTrain = 0;
-            
+
             // Training phase
             int numBatches = trainDataset.size() / config.batchSize;
             for (int batch = 0; batch < numBatches; batch++) {
                 optimizer.zeroGrad();
-                
+
                 // Get mini-batch
                 int[] indices = new int[config.batchSize];
                 for (int i = 0; i < config.batchSize; i++) {
                     indices[i] = batch * config.batchSize + i;
                 }
-                
+
                 GradTensor[] batch_data = trainDataset.getBatch(indices);
                 GradTensor images = batch_data[0];
                 GradTensor labels = batch_data[1];
-                
+
                 // Forward pass
                 GradTensor logits = model.forward(images);
                 GradTensor loss = criterion.compute(logits, labels);
-                
+
                 // Backward pass
                 loss.backward();
                 optimizer.step();
-                
+
                 trainLoss += loss.item();
                 trainCorrect += countCorrect(logits, labels);
                 totalTrain += config.batchSize;
             }
-            
+
             float avgTrainLoss = trainLoss / numBatches;
             float trainAccuracy = 100f * trainCorrect / totalTrain;
-            
+
             // Evaluation phase
             model.eval();
             int testCorrect = 0;
             int testTotal = 0;
             int testNumBatches = testDataset.size() / config.batchSize;
-            
+
             for (int batch = 0; batch < testNumBatches; batch++) {
                 int[] indices = new int[config.batchSize];
                 for (int i = 0; i < config.batchSize; i++) {
                     indices[i] = batch * config.batchSize + i;
                 }
-                
+
                 GradTensor[] batch_data = testDataset.getBatch(indices);
                 GradTensor images = batch_data[0];
                 GradTensor labels = batch_data[1];
-                
+
                 GradTensor logits = model.forward(images);
                 testCorrect += countCorrect(logits, labels);
                 testTotal += config.batchSize;
             }
-            
+
             float testAccuracy = 100f * testCorrect / testTotal;
             model.train();
-            
+
             // Update learning rate
             scheduler.step();
-            
+
             System.out.printf("%5d | %.6f | %7.2f%% | %7.2f%%\n",
-                epoch, avgTrainLoss, trainAccuracy, testAccuracy);
+                    epoch, avgTrainLoss, trainAccuracy, testAccuracy);
         }
 
         System.out.println("\n" + "─".repeat(50));
@@ -239,17 +240,18 @@ public class MNISTCNNExample {
     private static int countCorrect(GradTensor logits, GradTensor labels) {
         float[] logitsData = logits.data();
         float[] labelsData = labels.data();
-        
+
         int batchSize = (int) logits.shape()[0];
         int numClasses = (int) logits.shape()[1];
         int correct = 0;
-        
+
         for (int i = 0; i < batchSize; i++) {
             int predicted = argmax(logitsData, i * numClasses, numClasses);
             int actual = (int) labelsData[i];
-            if (predicted == actual) correct++;
+            if (predicted == actual)
+                correct++;
         }
-        
+
         return correct;
     }
 
@@ -266,7 +268,8 @@ public class MNISTCNNExample {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // MNIST Dataset (placeholder - tech.kayys.tafkir.train.data.Dataset not available)
+    // MNIST Dataset (placeholder - tech.kayys.tafkir.train.data.Dataset not
+    // available)
     // ─────────────────────────────────────────────────────────────────────────
 
     static class MNISTDataset {
@@ -277,22 +280,23 @@ public class MNISTCNNExample {
             int numSamples = training ? 60000 : 10000;
             images = new ArrayList<>();
             labels = new ArrayList<>();
-            
+
             // Generate synthetic MNIST-like data for demonstration
             for (int i = 0; i < numSamples; i++) {
                 float[] img = new float[28 * 28];
                 int label = i % 10;
-                
+
                 // Generate digit-like patterns
                 for (int y = 0; y < 28; y++) {
                     for (int x = 0; x < 28; x++) {
                         float val = (float) Math.random();
                         // Add digit-specific patterns
-                        if (Math.random() < 0.3) val += 0.5f;
+                        if (Math.random() < 0.3)
+                            val += 0.5f;
                         img[y * 28 + x] = Math.min(1f, val);
                     }
                 }
-                
+
                 images.add(img);
                 labels.add(label);
             }
@@ -305,15 +309,15 @@ public class MNISTCNNExample {
         public GradTensor[] getBatch(int[] indices) {
             float[] batchImages = new float[indices.length * 28 * 28];
             float[] batchLabels = new float[indices.length];
-            
+
             for (int i = 0; i < indices.length; i++) {
                 System.arraycopy(images.get(indices[i]), 0, batchImages, i * 28 * 28, 28 * 28);
                 batchLabels[i] = labels.get(indices[i]);
             }
-            
-            return new GradTensor[]{
-                GradTensor.of(batchImages, indices.length, 1, 28, 28),
-                GradTensor.of(batchLabels)
+
+            return new GradTensor[] {
+                    GradTensor.of(batchImages, indices.length, 1, 28, 28),
+                    GradTensor.of(batchLabels)
             };
         }
     }

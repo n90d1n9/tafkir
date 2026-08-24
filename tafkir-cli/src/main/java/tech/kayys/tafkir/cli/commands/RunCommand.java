@@ -980,28 +980,28 @@ public class RunCommand implements Runnable {
                         gemma4MobileQatSelection.cacheHit(),
                         gemma4MobileQatSelection.cacheKind());
             }
-            DirectSafetensorRoutePolicy.AlternateRuntimeSelection gemma4TextSelection =
+            DirectSafetensorRoutePolicy.AlternateRuntimeSelection nativeBf16MatvecSelection =
                     DirectSafetensorRoutePolicy.selectGemma4TextAlternateRuntime(
                             providerId, modelId, finalLocalPath, providerExplicit,
                             preferAlternateRuntime, this::isRuntimeRouteActive);
-            if (!quietRouteResolutionOutput() && gemma4TextSelection.hasNotice()) {
-                System.out.println(gemma4TextSelection.notice());
+            if (!quietRouteResolutionOutput() && nativeBf16MatvecSelection.hasNotice()) {
+                System.out.println(nativeBf16MatvecSelection.notice());
             }
-            if (gemma4TextSelection.selected()) {
+            if (nativeBf16MatvecSelection.selected()) {
                 String previousProviderId = providerId;
                 String previousFormat = format;
-                providerId = gemma4TextSelection.provider();
-                finalLocalPath = gemma4TextSelection.localPath();
+                providerId = nativeBf16MatvecSelection.provider();
+                finalLocalPath = nativeBf16MatvecSelection.localPath();
                 modelId = finalLocalPath;
-                format = gemma4TextSelection.format();
+                format = nativeBf16MatvecSelection.format();
                 runnerRouteReport = runnerRouteReport.withRuntimeRedirect(
                         previousProviderId,
                         previousFormat,
                         providerId,
                         format,
-                        gemma4TextSelection.reason(),
-                        gemma4TextSelection.cacheHit(),
-                        gemma4TextSelection.cacheKind());
+                        nativeBf16MatvecSelection.reason(),
+                        nativeBf16MatvecSelection.cacheHit(),
+                        nativeBf16MatvecSelection.cacheKind());
             }
             DirectSafetensorRoutePolicy.AlternateRuntimeSelection communityTextGgufSelection =
                     DirectSafetensorRoutePolicy.selectCommunityTextGgufAlternateRuntime(

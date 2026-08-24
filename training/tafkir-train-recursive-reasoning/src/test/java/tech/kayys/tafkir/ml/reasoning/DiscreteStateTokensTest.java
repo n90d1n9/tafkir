@@ -7,34 +7,34 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import tech.kayys.aljabr.core.backend.ComputeBackend;
-import tech.kayys.aljabr.core.tensor.DType;
-import tech.kayys.aljabr.core.tensor.DeviceType;
-import tech.kayys.aljabr.core.tensor.Shape;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.backend.ComputeBackend;
+import tech.kayys.alkhawarizm.core.tensor.DType;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.Shape;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 class DiscreteStateTokensTest {
     @Test
     void attachesAndDecodesDefaultTokenMetadata() {
         RecursiveReasoningState state = state(Map.of("keep", "yes"));
-        int[] tokens = {1, 2, 3};
+        int[] tokens = { 1, 2, 3 };
 
         RecursiveReasoningState updated = DiscreteStateTokens.attach(state, tokens);
         tokens[0] = 9;
 
         assertEquals("yes", updated.metadata().get("keep"));
-        assertArrayEquals(new int[] {1, 2, 3}, DiscreteStateTokens.defaultDecoder().decodeTokens(updated));
+        assertArrayEquals(new int[] { 1, 2, 3 }, DiscreteStateTokens.defaultDecoder().decodeTokens(updated));
         int[] exposed = DiscreteStateTokens.defaultDecoder().decodeTokens(updated);
         exposed[1] = 9;
-        assertArrayEquals(new int[] {1, 2, 3}, DiscreteStateTokens.defaultDecoder().decodeTokens(updated));
+        assertArrayEquals(new int[] { 1, 2, 3 }, DiscreteStateTokens.defaultDecoder().decodeTokens(updated));
     }
 
     @Test
     void decodesCommonNumericMetadataShapes() {
-        assertArrayEquals(new int[] {1, 2}, decode(Map.of("tokens", new int[] {1, 2})));
-        assertArrayEquals(new int[] {3, 4}, decode(Map.of("tokens", new long[] {3L, 4L})));
-        assertArrayEquals(new int[] {5, 6}, decode(Map.of("tokens", new Number[] {5, 6L})));
-        assertArrayEquals(new int[] {7, 8}, decode(Map.of("tokens", List.of(7, 8L))));
+        assertArrayEquals(new int[] { 1, 2 }, decode(Map.of("tokens", new int[] { 1, 2 })));
+        assertArrayEquals(new int[] { 3, 4 }, decode(Map.of("tokens", new long[] { 3L, 4L })));
+        assertArrayEquals(new int[] { 5, 6 }, decode(Map.of("tokens", new Number[] { 5, 6L })));
+        assertArrayEquals(new int[] { 7, 8 }, decode(Map.of("tokens", List.of(7, 8L))));
     }
 
     @Test
@@ -42,7 +42,7 @@ class DiscreteStateTokensTest {
         RecursiveReasoningState state = state(Map.of("tokens", List.of(1, 2, 3)));
 
         assertArrayEquals(
-                new int[] {1, 2, 3},
+                new int[] { 1, 2, 3 },
                 DiscreteStateTokenDecoder.fromMetadata("tokens", 3).decodeTokens(state));
         assertThrows(
                 IllegalArgumentException.class,
@@ -69,13 +69,13 @@ class DiscreteStateTokensTest {
         RecursiveReasoningState updated = DiscreteStateTokens.attachProjection(
                 state(Map.of()),
                 "tokens",
-                new int[] {0, 1},
+                new int[] { 0, 1 },
                 "mode",
                 "row-argmax",
                 "projection",
                 Map.of("source", "test"));
 
-        assertArrayEquals(new int[] {0, 1}, DiscreteStateTokenDecoder.fromMetadata("tokens").decodeTokens(updated));
+        assertArrayEquals(new int[] { 0, 1 }, DiscreteStateTokenDecoder.fromMetadata("tokens").decodeTokens(updated));
         assertEquals("row-argmax", updated.metadata().get("mode"));
         assertEquals("test", ((Map<?, ?>) updated.metadata().get("projection")).get("source"));
     }
@@ -110,80 +110,190 @@ class DiscreteStateTokensTest {
         }
 
         @Override
-        public Tensor add(Tensor other) { return this; }
+        public Tensor add(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor sub(Tensor other) { return this; }
+        public Tensor sub(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor mul(Tensor other) { return this; }
+        public Tensor mul(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor mul(float scalar) { return this; }
+        public Tensor mul(float scalar) {
+            return this;
+        }
+
         @Override
-        public Tensor div(float scalar) { return this; }
+        public Tensor div(float scalar) {
+            return this;
+        }
+
         @Override
-        public Tensor matmul(Tensor other) { return this; }
+        public Tensor matmul(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor reshape(long... newShape) { return this; }
+        public Tensor reshape(long... newShape) {
+            return this;
+        }
+
         @Override
-        public Tensor softmax() { return this; }
+        public Tensor softmax() {
+            return this;
+        }
+
         @Override
-        public Tensor slice(long[] offsets, long[] sizes) { return this; }
+        public Tensor slice(long[] offsets, long[] sizes) {
+            return this;
+        }
+
         @Override
-        public Tensor pow(float exponent) { return this; }
+        public Tensor pow(float exponent) {
+            return this;
+        }
+
         @Override
-        public Tensor mean() { return this; }
+        public Tensor mean() {
+            return this;
+        }
+
         @Override
-        public Tensor abs() { return this; }
+        public Tensor abs() {
+            return this;
+        }
+
         @Override
-        public Tensor crossEntropy(Tensor target) { return this; }
+        public Tensor crossEntropy(Tensor target) {
+            return this;
+        }
+
         @Override
-        public Tensor binaryCrossEntropy(Tensor target) { return this; }
+        public Tensor binaryCrossEntropy(Tensor target) {
+            return this;
+        }
+
         @Override
-        public Tensor div(Tensor other) { return this; }
+        public Tensor div(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor add(float scalar) { return this; }
+        public Tensor add(float scalar) {
+            return this;
+        }
+
         @Override
-        public Tensor zerosLike() { return this; }
+        public Tensor zerosLike() {
+            return this;
+        }
+
         @Override
-        public Tensor sqrt() { return this; }
+        public Tensor sqrt() {
+            return this;
+        }
+
         @Override
-        public Tensor cast(DType dtype) { return this; }
+        public Tensor cast(DType dtype) {
+            return this;
+        }
+
         @Override
-        public Tensor to(DeviceType device) { return this; }
+        public Tensor to(DeviceType device) {
+            return this;
+        }
+
         @Override
-        public float item() { return 0f; }
+        public float item() {
+            return 0f;
+        }
+
         @Override
-        public void backward() {}
+        public void backward() {
+        }
+
         @Override
-        public Tensor grad() { return this; }
+        public Tensor grad() {
+            return this;
+        }
+
         @Override
-        public void setGrad(Tensor grad) {}
+        public void setGrad(Tensor grad) {
+        }
+
         @Override
-        public boolean requiresGrad() { return false; }
+        public boolean requiresGrad() {
+            return false;
+        }
+
         @Override
-        public void setRequiresGrad(boolean requiresGrad) {}
+        public void setRequiresGrad(boolean requiresGrad) {
+        }
+
         @Override
-        public Tensor relu() { return this; }
+        public Tensor relu() {
+            return this;
+        }
+
         @Override
-        public Tensor sigmoid() { return this; }
+        public Tensor sigmoid() {
+            return this;
+        }
+
         @Override
-        public Tensor tanh() { return this; }
+        public Tensor tanh() {
+            return this;
+        }
+
         @Override
-        public Tensor log() { return this; }
+        public Tensor log() {
+            return this;
+        }
+
         @Override
-        public Tensor exp() { return this; }
+        public Tensor exp() {
+            return this;
+        }
+
         @Override
-        public Tensor silu() { return this; }
+        public Tensor silu() {
+            return this;
+        }
+
         @Override
-        public Tensor flatten() { return this; }
+        public Tensor flatten() {
+            return this;
+        }
+
         @Override
-        public Tensor unsqueeze(int dim) { return this; }
+        public Tensor unsqueeze(int dim) {
+            return this;
+        }
+
         @Override
-        public Tensor squeeze() { return this; }
+        public Tensor squeeze() {
+            return this;
+        }
+
         @Override
-        public Tensor transpose() { return this; }
+        public Tensor transpose() {
+            return this;
+        }
+
         @Override
-        public Tensor transpose(int dim0, int dim1) { return this; }
+        public Tensor transpose(int dim0, int dim1) {
+            return this;
+        }
+
         @Override
-        public long numel() { return 1L; }
+        public long numel() {
+            return 1L;
+        }
     }
 }

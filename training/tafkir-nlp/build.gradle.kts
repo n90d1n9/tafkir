@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "tech.kayys.aljabr"
+group = "tech.kayys.alkhawarizm"
 version = "0.1.0-SNAPSHOT"
 
 java {
@@ -20,13 +20,13 @@ repositories {
 dependencies {
     implementation(project(":ml:tafkir-ml-nn"))
     implementation(project(":ml:tafkir-ml-autograd"))
-    implementation(project(":core:aljabr-tokenizer-core"))
-   // implementation(project(":sdk:aljabr-sdk-api"))
+    implementation(project(":core:alkhawarizm-tokenizer-core"))
+   // implementation(project(":sdk:alkhawarizm-sdk-api"))
     implementation(project(":ml:tafkir-ml-optimize"))
     implementation(project(":ml:tafkir-ml-selection"))
     implementation(project(":ml:tafkir-ml-data"))
-   // implementation(project(":spi:aljabr-spi-inference"))
-   // implementation(project(":spi:aljabr-spi-multimodal"))
+   // implementation(project(":spi:alkhawarizm-spi-inference"))
+   // implementation(project(":spi:alkhawarizm-spi-multimodal"))
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter")
 }
 

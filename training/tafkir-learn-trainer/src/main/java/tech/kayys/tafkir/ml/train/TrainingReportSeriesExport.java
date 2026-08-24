@@ -14,7 +14,7 @@ public record TrainingReportSeriesExport(
         List<String> seriesNames,
         List<Map<String, Object>> rows,
         List<Map<String, Object>> points) {
-    public static final String SCHEMA = "aljabr.training.report.series-export.v1";
+    public static final String SCHEMA = "alkhawarizm.training.report.series-export.v1";
 
     public TrainingReportSeriesExport {
         seriesNames = seriesNames == null ? List.of() : List.copyOf(seriesNames);

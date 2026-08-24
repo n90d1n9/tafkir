@@ -1,9 +1,5 @@
 package tech.kayys.tafkir.ml.autograd;
 
-import tech.kayys.aljabr.autograd.AutogradEngine;
-import tech.kayys.aljabr.autograd.GradRegistry;
-import tech.kayys.aljabr.ir.GGraph;
-import tech.kayys.aljabr.ir.GValueId;
 import tech.kayys.tafkir.ml.tensor.TafkirTensor;
 
 import java.util.List;

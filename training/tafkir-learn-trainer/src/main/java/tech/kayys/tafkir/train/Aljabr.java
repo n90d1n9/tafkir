@@ -5,7 +5,7 @@ import static tech.kayys.tafkir.ml.AljabrTrainingOptionValidators.*;
 import tech.kayys.tafkir.ml.autograd.GradTensor;
 import tech.kayys.tafkir.ml.autograd.NoGrad;
 import tech.kayys.tafkir.ml.nn.NNModule;
-import tech.kayys.aljabr.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
 import tech.kayys.tafkir.ml.optim.GradScaler;
 import tech.kayys.tafkir.ml.optim.LRScheduler;
 import tech.kayys.tafkir.ml.optim.Optimizer;
@@ -148,8 +148,8 @@ public final class Aljabr {
                 focalGamma = normalizeFocalGamma(focalGamma);
                 focalAlpha = normalizeFocalAlpha(focalAlpha);
                 focalClassWeights = normalizeFocalClassWeights(focalClassWeights);
-                causalLanguageModelingIgnoreIndex =
-                        normalizeCausalLanguageModelingIgnoreIndex(causalLanguageModelingIgnoreIndex);
+                causalLanguageModelingIgnoreIndex = normalizeCausalLanguageModelingIgnoreIndex(
+                        causalLanguageModelingIgnoreIndex);
                 bcePositiveWeights = normalizeBcePositiveWeights(bcePositiveWeights);
                 pinballQuantiles = normalizePinballQuantiles(pinballQuantiles);
                 intervalAlpha = normalizeIntervalAlpha(intervalAlpha);

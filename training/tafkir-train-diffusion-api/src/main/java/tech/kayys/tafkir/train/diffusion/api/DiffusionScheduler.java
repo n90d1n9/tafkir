@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.train.diffusion.api;
 
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 /**
  * Java-first scheduler contract for diffusion training loops.

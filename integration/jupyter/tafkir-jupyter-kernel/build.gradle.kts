@@ -23,11 +23,11 @@ dependencies {
     implementation(group = "org.dflib.jjava", name = "jjava", version = "1.0-a4")
     // The kernel itself only needs Tafkir ML jars at runtime so notebook
     // snippets can import them; source compilation uses reflection.
-    runtimeOnly("tech.kayys.aljabr:aljabr-tensor:0.1.0-SNAPSHOT")
+    runtimeOnly("tech.kayys.alkhawarizm:alkhawarizm-tensor:0.1.0-SNAPSHOT")
     runtimeOnly(project(":ml:tafkir-ml-autograd"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("tech.kayys.aljabr:aljabr-tensor:0.1.0-SNAPSHOT")
-    testImplementation("tech.kayys.aljabr:aljabr-core:0.1.0-SNAPSHOT")
+    testImplementation("tech.kayys.alkhawarizm:alkhawarizm-tensor:0.1.0-SNAPSHOT")
+    testImplementation("tech.kayys.alkhawarizm:alkhawarizm-core:0.1.0-SNAPSHOT")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

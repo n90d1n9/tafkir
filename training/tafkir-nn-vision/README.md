@@ -17,8 +17,8 @@ Computer vision layers, transforms, and pre-trained models for image classificat
 ### Image Classification with ResNet
 
 ```java
-import tech.kayys.aljabr.lib.vision.models.ResNet;
-import tech.kayys.aljabr.lib.vision.transforms.Transform;
+import tech.kayys.alkhawarizm.lib.vision.models.ResNet;
+import tech.kayys.alkhawarizm.lib.vision.transforms.Transform;
 import tech.kayys.tafkir.ml.autograd.GradTensor;
 
 // Create ResNet-18 for 1000-class ImageNet
@@ -49,7 +49,7 @@ System.out.println("Predicted class: " + predictedClass);
 ### Building Custom Vision Models
 
 ```java
-import tech.kayys.aljabr.lib.vision.layers.*;
+import tech.kayys.alkhawarizm.lib.vision.layers.*;
 
 // Build a simple CNN
 Conv2d conv1 = new Conv2d(3, 64, 3, 1, 1);
@@ -162,7 +162,7 @@ GradTensor tensor = transform.apply(image);
 
 ```xml
 <dependency>
-    <groupId>tech.kayys.aljabr</groupId>
+    <groupId>tech.kayys.alkhawarizm</groupId>
     <artifactId>tafkir-ml-vision</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 </dependency>
@@ -171,9 +171,9 @@ GradTensor tensor = transform.apply(image);
 ## Training Example
 
 ```java
-import tech.kayys.aljabr.lib.train.Trainer;
-import tech.kayys.aljabr.lib.optimize.AdamW;
-import tech.kayys.aljabr.lib.vision.models.ResNet;
+import tech.kayys.alkhawarizm.lib.train.Trainer;
+import tech.kayys.alkhawarizm.lib.optimize.AdamW;
+import tech.kayys.alkhawarizm.lib.vision.models.ResNet;
 
 // Create model
 ResNet model = ResNet.resnet18(numClasses=10);

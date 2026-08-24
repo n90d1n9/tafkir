@@ -13,9 +13,9 @@ final class TrainingReportPerformanceGateJUnitXml {
         }
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr-trainer-performance-gate\" tests=\"1\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm-trainer-performance-gate\" tests=\"1\" failures=\""
                 + (result.passed() ? "0" : "1") + "\">");
-        appendLine(xml, "  <testcase classname=\"aljabr.training\" name=\"performance-gate\">");
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training\" name=\"performance-gate\">");
         if (!result.passed()) {
             appendLine(xml, "    <failure type=\"" + escapeXml(failureType(result)) + "\" message=\""
                     + escapeXml(result.message()) + "\">" + escapeXml(findingCodes(result)) + "</failure>");

@@ -2,10 +2,10 @@ package tech.kayys.tafkir.ml.export;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import tech.kayys.aljabr.gguf.core.GgmlType;
-import tech.kayys.aljabr.gguf.loader.GGUFModel;
-import tech.kayys.aljabr.gguf.loader.GGUFParser;
-import tech.kayys.aljabr.gguf.loader.GGUFReader;
+import tech.kayys.alkhawarizm.gguf.core.GgmlType;
+import tech.kayys.alkhawarizm.gguf.loader.GGUFModel;
+import tech.kayys.alkhawarizm.gguf.loader.GGUFParser;
+import tech.kayys.alkhawarizm.gguf.loader.GGUFReader;
 import tech.kayys.tafkir.ml.nn.layer.Linear;
 
 import java.lang.foreign.Arena;
@@ -31,7 +31,7 @@ class ModelExporterTest {
                 .model(model)
                 .inputShape(1, 2)
                 .metadata(Map.of(
-                        "architecture", "aljabr-linear",
+                        "architecture", "alkhawarizm-linear",
                         "general.name", "linear-smoke",
                         "trainer.tags", List.of("java", "gguf")))
                 .build()
@@ -40,7 +40,7 @@ class ModelExporterTest {
         assertTrue(Files.size(output) > 0);
         GGUFModel parsed = parse(output);
         assertEquals(3, parsed.version());
-        assertEquals("aljabr-linear", parsed.metadata().get("general.architecture"));
+        assertEquals("alkhawarizm-linear", parsed.metadata().get("general.architecture"));
         assertEquals("linear-smoke", parsed.metadata().get("general.name"));
         assertEquals(2, parsed.tensors().size());
         assertTrue(parsed.tensors().stream().anyMatch(tensor -> tensor.name().equals("weight")));
@@ -55,7 +55,7 @@ class ModelExporterTest {
         ModelExporter.builder()
                 .model(model)
                 .inputShape(1, 32)
-                .metadata(Map.of("architecture", "aljabr-linear"))
+                .metadata(Map.of("architecture", "alkhawarizm-linear"))
                 .build()
                 .toGGUF(output, ModelExporter.Quantization.INT4);
 

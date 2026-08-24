@@ -1001,7 +1001,7 @@ class DirectSafetensorRoutePolicyTest {
     }
 
     @Test
-    void gemma4TextSafetensorRoutePassesGemma4UnifiedGuard() throws Exception {
+    void nativeBf16MatvecSafetensorRoutePassesGemma4UnifiedGuard() throws Exception {
         Path modelDir = modelDir("gemma4_text", "Gemma4ForCausalLM");
 
         DirectSafetensorRoutePolicy.RouteValidation validation =
@@ -1014,7 +1014,7 @@ class DirectSafetensorRoutePolicyTest {
     }
 
     @Test
-    void gemma4TextSafetensorRouteSwitchesToLocalGgufEquivalentWhenAuto() throws Exception {
+    void nativeBf16MatvecSafetensorRouteSwitchesToLocalGgufEquivalentWhenAuto() throws Exception {
         Path modelDir = modelDir("gemma4", "Gemma4ForConditionalGeneration");
         Path gguf = Files.writeString(tempDir.resolve("gemma-4-E2B-it-Q4_K_M.gguf"), "");
 
@@ -1036,7 +1036,7 @@ class DirectSafetensorRoutePolicyTest {
     }
 
     @Test
-    void gemma4TextSafetensorRouteHonorsExplicitSafetensorProvider() throws Exception {
+    void nativeBf16MatvecSafetensorRouteHonorsExplicitSafetensorProvider() throws Exception {
         Path modelDir = modelDir("gemma4", "Gemma4ForConditionalGeneration");
         Path gguf = Files.writeString(tempDir.resolve("gemma-4-E2B-it-explicit-Q4_K_M.gguf"), "");
 
@@ -1055,7 +1055,7 @@ class DirectSafetensorRoutePolicyTest {
     }
 
     @Test
-    void gemma4TextSafetensorRouteCanBeForcedToGgufWithAlternatePreference() throws Exception {
+    void nativeBf16MatvecSafetensorRouteCanBeForcedToGgufWithAlternatePreference() throws Exception {
         Path modelDir = modelDir("gemma4", "Gemma4ForConditionalGeneration");
         Path gguf = Files.writeString(tempDir.resolve("gemma-4-E2B-it-forced-Q4_K_M.gguf"), "");
 
@@ -1075,7 +1075,7 @@ class DirectSafetensorRoutePolicyTest {
     }
 
     @Test
-    void gemma4TextSafetensorRouteReusesCachedGgufEquivalentBeforeResolver() throws Exception {
+    void nativeBf16MatvecSafetensorRouteReusesCachedGgufEquivalentBeforeResolver() throws Exception {
         Path modelDir = modelDir("gemma4", "Gemma4ForConditionalGeneration");
         Path gguf = Files.writeString(tempDir.resolve("gemma-4-E2B-it-cache-Q4_K_M.gguf"), "");
         Path cacheDir = Files.createDirectory(tempDir.resolve("gemma4-text-gguf-route-cache"));

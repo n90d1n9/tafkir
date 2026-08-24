@@ -20,7 +20,7 @@ class TrainerCheckpointIOTest {
 
     @Test
     void writeStringAtomicallyCreatesParentAndRemovesTempFile() throws Exception {
-        Path target = Files.createTempDirectory("aljabr-checkpoint-io").resolve("nested/state.txt");
+        Path target = Files.createTempDirectory("alkhawarizm-checkpoint-io").resolve("nested/state.txt");
 
         TrainerCheckpointIO.writeStringAtomically(target, "checkpoint-ready");
 
@@ -30,7 +30,7 @@ class TrainerCheckpointIOTest {
 
     @Test
     void writeMapAtomicallyRoundTripsStringKeyedState() throws Exception {
-        Path target = Files.createTempDirectory("aljabr-checkpoint-map").resolve("optimizer.state");
+        Path target = Files.createTempDirectory("alkhawarizm-checkpoint-map").resolve("optimizer.state");
         Map<String, Object> state = new LinkedHashMap<>();
         state.put("step", 7);
         state.put("class", "SGD");
@@ -44,7 +44,7 @@ class TrainerCheckpointIOTest {
 
     @Test
     void writePropertiesAtomicallyPersistsLoadableProperties() throws Exception {
-        Path target = Files.createTempDirectory("aljabr-checkpoint-properties").resolve("manifest.properties");
+        Path target = Files.createTempDirectory("alkhawarizm-checkpoint-properties").resolve("manifest.properties");
         Properties properties = new Properties();
         properties.setProperty("formatVersion", "1");
         properties.setProperty("artifact.model.bytes", "42");
@@ -62,7 +62,7 @@ class TrainerCheckpointIOTest {
 
     @Test
     void readMapReportsArtifactNameForNonMapPayload() throws Exception {
-        Path target = Files.createTempDirectory("aljabr-checkpoint-invalid-payload").resolve("scheduler.state");
+        Path target = Files.createTempDirectory("alkhawarizm-checkpoint-invalid-payload").resolve("scheduler.state");
         writeObject(target, List.of("not", "a", "map"));
 
         IOException error = assertThrows(
@@ -75,7 +75,7 @@ class TrainerCheckpointIOTest {
 
     @Test
     void readMapReportsArtifactNameForNonStringKeys() throws Exception {
-        Path target = Files.createTempDirectory("aljabr-checkpoint-invalid-key").resolve("grad-scaler.state");
+        Path target = Files.createTempDirectory("alkhawarizm-checkpoint-invalid-key").resolve("grad-scaler.state");
         writeObject(target, Map.of(1, "bad-key"));
 
         IOException error = assertThrows(
@@ -88,7 +88,7 @@ class TrainerCheckpointIOTest {
 
     @Test
     void writeAtomicallyDeletesTempFileAfterWriterFailure() throws Exception {
-        Path target = Files.createTempDirectory("aljabr-checkpoint-failure").resolve("state.txt");
+        Path target = Files.createTempDirectory("alkhawarizm-checkpoint-failure").resolve("state.txt");
 
         IOException error = assertThrows(IOException.class, () -> TrainerCheckpointIO.writeAtomically(target, temp -> {
             Files.writeString(temp, "partial", StandardCharsets.UTF_8);
@@ -102,7 +102,7 @@ class TrainerCheckpointIOTest {
 
     @Test
     void sha256HexMatchesKnownDigest() throws Exception {
-        Path target = Files.createTempDirectory("aljabr-checkpoint-sha").resolve("payload.bin");
+        Path target = Files.createTempDirectory("alkhawarizm-checkpoint-sha").resolve("payload.bin");
         Files.writeString(target, "abc", StandardCharsets.UTF_8);
 
         assertEquals(

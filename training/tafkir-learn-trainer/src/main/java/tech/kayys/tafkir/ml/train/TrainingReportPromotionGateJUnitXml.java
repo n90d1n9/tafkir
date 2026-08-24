@@ -20,7 +20,7 @@ public final class TrainingReportPromotionGateJUnitXml {
 
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.promotion\" tests=\"1\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.promotion\" tests=\"1\" failures=\""
                 + (result.passed() ? "0" : "1")
                 + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
@@ -38,7 +38,7 @@ public final class TrainingReportPromotionGateJUnitXml {
         property(xml, "sourceReports.count", Integer.toString(sourceVerification.reports().size()));
         property(xml, "sourceReports.failures", Integer.toString(sourceVerification.failures().size()));
         appendLine(xml, "  </properties>");
-        appendLine(xml, "  <testcase classname=\"aljabr.training.promotion\" name=\""
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.promotion\" name=\""
                 + escapeXml(testName)
                 + "\" time=\"0\">");
         if (!result.passed()) {

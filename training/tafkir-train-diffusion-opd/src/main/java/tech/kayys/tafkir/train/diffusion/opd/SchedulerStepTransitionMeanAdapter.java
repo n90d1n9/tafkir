@@ -1,13 +1,14 @@
 package tech.kayys.tafkir.train.diffusion.opd;
 
 import java.util.Objects;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionScheduler;
 
 /**
  * Adapts a scheduler step into the transition-mean view used by OPD.
  *
- * <p>This is the default bridge when a {@link DiffusionScheduler} already
+ * <p>
+ * This is the default bridge when a {@link DiffusionScheduler} already
  * exposes the executable transition step directly and no extra backend
  * translation layer is needed.
  */
@@ -19,7 +20,8 @@ public final class SchedulerStepTransitionMeanAdapter implements TransitionMeanA
     }
 
     /**
-     * Delegates directly to the scheduler step so OPD can supervise the scheduler-native
+     * Delegates directly to the scheduler step so OPD can supervise the
+     * scheduler-native
      * transition mean without another translation layer.
      */
     @Override
@@ -28,7 +30,8 @@ public final class SchedulerStepTransitionMeanAdapter implements TransitionMeanA
     }
 
     /**
-     * Uses unit variance for scheduler-step adapters that only expose the mean path directly.
+     * Uses unit variance for scheduler-step adapters that only expose the mean path
+     * directly.
      */
     @Override
     public float stepVariance(int timestepIndex) {

@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import tech.kayys.aljabr.core.backend.ComputeBackend;
-import tech.kayys.aljabr.core.tensor.DType;
-import tech.kayys.aljabr.core.tensor.DeviceType;
-import tech.kayys.aljabr.core.tensor.Shape;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.backend.ComputeBackend;
+import tech.kayys.alkhawarizm.core.tensor.DType;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.Shape;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 class RecursiveReasoningContractsTest {
     @Test
@@ -74,8 +74,8 @@ class RecursiveReasoningContractsTest {
 
     @Test
     void rolloutSummaryNormalizesMetadata() {
-        RecursiveReasoningRolloutSummary summary =
-                new RecursiveReasoningRolloutSummary(4, 2, "best", Map.of("selector", "lprm"));
+        RecursiveReasoningRolloutSummary summary = new RecursiveReasoningRolloutSummary(4, 2, "best",
+                Map.of("selector", "lprm"));
 
         assertEquals(4, summary.exploredTrajectoryCount());
         assertEquals("best", summary.selectedStateId());

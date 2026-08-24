@@ -15,7 +15,7 @@ public final class TrainingReportRuntimeEfficiencyGateJUnitXml {
         String markdown = result.markdown();
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.runtime.efficiency\" tests=\"1\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.runtime.efficiency\" tests=\"1\" failures=\""
                 + (result.passed() ? "0" : "1")
                 + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
@@ -30,7 +30,7 @@ public final class TrainingReportRuntimeEfficiencyGateJUnitXml {
         property(xml, "policy.maxBottleneckPercent",
                 Double.toString(result.policy().maxBottleneckPercent()));
         appendLine(xml, "  </properties>");
-        appendLine(xml, "  <testcase classname=\"aljabr.training.runtime.efficiency\" "
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.runtime.efficiency\" "
                 + "name=\"validate runtime efficiency\" time=\"0\">");
         if (!result.passed()) {
             appendLine(xml, "    <failure type=\"" + escapeXml(failureType(result))

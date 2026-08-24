@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
 import java.util.function.UnaryOperator;
-import tech.kayys.aljabr.tokenizer.spi.Tokenizer;
-import tech.kayys.aljabr.tokenizer.spi.EncodeOptions;
+import tech.kayys.alkhawarizm.tokenizer.spi.Tokenizer;
+import tech.kayys.alkhawarizm.tokenizer.spi.EncodeOptions;
 
 /**
  * Text dataset — loads text samples from a directory or file for NLP training.
@@ -16,7 +16,8 @@ import tech.kayys.aljabr.tokenizer.spi.EncodeOptions;
  * Supports two formats:
  * <ul>
  * <li>Classification: directory with one subdirectory per class</li>
- * <li>Language modeling: single text file or packed text corpus, split into fixed-length chunks</li>
+ * <li>Language modeling: single text file or packed text corpus, split into
+ * fixed-length chunks</li>
  * </ul>
  *
  * <h3>Example — classification</h3>
@@ -119,7 +120,8 @@ public final class TokenizedDataset implements Dataset<Dataset.Sample> {
     }
 
     /**
-     * Loads a language modeling dataset from a single text file with overlapping chunks.
+     * Loads a language modeling dataset from a single text file with overlapping
+     * chunks.
      *
      * @param file      path to text file
      * @param tokenizer tokenizer for encoding
@@ -140,10 +142,12 @@ public final class TokenizedDataset implements Dataset<Dataset.Sample> {
     }
 
     /**
-     * Loads a packed language modeling dataset from multiple text files in caller-provided order.
+     * Loads a packed language modeling dataset from multiple text files in
+     * caller-provided order.
      *
      * <p>
-     * Each file is tokenized independently, then non-empty documents are packed with the tokenizer
+     * Each file is tokenized independently, then non-empty documents are packed
+     * with the tokenizer
      * EOS token between documents before next-token windows are produced.
      */
     public static TokenizedDataset fromFiles(
@@ -154,7 +158,8 @@ public final class TokenizedDataset implements Dataset<Dataset.Sample> {
     }
 
     /**
-     * Loads a packed language modeling dataset from multiple text files with overlapping chunks.
+     * Loads a packed language modeling dataset from multiple text files with
+     * overlapping chunks.
      *
      * @param files     ordered text files to tokenize
      * @param tokenizer tokenizer for encoding and EOS separation
@@ -179,10 +184,12 @@ public final class TokenizedDataset implements Dataset<Dataset.Sample> {
     }
 
     /**
-     * Loads a packed language modeling dataset from all {@code .txt} files under a directory.
+     * Loads a packed language modeling dataset from all {@code .txt} files under a
+     * directory.
      *
      * <p>
-     * Files are discovered recursively and processed in sorted path order for reproducible training.
+     * Files are discovered recursively and processed in sorted path order for
+     * reproducible training.
      */
     public static TokenizedDataset fromDirectoryCorpus(
             Path dir,
@@ -192,7 +199,8 @@ public final class TokenizedDataset implements Dataset<Dataset.Sample> {
     }
 
     /**
-     * Loads a packed language modeling dataset from all {@code .txt} files under a directory with overlapping chunks.
+     * Loads a packed language modeling dataset from all {@code .txt} files under a
+     * directory with overlapping chunks.
      */
     public static TokenizedDataset fromDirectoryCorpus(
             Path dir,
@@ -225,7 +233,8 @@ public final class TokenizedDataset implements Dataset<Dataset.Sample> {
         Objects.requireNonNull(tokenizer, "tokenizer must not be null");
         int eosTokenId = tokenizer.eosTokenId();
         if (eosTokenId < 0) {
-            throw new IllegalArgumentException("tokenizer must provide a non-negative EOS token id for packed corpus loading");
+            throw new IllegalArgumentException(
+                    "tokenizer must provide a non-negative EOS token id for packed corpus loading");
         }
         return eosTokenId;
     }

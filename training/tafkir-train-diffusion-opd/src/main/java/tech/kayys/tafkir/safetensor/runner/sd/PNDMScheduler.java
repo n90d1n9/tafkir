@@ -1,12 +1,14 @@
-package tech.kayys.aljabr.safetensor.runner.sd;
+package tech.kayys.alkhawarizm.safetensor.runner.sd;
 
-import tech.kayys.aljabr.safetensor.core.tensor.AccelTensor;
+import tech.kayys.alkhawarizm.safetensor.core.tensor.AccelTensor;
 
 /**
  * Stub — PNDM scheduler from the safetensor Stable Diffusion runner.
  *
- * <p>The real implementation is in the safetensor runner module.
- * Provides the metadata and step interface used by {@code StableDiffusionRunnerAdapters}.
+ * <p>
+ * The real implementation is in the safetensor runner module.
+ * Provides the metadata and step interface used by
+ * {@code StableDiffusionRunnerAdapters}.
  */
 public abstract class PNDMScheduler implements AutoCloseable {
 
@@ -28,9 +30,9 @@ public abstract class PNDMScheduler implements AutoCloseable {
     /**
      * Advance one denoising step.
      *
-     * @param modelOutput   the UNet's noise prediction
-     * @param timestep      the current timestep value
-     * @param sample        the current noisy latent
+     * @param modelOutput the UNet's noise prediction
+     * @param timestep    the current timestep value
+     * @param sample      the current noisy latent
      * @return the denoised latent after this step (caller must close)
      */
     public abstract AccelTensor step(AccelTensor modelOutput, int timestep, AccelTensor sample);

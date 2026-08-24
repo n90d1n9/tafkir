@@ -4,8 +4,8 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>tech.kayys.aljabr</groupId>
-        <artifactId>aljabr-core-parent</artifactId>
+        <groupId>tech.kayys.alkhawarizm</groupId>
+        <artifactId>alkhawarizm-core-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
@@ -26,13 +26,13 @@
     <dependencies>
         <!-- Safetensor Loader (generic utilities) -->
         <dependency>
-            <groupId>tech.kayys.aljabr</groupId>
-            <artifactId>aljabr-safetensor-loader</artifactId>
+            <groupId>tech.kayys.alkhawarizm</groupId>
+            <artifactId>alkhawarizm-safetensor-loader</artifactId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
         <!-- Memory Allocator and GPTQ utilities -->
         <dependency>
-            <groupId>tech.kayys.aljabr</groupId>
+            <groupId>tech.kayys.alkhawarizm</groupId>
             <artifactId>tafkir-quantizer-gptq</artifactId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
@@ -55,8 +55,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>tech.kayys.aljabr</groupId>
-            <artifactId>aljabr-gguf-core</artifactId>
+            <groupId>tech.kayys.alkhawarizm</groupId>
+            <artifactId>alkhawarizm-gguf-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Testing -->

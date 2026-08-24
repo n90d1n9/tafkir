@@ -2,7 +2,7 @@ package tech.kayys.tafkir.ml.reasoning;
 
 import java.util.Map;
 import java.util.Objects;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 import tech.kayys.tafkir.trainer.api.TrainingSummary;
 
 /**

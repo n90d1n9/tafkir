@@ -26,7 +26,7 @@ class TextByteSequenceDatasetTest {
 
     @Test
     void loadsDatasetFromLineFile() throws IOException {
-        Path file = Files.createTempFile("aljabr-byte-latent", ".txt");
+        Path file = Files.createTempFile("alkhawarizm-byte-latent", ".txt");
         Files.write(file, List.of("alpha", "beta"), StandardCharsets.UTF_8);
 
         TextByteSequenceDataset dataset = TextByteSequenceDataset.fromLines(file);

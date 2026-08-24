@@ -15,6 +15,6 @@ class ByteLatentModelFamilyTest {
 
         List<String> modules = ByteLatentModelFamily.recommendedModuleIds();
         assertTrue(modules.contains("ml:tafkir-ml-byte-latent"));
-        assertTrue(modules.contains("trainer:aljabr-trainer-byte-latent"));
+        assertTrue(modules.contains("trainer:alkhawarizm-trainer-byte-latent"));
     }
 }

@@ -27,7 +27,7 @@ public final class TrainingReportComparisonJUnitXml {
 
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.report.comparison\" tests=\"" + tests
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.report.comparison\" tests=\"" + tests
                 + "\" failures=\"" + failures + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
         property(xml, "comparison.metricCount", Integer.toString(export.metricCount()));
@@ -39,7 +39,7 @@ public final class TrainingReportComparisonJUnitXml {
         property(xml, "comparison.unavailable", Integer.toString(verdicts.unavailable()));
         appendLine(xml, "  </properties>");
         if (export.findingRows().isEmpty()) {
-            appendLine(xml, "  <testcase classname=\"aljabr.training.report.comparison\""
+            appendLine(xml, "  <testcase classname=\"alkhawarizm.training.report.comparison\""
                     + " name=\"comparison passed\" time=\"0\">");
             appendLine(xml, "    <system-out>" + escapeText(markdown) + "</system-out>");
             appendLine(xml, "  </testcase>");
@@ -61,7 +61,7 @@ public final class TrainingReportComparisonJUnitXml {
         Objects.requireNonNull(verification, "verification must not be null");
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.report.comparison.artifacts\" tests=\"10\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.report.comparison.artifacts\" tests=\"10\" failures=\""
                 + artifactFailureCount(verification) + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
         property(xml, "artifacts.passed", Boolean.toString(verification.passed()));
@@ -96,7 +96,7 @@ public final class TrainingReportComparisonJUnitXml {
         String code = value(finding, "code", "comparison.finding");
         String severity = value(finding, "severity", "UNKNOWN");
         String message = value(finding, "message", code);
-        appendLine(xml, "  <testcase classname=\"aljabr.training.report.comparison\" name=\""
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.report.comparison\" name=\""
                 + escapeXml(code) + "\" time=\"0\">");
         appendLine(xml, "    <failure type=\"" + escapeXml(severity)
                 + "\" message=\"" + escapeXml(message) + "\">");
@@ -111,7 +111,7 @@ public final class TrainingReportComparisonJUnitXml {
             String name,
             boolean passed,
             String failureMessage) {
-        appendLine(xml, "  <testcase classname=\"aljabr.training.report.comparison.artifacts\" name=\""
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.report.comparison.artifacts\" name=\""
                 + escapeXml(name) + "\" time=\"0\">");
         if (!passed) {
             appendLine(xml, "    <failure type=\"ARTIFACT_VERIFICATION\" message=\""

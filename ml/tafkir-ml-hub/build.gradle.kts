@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "tech.kayys.aljabr"
+group = "tech.kayys.alkhawarizm"
 version = "0.1.0-SNAPSHOT"
 
 java {
@@ -20,12 +20,12 @@ repositories {
 dependencies {
     implementation(project(":ml:tafkir-ml-autograd"))
     implementation(project(":ml:tafkir-ml-nn"))
-    //implementation(project(":core:aljabr-runtime-config"))
-    implementation(project(":core:aljabr-model-repository"))
-    implementation(project(":core:aljabr-model-repo-hf"))
-    implementation(project(":core:aljabr-model-repo-local"))
-   // implementation(project(":runner:safetensor:aljabr-safetensor-loader"))
-    implementation(project(":core:aljabr-spi-model"))
+    //implementation(project(":core:alkhawarizm-runtime-config"))
+    implementation(project(":core:alkhawarizm-model-repository"))
+    implementation(project(":core:alkhawarizm-model-repo-hf"))
+    implementation(project(":core:alkhawarizm-model-repo-local"))
+   // implementation(project(":runner:safetensor:alkhawarizm-safetensor-loader"))
+    implementation(project(":core:alkhawarizm-spi-model"))
     implementation("io.smallrye.reactive:mutiny")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1")

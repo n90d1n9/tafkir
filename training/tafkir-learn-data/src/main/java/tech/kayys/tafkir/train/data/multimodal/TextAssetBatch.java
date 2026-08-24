@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.ModalityType;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,10 +12,14 @@ import java.util.Objects;
 /**
  * A typed projection for common multimodal supervised tasks.
  *
- * <p>Many trainer loops need one text target or prompt paired with one non-text
- * asset per sample: image-caption, audio-transcription, document-QA, video-caption,
- * and similar datasets. This record keeps that shape explicit without forcing the
- * generic manifest dataset to know about every future task.</p>
+ * <p>
+ * Many trainer loops need one text target or prompt paired with one non-text
+ * asset per sample: image-caption, audio-transcription, document-QA,
+ * video-caption,
+ * and similar datasets. This record keeps that shape explicit without forcing
+ * the
+ * generic manifest dataset to know about every future task.
+ * </p>
  */
 public record TextAssetBatch(
         ModalityType assetModality,

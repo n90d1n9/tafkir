@@ -26,11 +26,10 @@ class TrainerRuntimeArtifactPersistenceTest {
         row.put("epoch", 1);
         row.put("trainLoss", 0.5);
 
-        TrainerRuntimeArtifactPersistence.ArtifactResult result =
-                TrainerRuntimeArtifactPersistence.persistHistory(
-                        history,
-                        List.of(row),
-                        manifestRequest(manifest, Map.of("history", history)));
+        TrainerRuntimeArtifactPersistence.ArtifactResult result = TrainerRuntimeArtifactPersistence.persistHistory(
+                history,
+                List.of(row),
+                manifestRequest(manifest, Map.of("history", history)));
 
         assertTrue(result.artifact().stateChanged());
         assertTrue(result.artifact().saved());
@@ -53,15 +52,14 @@ class TrainerRuntimeArtifactPersistenceTest {
                 100,
                 Map.of("device", "cpu"));
 
-        TrainerRuntimeArtifactPersistence.ArtifactResult result =
-                TrainerRuntimeArtifactPersistence.persistReport(
-                        report,
-                        summary,
-                        manifestRequest(manifest, Map.of("report", report)));
+        TrainerRuntimeArtifactPersistence.ArtifactResult result = TrainerRuntimeArtifactPersistence.persistReport(
+                report,
+                summary,
+                manifestRequest(manifest, Map.of("report", report)));
 
         assertTrue(result.artifact().saved());
         assertTrue(result.manifest().saved());
-        assertTrue(Files.readString(report).contains("\"schema\":\"aljabr.canonical-trainer.report.v1\""));
+        assertTrue(Files.readString(report).contains("\"schema\":\"alkhawarizm.canonical-trainer.report.v1\""));
         assertTrue(Files.readString(manifest).contains("artifact.report.file=report.json"));
     }
 
@@ -71,9 +69,8 @@ class TrainerRuntimeArtifactPersistenceTest {
         Path manifest = tempDir.resolve("manifest.properties");
         Files.writeString(history, "epoch\n1\n");
 
-        TrainerRuntimeArtifactPersistence.SaveResult result =
-                TrainerRuntimeArtifactPersistence.persistManifest(
-                        manifestRequest(manifest, Map.of("history", history)));
+        TrainerRuntimeArtifactPersistence.SaveResult result = TrainerRuntimeArtifactPersistence.persistManifest(
+                manifestRequest(manifest, Map.of("history", history)));
 
         assertTrue(result.saved());
         assertNull(result.error());
@@ -84,11 +81,10 @@ class TrainerRuntimeArtifactPersistenceTest {
     void skipsManifestRefreshWhenArtifactIsSkipped() {
         Path manifest = tempDir.resolve("manifest.properties");
 
-        TrainerRuntimeArtifactPersistence.ArtifactResult result =
-                TrainerRuntimeArtifactPersistence.persistHistory(
-                        null,
-                        List.of(),
-                        manifestRequest(manifest, Map.of()));
+        TrainerRuntimeArtifactPersistence.ArtifactResult result = TrainerRuntimeArtifactPersistence.persistHistory(
+                null,
+                List.of(),
+                manifestRequest(manifest, Map.of()));
 
         assertFalse(result.artifact().stateChanged());
         assertFalse(result.artifact().saved());
@@ -103,11 +99,10 @@ class TrainerRuntimeArtifactPersistenceTest {
         Files.writeString(nonDirectoryParent, "not a directory");
         Path badHistory = nonDirectoryParent.resolve("history.csv");
 
-        TrainerRuntimeArtifactPersistence.ArtifactResult result =
-                TrainerRuntimeArtifactPersistence.persistHistory(
-                        badHistory,
-                        List.of(Map.of("epoch", 1)),
-                        manifestRequest(manifest, Map.of("history", badHistory)));
+        TrainerRuntimeArtifactPersistence.ArtifactResult result = TrainerRuntimeArtifactPersistence.persistHistory(
+                badHistory,
+                List.of(Map.of("epoch", 1)),
+                manifestRequest(manifest, Map.of("history", badHistory)));
 
         assertTrue(result.artifact().stateChanged());
         assertFalse(result.artifact().saved());

@@ -16,7 +16,7 @@ import java.util.Optional;
  * One-file receipt for every artifact emitted by a quality-profile CI gate run.
  */
 public final class TrainingReportQualityProfileCiGateManifest {
-    public static final String FORMAT = "aljabr.training.quality-profile.ci-gate.manifest.v1";
+    public static final String FORMAT = "alkhawarizm.training.quality-profile.ci-gate.manifest.v1";
     public static final String DEFAULT_JSON_FILE_NAME = "quality-profile-ci-gate-manifest.json";
     public static final String DEFAULT_MARKDOWN_FILE_NAME = "quality-profile-ci-gate-manifest.md";
 
@@ -305,13 +305,13 @@ public final class TrainingReportQualityProfileCiGateManifest {
         Path resolvedDirectory = Objects.requireNonNull(directory, "directory must not be null")
                 .toAbsolutePath()
                 .normalize();
-        TrainingReportQualityProfileCiGate.Result resolvedResult =
-                Objects.requireNonNull(result, "result must not be null");
+        TrainingReportQualityProfileCiGate.Result resolvedResult = Objects.requireNonNull(result,
+                "result must not be null");
         Options resolvedOptions = options == null ? Options.defaults() : options;
         Path jsonFile = resolvedDirectory.resolve(resolvedOptions.jsonFileName());
         Path markdownFile = resolvedDirectory.resolve(resolvedOptions.markdownFileName());
-        List<ArtifactEntry> artifacts =
-                TrainingReportQualityProfileCiGateManifestArtifacts.collect(resolvedDirectory, resolvedResult);
+        List<ArtifactEntry> artifacts = TrainingReportQualityProfileCiGateManifestArtifacts.collect(resolvedDirectory,
+                resolvedResult);
         Map<String, Object> manifest = manifestMap(resolvedResult, artifacts);
 
         TrainerCheckpointIO.writeStringAtomically(jsonFile, TrainerJson.toJson(manifest) + "\n");
@@ -370,10 +370,9 @@ public final class TrainingReportQualityProfileCiGateManifest {
         Path resolvedMarkdownFile = Objects.requireNonNull(markdownFile, "markdownFile must not be null")
                 .toAbsolutePath()
                 .normalize();
-        TrainingReportArtifactFingerprint jsonFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedJsonFile);
-        TrainingReportArtifactFingerprint markdownFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedMarkdownFile);
+        TrainingReportArtifactFingerprint jsonFingerprint = TrainingReportArtifactFingerprint.of(resolvedJsonFile);
+        TrainingReportArtifactFingerprint markdownFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedMarkdownFile);
         return new ManifestInspection(
                 commonDirectory(resolvedJsonFile, resolvedMarkdownFile),
                 resolvedJsonFile,
@@ -386,7 +385,8 @@ public final class TrainingReportQualityProfileCiGateManifest {
 
     public static ManifestVerification verify(ManifestBundle bundle) throws IOException {
         Objects.requireNonNull(bundle, "bundle must not be null");
-        return verify(readFiles(bundle.jsonFile(), bundle.markdownFile()), bundle.jsonSha256(), bundle.markdownSha256());
+        return verify(readFiles(bundle.jsonFile(), bundle.markdownFile()), bundle.jsonSha256(),
+                bundle.markdownSha256());
     }
 
     public static ManifestVerification verify(

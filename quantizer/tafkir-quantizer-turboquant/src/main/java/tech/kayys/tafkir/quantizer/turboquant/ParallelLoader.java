@@ -1,10 +1,10 @@
 package tech.kayys.tafkir.quantizer.turboquant;
 
 import tech.kayys.tafkir.quantizer.gptq.MemoryAllocator;
-import tech.kayys.aljabr.safetensor.loader.SafetensorFFMLoader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorLoadResult;
-import tech.kayys.aljabr.safetensor.loader.SafetensorHeader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorTensor;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorFFMLoader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorLoadResult;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorHeader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorTensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +78,8 @@ public class ParallelLoader {
      * @param shards list of shard paths to open
      * @return list of open SafetensorLoadResults, same order as input
      */
-    public List<SafetensorLoadResult> parseHeadersParallel(SafetensorFFMLoader loader, List<Path> shards) throws IOException {
+    public List<SafetensorLoadResult> parseHeadersParallel(SafetensorFFMLoader loader, List<Path> shards)
+            throws IOException {
         log.info("Parsing {} shard headers in parallel (concurrency={})",
                 shards.size(), maxConcurrency);
         long t0 = System.currentTimeMillis();

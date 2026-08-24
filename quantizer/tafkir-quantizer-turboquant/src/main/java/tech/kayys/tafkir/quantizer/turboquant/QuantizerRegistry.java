@@ -1,8 +1,8 @@
 package tech.kayys.tafkir.quantizer.turboquant;
 
-import tech.kayys.aljabr.safetensor.loader.SafetensorHeader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorTensorInfo;
-import tech.kayys.aljabr.safetensor.loader.SafetensorDType;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorHeader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorTensorInfo;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorDType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -132,7 +132,8 @@ public class QuantizerRegistry {
         // Use simple JSON parsing approach without requiring full safetensor-loader
         try (var channel = java.nio.channels.FileChannel.open(filePath, java.nio.file.StandardOpenOption.READ)) {
             long fileSize = channel.size();
-            if (fileSize < 8) return null;
+            if (fileSize < 8)
+                return null;
 
             // Read 8-byte LE header size
             java.nio.ByteBuffer buf = java.nio.ByteBuffer.allocate(8);
@@ -141,7 +142,8 @@ public class QuantizerRegistry {
             buf.flip();
             long headerSize = buf.getLong();
 
-            if (headerSize <= 0 || headerSize > 100_000_000L) return null;
+            if (headerSize <= 0 || headerSize > 100_000_000L)
+                return null;
 
             // Read JSON header
             byte[] jsonBytes = new byte[(int) headerSize];
@@ -178,7 +180,8 @@ public class QuantizerRegistry {
                     // Create a SafetensorTensorInfo from the parsed data
                     long[] shapeArray = shape.stream().mapToLong(Long::longValue).toArray();
                     long[] offsetsArray = offsets.stream().mapToLong(Long::longValue).toArray();
-                    tensors.put(entry.getKey(), new SafetensorTensorInfo(entry.getKey(), dtype, shapeArray, offsetsArray));
+                    tensors.put(entry.getKey(),
+                            new SafetensorTensorInfo(entry.getKey(), dtype, shapeArray, offsetsArray));
                 }
             }
         }
@@ -195,14 +198,16 @@ public class QuantizerRegistry {
     @SuppressWarnings("unchecked")
     private static List<Long> getShape(Map<?, ?> map) {
         Object v = map.get("shape");
-        if (!(v instanceof List<?> list)) return null;
+        if (!(v instanceof List<?> list))
+            return null;
         return list.stream().map(e -> ((Number) e).longValue()).toList();
     }
 
     @SuppressWarnings("unchecked")
     private static List<Long> getOffsets(Map<?, ?> map) {
         Object v = map.get("data_offsets");
-        if (!(v instanceof List<?> list)) return null;
+        if (!(v instanceof List<?> list))
+            return null;
         return list.stream().map(e -> ((Number) e).longValue()).toList();
     }
 

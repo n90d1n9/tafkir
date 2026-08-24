@@ -54,7 +54,7 @@ class ByteLatentHistoryReportsTest {
 
     @Test
     void loadsAndSelectsFromPersistedHistoryFile() throws Exception {
-        Path file = Files.createTempFile("aljabr-byte-history-report", ".csv");
+        Path file = Files.createTempFile("alkhawarizm-byte-history-report", ".csv");
         ByteLatentHistoryCsv.write(file, sampleRows());
 
         assertEquals(3, ByteLatentHistoryReports.select(file, "historyCount"));

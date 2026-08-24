@@ -3,17 +3,17 @@ package tech.kayys.tafkir.train.diffusion.opd.adapter;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import tech.kayys.aljabr.core.backend.ComputeBackend;
-import tech.kayys.aljabr.core.memory.CpuBuffer;
-import tech.kayys.aljabr.core.tensor.DType;
-import tech.kayys.aljabr.core.tensor.DefaultTensor;
-import tech.kayys.aljabr.core.tensor.DeviceType;
-import tech.kayys.aljabr.core.tensor.Shape;
-import tech.kayys.aljabr.metal.binding.MetalBinding;
-import tech.kayys.aljabr.core.tensor.Tensor;
-import tech.kayys.aljabr.safetensor.core.tensor.AccelTensor;
-import tech.kayys.aljabr.safetensor.runner.sd.PNDMScheduler;
-import tech.kayys.aljabr.safetensor.runner.sd.UNetModel;
+import tech.kayys.alkhawarizm.core.backend.ComputeBackend;
+import tech.kayys.alkhawarizm.core.memory.CpuBuffer;
+import tech.kayys.alkhawarizm.core.tensor.DType;
+import tech.kayys.alkhawarizm.core.tensor.DefaultTensor;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.Shape;
+import tech.kayys.alkhawarizm.metal.binding.MetalBinding;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.safetensor.core.tensor.AccelTensor;
+import tech.kayys.alkhawarizm.safetensor.runner.sd.PNDMScheduler;
+import tech.kayys.alkhawarizm.safetensor.runner.sd.UNetModel;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionDenoiser;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionScheduler;
 
@@ -21,7 +21,8 @@ import tech.kayys.tafkir.train.diffusion.api.DiffusionScheduler;
  * Adapters from the safetensor-native Stable Diffusion runner surfaces to the
  * Java diffusion OPD contracts.
  *
- * <p>This is the bridge point for aligning Aljabr's inference-side Stable
+ * <p>
+ * This is the bridge point for aligning Aljabr's inference-side Stable
  * Diffusion runtime with the Java-first diffusion training stack. The
  * scheduler path is directly adaptable, while the UNet path requires an
  * explicit tensor bridge because the stable-diffusion-native runner uses
@@ -32,8 +33,8 @@ import tech.kayys.tafkir.train.diffusion.api.DiffusionScheduler;
  */
 public final class StableDiffusionRunnerAdapters {
 
-    private static final ComputeBackend MATERIALIZATION_ONLY_BACKEND =
-            new MaterializationOnlyBackend("stable-diffusion-bridge-materializer");
+    private static final ComputeBackend MATERIALIZATION_ONLY_BACKEND = new MaterializationOnlyBackend(
+            "stable-diffusion-bridge-materializer");
 
     private StableDiffusionRunnerAdapters() {
     }
@@ -210,12 +211,14 @@ public final class StableDiffusionRunnerAdapters {
      * needs tensor materialization and accelerator metadata, not a fully
      * operational backend implementation for downstream math.
      *
-     * <p>Core tensors produced by this bridge are tagged with a
+     * <p>
+     * Core tensors produced by this bridge are tagged with a
      * materialization-only backend and should be treated as transport tensors
      * for adapter boundaries. Math operations on those tensors will throw until
      * the caller replaces the backend with a full execution backend.
      *
-     * <p>Reference:
+     * <p>
+     * Reference:
      * Quanhao Li et al., "DiffusionOPD: A Unified Perspective of On-Policy
      * Distillation in Diffusion Models", arXiv:2605.15055, 2026.
      */

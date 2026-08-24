@@ -1,7 +1,7 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 25
-//DEPS tech.kayys.tafkir:tafkir-ml-aljabr:0.3.0-SNAPSHOT
-//DEPS tech.kayys.tafkir:tafkir-trainer-aljabr:0.3.0-SNAPSHOT
+//DEPS tech.kayys.tafkir:tafkir-ml-alkhawarizm:0.3.0-SNAPSHOT
+//DEPS tech.kayys.tafkir:tafkir-trainer-alkhawarizm:0.3.0-SNAPSHOT
 //DEPS tech.kayys.tafkir:tafkir-data:0.3.0-SNAPSHOT
 //COMPILE_OPTIONS --enable-preview --add-modules jdk.incubator.vector
 //RUNTIME_OPTIONS --enable-preview --add-modules jdk.incubator.vector
@@ -27,20 +27,18 @@ public class mnist_mlp {
         System.out.println("Train: " + trainSet.numSamples() + ", Test: " + testSet.numSamples());
 
         TafkirSequential model = new TafkirSequential(
-            new TafkirLinear(784, 256),
-            new TafkirReLU(),
-            new TafkirLinear(256, 128),
-            new TafkirReLU(),
-            new TafkirLinear(128, 10)
-        );
+                new TafkirLinear(784, 256),
+                new TafkirReLU(),
+                new TafkirLinear(256, 128),
+                new TafkirReLU(),
+                new TafkirLinear(128, 10));
         System.out.println("\n" + model);
 
         TafkirTrainer trainer = new TafkirTrainer(
-            model,
-            new TafkirCrossEntropyLoss(),
-            new TafkirAdam(model.parameters(), 0.001f),
-            10
-        );
+                model,
+                new TafkirCrossEntropyLoss(),
+                new TafkirAdam(model.parameters(), 0.001f),
+                10);
 
         // Train on full dataset (no batching for simplicity in example)
         trainer.fit(trainSet.images(), trainSet.labels());

@@ -1,4 +1,4 @@
-package tech.kayys.aljabr.safetensor.loader;
+package tech.kayys.alkhawarizm.safetensor.loader;
 
 /**
  * Stub — metadata for a single tensor entry in a safetensor file header.
@@ -17,9 +17,17 @@ public final class SafetensorTensorInfo {
         this.dataOffsets = dataOffsets;
     }
 
-    public String name() { return name; }
-    public long[] shape() { return shape; }
-    public long[] dataOffsets() { return dataOffsets; }
+    public String name() {
+        return name;
+    }
+
+    public long[] shape() {
+        return shape;
+    }
+
+    public long[] dataOffsets() {
+        return dataOffsets;
+    }
 
     /** Parsed dtype. Returns {@code null} if unrecognized. */
     public SafetensorDType dtype() {
@@ -30,5 +38,7 @@ public final class SafetensorTensorInfo {
         }
     }
 
-    public String rawDtype() { return rawDtype; }
+    public String rawDtype() {
+        return rawDtype;
+    }
 }

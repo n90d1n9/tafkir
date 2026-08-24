@@ -14,10 +14,13 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Bounded asynchronous prefetch wrapper for data-loading pipelines.
  *
- * <p>Each iterator owns one daemon worker that pulls from the source iterator and
- * buffers up to {@code bufferSize} elements. Fully consuming the iterator closes
+ * <p>
+ * Each iterator owns one daemon worker that pulls from the source iterator and
+ * buffers up to {@code bufferSize} elements. Fully consuming the iterator
+ * closes
  * the worker automatically. For early exits, prefer try-with-resources around
- * the iterable so the worker can be interrupted promptly.</p>
+ * the iterable so the worker can be interrupted promptly.
+ * </p>
  */
 public final class PrefetchingIterable<T> implements Iterable<T>, AutoCloseable {
     private static final AtomicLong WORKER_IDS = new AtomicLong();
@@ -96,7 +99,8 @@ public final class PrefetchingIterable<T> implements Iterable<T>, AutoCloseable 
         private final Iterator<? extends T> source;
         private final BlockingQueue<Signal<T>> queue;
         private final AtomicBoolean closed = new AtomicBoolean();
-        private Runnable onClose = () -> {};
+        private Runnable onClose = () -> {
+        };
         private Thread worker;
         private Signal<T> nextSignal;
         private boolean finished;
@@ -111,7 +115,7 @@ public final class PrefetchingIterable<T> implements Iterable<T>, AutoCloseable 
         }
 
         private void start() {
-            worker = new Thread(this::runWorker, "aljabr-data-prefetch-" + WORKER_IDS.incrementAndGet());
+            worker = new Thread(this::runWorker, "alkhawarizm-data-prefetch-" + WORKER_IDS.incrementAndGet());
             worker.setDaemon(true);
             worker.start();
         }

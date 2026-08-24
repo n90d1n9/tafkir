@@ -23,24 +23,22 @@ public record DiscreteTokenDatasetCheckpointLineageHealthValidationReport(
         Map<String, Object> payloadSummary,
         List<String> errors) {
 
-    public static final String VALID_CODE = "ALJABR_LINEAGE_HEALTH_VALID";
-    public static final String INVALID_CODE = "ALJABR_LINEAGE_HEALTH_INVALID";
-    public static final String INVALID_JSON_CODE = "ALJABR_LINEAGE_HEALTH_JSON_INVALID";
-    public static final String READ_ERROR_CODE = "ALJABR_LINEAGE_HEALTH_READ_ERROR";
+    public static final String VALID_CODE = "ALKHAWARIZM_LINEAGE_HEALTH_VALID";
+    public static final String INVALID_CODE = "ALKHAWARIZM_LINEAGE_HEALTH_INVALID";
+    public static final String INVALID_JSON_CODE = "ALKHAWARIZM_LINEAGE_HEALTH_JSON_INVALID";
+    public static final String READ_ERROR_CODE = "ALKHAWARIZM_LINEAGE_HEALTH_READ_ERROR";
     public static final String KIND = "checkpoint-lineage-health-validation";
-    public static final String SCHEMA_VERSION = "aljabr.checkpoint-lineage-health-validation.v1";
-    public static final String JSON_SCHEMA_ID =
-            "https://aljabr.ai/schemas/training/checkpoint-lineage-health-validation.v1.schema.json";
-    public static final String JSON_SCHEMA_RESOURCE =
-            "tech/kayys/aljabr/ml/reasoning/schemas/checkpoint-lineage-health-validation.v1.schema.json";
+    public static final String SCHEMA_VERSION = "alkhawarizm.checkpoint-lineage-health-validation.v1";
+    public static final String JSON_SCHEMA_ID = "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-validation.v1.schema.json";
+    public static final String JSON_SCHEMA_RESOURCE = "tech/kayys/alkhawarizm/ml/reasoning/schemas/checkpoint-lineage-health-validation.v1.schema.json";
 
     public DiscreteTokenDatasetCheckpointLineageHealthValidationReport {
         code = DiscreteTokenDatasetMetadataSupport.requireText(code, "code");
         message = DiscreteTokenDatasetMetadataSupport.requireText(message, "message");
         schemaId = DiscreteTokenDatasetMetadataSupport.requireText(schemaId, "schemaId");
         expectedKind = DiscreteTokenDatasetMetadataSupport.requireText(expectedKind, "expectedKind");
-        expectedSchemaVersion =
-                DiscreteTokenDatasetMetadataSupport.requireText(expectedSchemaVersion, "expectedSchemaVersion");
+        expectedSchemaVersion = DiscreteTokenDatasetMetadataSupport.requireText(expectedSchemaVersion,
+                "expectedSchemaVersion");
         payloadSummary = DiscreteTokenDatasetMetadataSupport.immutableMetadataMap(payloadSummary, "payloadSummary");
         errors = DiscreteTokenDatasetMetadataSupport.optionalTextList(errors, "errors");
         if (valid && !errors.isEmpty()) {

@@ -3,8 +3,8 @@ package tech.kayys.tafkir.train.data.multimodal;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import tech.kayys.aljabr.spi.model.ModalityType;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,8 @@ import java.util.Map;
 import java.util.Objects;
 
 final class MultimodalManifestParser {
-    private static final TypeReference<Map<String, Object>> MAP_TYPE = new TypeReference<>() {};
+    private static final TypeReference<Map<String, Object>> MAP_TYPE = new TypeReference<>() {
+    };
 
     private final ObjectMapper mapper;
     private final MultimodalManifestAssetResolver assetResolver;
@@ -173,7 +174,8 @@ final class MultimodalManifestParser {
         Map<String, Object> metadata = objectMap(row.get(field + "Metadata"));
         metadata.putAll(sampleMetadata);
         if (node.isTextual()) {
-            parts.add(contentFromAsset(assetResolver.resolvePath(node.asText(), modality, null, null), modality, metadata));
+            parts.add(contentFromAsset(assetResolver.resolvePath(node.asText(), modality, null, null), modality,
+                    metadata));
             return;
         }
         if (node.isObject()) {

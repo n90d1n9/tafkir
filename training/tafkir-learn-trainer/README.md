@@ -8,7 +8,7 @@ The `tafkir-ml-ml` module is the top-level aggregator for the Aljabr ML framewor
 - **Pre-configured Pipelines**: Provides native access to `TextGenerationPipeline`, `EmbeddingsPipeline`, etc.
 - **Unified Interface**: Masks the complexity of `tafkir-ml-autograd`, `tafkir-ml-nn`, and the execution kernels.
 - **Canonical Trainer Bridge**: `Aljabr.DL.trainer()` now provides a typed path into
-  `:trainer:aljabr-trainer` with real forward/loss/backward execution.
+  `:trainer:alkhawarizm-trainer` with real forward/loss/backward execution.
 - **One-call Training Presets**: `Aljabr.DL.fit(...)` can run preset training
   modes (MSE/Huber/CrossEntropy + AdamW/SGD) without manual runtime wiring.
 - **Public Training Metrics**: `Aljabr.DL.trainingOptions()` can attach
@@ -377,11 +377,11 @@ The `tafkir-ml-ml` module is the top-level aggregator for the Aljabr ML framewor
 import tech.kayys.tafkir.ml.Aljabr;
 
 // Create an instance tied to the local execution backend
-Aljabr aljabr = Aljabr.builder()
+Aljabr alkhawarizm = Aljabr.builder()
     .model("Qwen/Qwen2.5-0.5B")
     .device("METAL")
     .build();
 
 // Simple text completion hiding tokenizer complexity
-String answer = aljabr.createCompletion("What is the capital of France?");
+String answer = alkhawarizm.createCompletion("What is the capital of France?");
 ```

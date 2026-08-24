@@ -1,4 +1,4 @@
-package tech.kayys.aljabr.hub;
+package tech.kayys.alkhawarizm.hub;
 
 import java.nio.file.Path;
 
@@ -33,8 +33,8 @@ public record HubConfig(
     }
 
     public static final class Builder {
-        private final tech.kayys.tafkir.ml.hub.HubConfig.Builder delegate =
-                tech.kayys.tafkir.ml.hub.HubConfig.builder();
+        private final tech.kayys.tafkir.ml.hub.HubConfig.Builder delegate = tech.kayys.tafkir.ml.hub.HubConfig
+                .builder();
 
         public Builder revision(String value) {
             delegate.revision(value);

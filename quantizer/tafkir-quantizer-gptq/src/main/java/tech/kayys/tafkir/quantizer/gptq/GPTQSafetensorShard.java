@@ -1,10 +1,10 @@
 package tech.kayys.tafkir.quantizer.gptq;
 
-import tech.kayys.aljabr.safetensor.loader.SafetensorDType;
-import tech.kayys.aljabr.safetensor.loader.SafetensorHeader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorLoadResult;
-import tech.kayys.aljabr.safetensor.loader.SafetensorTensor;
-import tech.kayys.aljabr.safetensor.loader.SafetensorTensorInfo;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorDType;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorHeader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorLoadResult;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorTensor;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorTensorInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +22,20 @@ import java.util.Set;
  * GPTQ-specific view over a single safetensor shard, wrapping
  * {@link SafetensorLoadResult} from the safetensor-loader module.
  *
- * <p>Provides convenience methods for the tensor access patterns used by
+ * <p>
+ * Provides convenience methods for the tensor access patterns used by
  * the GPTQ quantizer:
  * <ul>
- *   <li>{@link #getTensorSegment(String)} — zero-copy MemorySegment for dequantization</li>
- *   <li>{@link #getTensorAsInt32(String)} — copy to int[] for qweight/qzeros</li>
- *   <li>{@link #getTensorAsFp16(String)} — copy to short[] for scales/bias</li>
- *   <li>{@link #getTensorShape(String)} — shape as List&lt;Long&gt;</li>
- *   <li>{@link #getTensorDtype(String)} — dtype string</li>
+ * <li>{@link #getTensorSegment(String)} — zero-copy MemorySegment for
+ * dequantization</li>
+ * <li>{@link #getTensorAsInt32(String)} — copy to int[] for qweight/qzeros</li>
+ * <li>{@link #getTensorAsFp16(String)} — copy to short[] for scales/bias</li>
+ * <li>{@link #getTensorShape(String)} — shape as List&lt;Long&gt;</li>
+ * <li>{@link #getTensorDtype(String)} — dtype string</li>
  * </ul>
  *
- * <p><b>Lifetime:</b> This object holds a reference to an open
+ * <p>
+ * <b>Lifetime:</b> This object holds a reference to an open
  * {@link SafetensorLoadResult}. All tensor segments returned by this class
  * become invalid after {@link #close()} is called.
  */
@@ -94,7 +97,8 @@ public class GPTQSafetensorShard implements AutoCloseable {
      * The segment starts at byte 0 of the tensor's data and has
      * byteSize equal to the tensor's raw byte length.
      *
-     * <p><b>WARNING:</b> the returned segment is only valid while this
+     * <p>
+     * <b>WARNING:</b> the returned segment is only valid while this
      * shard is open. Do not use it after {@link #close()}.
      *
      * @param tensorName tensor key (e.g. "model.layers.0.self_attn.q_proj.qweight")

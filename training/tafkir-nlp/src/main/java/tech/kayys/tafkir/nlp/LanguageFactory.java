@@ -1,9 +1,9 @@
 package tech.kayys.tafkir.nlp;
 
-import tech.kayys.aljabr.tokenizer.TokenizerFactory;
-import tech.kayys.aljabr.tokenizer.spi.EncodeOptions;
-import tech.kayys.aljabr.tokenizer.spi.ModelConfig;
-import tech.kayys.aljabr.tokenizer.spi.TokenizerType;
+import tech.kayys.alkhawarizm.tokenizer.TokenizerFactory;
+import tech.kayys.alkhawarizm.tokenizer.spi.EncodeOptions;
+import tech.kayys.alkhawarizm.tokenizer.spi.ModelConfig;
+import tech.kayys.alkhawarizm.tokenizer.spi.TokenizerType;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,11 +20,11 @@ public class LanguageFactory {
         Language.Tokenizer tokenizer;
         try {
             var modelConfig = new ModelConfig(TokenizerType.BPE, tokenizerPath);
-            var aljabrTokenizer = TokenizerFactory.create(modelConfig);
+            var alkhawarizmTokenizer = TokenizerFactory.create(modelConfig);
 
             tokenizer = text -> {
                 Doc doc = new Doc(text);
-                long[] ids = aljabrTokenizer.encode(text, EncodeOptions.defaultOptions());
+                long[] ids = alkhawarizmTokenizer.encode(text, EncodeOptions.defaultOptions());
 
                 // Simplified mapping for demonstration
                 String[] words = text.split("\\s+");

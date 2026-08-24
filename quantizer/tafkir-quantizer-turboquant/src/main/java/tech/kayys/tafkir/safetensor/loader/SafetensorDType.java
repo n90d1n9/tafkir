@@ -1,4 +1,4 @@
-package tech.kayys.aljabr.safetensor.loader;
+package tech.kayys.alkhawarizm.safetensor.loader;
 
 /**
  * Stub — data type enum for safetensor tensors.

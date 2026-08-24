@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionOpdListener;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionOpdRuntimeObserver;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionPromptSample;
@@ -15,7 +15,8 @@ import tech.kayys.tafkir.trainer.api.TrainingSummary;
 /**
  * Owns trainer listener/observer coordination and runtime metadata shaping.
  *
- * <p>This helper covers the runtime-facing notification boundary after rollout
+ * <p>
+ * This helper covers the runtime-facing notification boundary after rollout
  * decisions are made, while persistence and adaptive weighting stay in their
  * sibling trainer helpers.
  */

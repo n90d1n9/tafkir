@@ -4,7 +4,7 @@ I have completed the comprehensive integration code for making Tafkir real using
 
 ## Complete Integration Deliverables
 
-### Core Module: `ml/tafkir-ml-aljabr`
+### Core Module: `ml/tafkir-ml-alkhawarizm`
 
 | File | Purpose |
 |------|---------|
@@ -12,7 +12,7 @@ I have completed the comprehensive integration code for making Tafkir real using
 | `TafkirBackend.java` | Factory for Aljabr compute backends (CPU now, CUDA/Metal detection planned) |
 | `TafkirAutograd.java` | Bridges Aljabr's `AutogradEngine` and `GGraph` to Tafkir |
 
-### Trainer Module: `trainer/tafkir-trainer-aljabr`
+### Trainer Module: `trainer/tafkir-trainer-alkhawarizm`
 
 | File | Purpose |
 |------|---------|
@@ -109,7 +109,7 @@ I have completed the comprehensive integration code for making Tafkir real using
 
 1. **Mutable Parameter References**: Currently, `TafkirLinear` creates new `TafkirTensor` objects for weights. For checkpoint loading to work with in-place updates, parameters need to be mutable references (e.g., `AtomicReference<Tensor>` or a mutable wrapper class).
 
-2. **CUDA Backend Integration**: The `TafkirBackend.cuda()` method needs to detect `aljabr-backend-cuda` via SPI and return it when available.
+2. **CUDA Backend Integration**: The `TafkirBackend.cuda()` method needs to detect `alkhawarizm-backend-cuda` via SPI and return it when available.
 
 3. **Distributed Multi-Process**: The current `DistributedTrainer` uses threads. For multi-node, implement MPI-style communication via gRPC or raw sockets, with gradient compression (FP16, 1-bit Adam).
 

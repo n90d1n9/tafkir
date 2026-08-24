@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "tech.kayys.aljabr"
+group = "tech.kayys.tafkir"
 version = "0.1.0-SNAPSHOT"
 
 java {
@@ -18,9 +18,9 @@ repositories {
 }
 
 dependencies {
-    api("tech.kayys.aljabr:aljabr-core:0.1.0-SNAPSHOT")
-    api("tech.kayys.aljabr:aljabr-tensor:0.1.0-SNAPSHOT")
-    api("tech.kayys.aljabr:aljabr-backend-cpu:0.1.0-SNAPSHOT")
+    api("tech.kayys.alkhawarizm:alkhawarizm-core:0.1.0-SNAPSHOT")
+    api("tech.kayys.alkhawarizm:alkhawarizm-tensor:0.1.0-SNAPSHOT")
+    api("tech.kayys.alkhawarizm:alkhawarizm-backend-cpu:0.1.0-SNAPSHOT")
 }
 
 publishing {

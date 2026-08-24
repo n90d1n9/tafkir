@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 import tech.kayys.tafkir.train.data.Dataset;
 
 import java.io.IOException;
@@ -13,7 +13,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Persistable fold membership manifest for reproducible multimodal cross-validation experiments.
+ * Persistable fold membership manifest for reproducible multimodal
+ * cross-validation experiments.
  */
 public record MultimodalCrossValidationManifest(
         int sampleCount,
@@ -64,8 +65,8 @@ public record MultimodalCrossValidationManifest(
         int sampleCount = -1;
         List<MultimodalSplitManifest.SampleFingerprint> samples = null;
         for (int index = 0; index < folds.size(); index++) {
-            Dataset.Fold<List<MultimodalContent>> fold =
-                    Objects.requireNonNull(folds.get(index), "folds must not contain null");
+            Dataset.Fold<List<MultimodalContent>> fold = Objects.requireNonNull(folds.get(index),
+                    "folds must not contain null");
             if (fold.foldIndex() != index || fold.foldCount() != folds.size()) {
                 throw new IllegalArgumentException("fold metadata must be contiguous and match fold list size");
             }

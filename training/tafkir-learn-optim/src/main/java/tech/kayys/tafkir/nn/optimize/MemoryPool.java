@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.ml.optimize;
 
-import tech.kayys.aljabr.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;

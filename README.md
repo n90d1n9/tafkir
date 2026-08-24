@@ -1,6 +1,6 @@
 # Tafkir
 
-A Java machine learning framework built on the [Aljabr](https://github.com/bhangun/aljabr) compute engine.
+A Java machine learning framework built on the [Aljabr](https://github.com/bhangun/alkhawarizm) compute engine.
 
 ## Architecture
 
@@ -21,15 +21,15 @@ A Java machine learning framework built on the [Aljabr](https://github.com/bhang
 ## Prerequisites
 
 - JDK 25+
-- Aljabr checked out at `../aljabr` (composite build)
+- Aljabr checked out at `../alkhawarizm` (composite build)
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/bhangun/aljabr.git ../aljabr
+git clone https://github.com/bhangun/alkhawarizm.git ../alkhawarizm
 git clone https://github.com/bhangun/tafkir.git
 cd tafkir
-./gradlew :trainer:tafkir-trainer-aljabr:test
+./gradlew :trainer:tafkir-trainer-alkhawarizm:test
 ```
 
 ## Status
@@ -85,8 +85,8 @@ TafkirSequential model = new TafkirSequential(
 
 | Module | Description |
 |--------|-------------|
-| `ml:tafkir-ml-aljabr` | Tensor API wrapping Aljabr backends |
-| `trainer:tafkir-trainer-aljabr` | Training loop, optimizers, losses |
+| `ml:tafkir-ml-alkhawarizm` | Tensor API wrapping Aljabr backends |
+| `trainer:tafkir-trainer-alkhawarizm` | Training loop, optimizers, losses |
 | `data:tafkir-data` | Dataset loaders (MNIST, etc.) |
 | `distributed:tafkir-distributed` | Multi-threaded data parallel training |
 | `checkpoint:tafkir-checkpoint` | Model save/load |

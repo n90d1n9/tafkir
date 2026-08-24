@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.ml.runner;
 
-import tech.kayys.aljabr.core.model.ModelFormat;
+import tech.kayys.alkhawarizm.core.model.ModelFormat;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -150,7 +150,7 @@ public class ModelRunnerRegistry {
     private void registerDefaults() {
         registerReflective(ModelFormat.ONNX,
                 "tech.kayys.tafkir.ml.runner.onnx.OnnxModelRunner",
-                "tech.kayys.aljabr.inference.onnx.OnnxModelRunner");
+                "tech.kayys.alkhawarizm.inference.onnx.OnnxModelRunner");
         registerUnsupported(ModelFormat.GGUF,
                 "Unified GGUF ModelRunner is not available yet. Use the GGUF plugin runner path for now.");
         registerUnsupported(ModelFormat.SAFETENSORS,

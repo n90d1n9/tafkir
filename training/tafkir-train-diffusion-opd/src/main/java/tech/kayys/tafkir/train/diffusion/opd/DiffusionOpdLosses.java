@@ -1,12 +1,13 @@
 package tech.kayys.tafkir.train.diffusion.opd;
 
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionSamplerType;
 
 /**
  * Minimal loss helpers for transition-mean supervision in DiffusionOPD.
  *
- * <p>This utility sits directly under {@link TransitionMeanAdapter}: adapters
+ * <p>
+ * This utility sits directly under {@link TransitionMeanAdapter}: adapters
  * convert model outputs into scheduler-aligned transition means, and this
  * helper evaluates the corresponding mean-matching objective.
  */

@@ -175,7 +175,7 @@ All CNN layers integrate seamlessly with the Aljabr ecosystem:
 ## Example: Building a Simple CNN
 
 ```java
-import tech.kayys.aljabr.lib.cnn.layers.*;
+import tech.kayys.alkhawarizm.lib.cnn.layers.*;
 import tech.kayys.tafkir.ml.autograd.GradTensor;
 
 public class SimpleCNN {
@@ -218,7 +218,7 @@ public class SimpleCNN {
 Run the comprehensive test suite:
 
 ```bash
-mvn test -f aljabr/sdk/lib/tafkir-ml-cnn/pom.xml
+mvn test -f alkhawarizm/sdk/lib/tafkir-ml-cnn/pom.xml
 ```
 
 Tests cover:

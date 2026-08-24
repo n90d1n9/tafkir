@@ -12,13 +12,12 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Terminal receipt for a quality-profile CI gate manifest verification report bundle.
+ * Terminal receipt for a quality-profile CI gate manifest verification report
+ * bundle.
  */
 public final class TrainingReportQualityProfileCiGateManifestVerificationReportReceipt {
-    public static final String FORMAT =
-            "aljabr.training.quality-profile.ci-gate.manifest.verification.receipt.v1";
-    public static final String DEFAULT_FILE_NAME =
-            "quality-profile-ci-gate-manifest-verification.receipt.json";
+    public static final String FORMAT = "alkhawarizm.training.quality-profile.ci-gate.manifest.verification.receipt.v1";
+    public static final String DEFAULT_FILE_NAME = "quality-profile-ci-gate-manifest-verification.receipt.json";
 
     private TrainingReportQualityProfileCiGateManifestVerificationReportReceipt() {
     }
@@ -229,8 +228,8 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReportR
         Path resolvedReceiptFile = Objects.requireNonNull(receiptFile, "receiptFile must not be null")
                 .toAbsolutePath()
                 .normalize();
-        TrainingReportQualityProfileCiGateManifestVerificationReport.ReportVerification resolvedVerification =
-                Objects.requireNonNull(verification, "verification must not be null");
+        TrainingReportQualityProfileCiGateManifestVerificationReport.ReportVerification resolvedVerification = Objects
+                .requireNonNull(verification, "verification must not be null");
         TrainerCheckpointIO.writeStringAtomically(
                 resolvedReceiptFile,
                 TrainerJson.toJson(
@@ -238,8 +237,8 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReportR
                                 resolvedVerification,
                                 Instant.now()))
                         + "\n");
-        TrainingReportArtifactFingerprint receiptFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedReceiptFile);
+        TrainingReportArtifactFingerprint receiptFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedReceiptFile);
         return new Receipt(
                 resolvedReceiptFile,
                 receiptFingerprint.sha256(),
@@ -280,8 +279,8 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReportR
             throw new IOException("Expected JSON object quality-profile CI manifest verification report receipt at "
                     + resolvedReceiptFile);
         }
-        TrainingReportArtifactFingerprint receiptFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedReceiptFile);
+        TrainingReportArtifactFingerprint receiptFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedReceiptFile);
         return new ReceiptInspection(
                 resolvedReceiptFile,
                 receiptFingerprint.sha256(),
@@ -301,8 +300,8 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReportR
             TrainingReportQualityProfileCiGateManifest.ManifestVerification manifestVerification)
             throws IOException {
         ReceiptInspection inspection = read(receiptFile);
-        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolvedManifestVerification =
-                Objects.requireNonNull(manifestVerification, "manifestVerification must not be null");
+        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolvedManifestVerification = Objects
+                .requireNonNull(manifestVerification, "manifestVerification must not be null");
         List<String> failures = new ArrayList<>();
         String normalizedExpectedSha256 = expectedReceiptSha256 == null || expectedReceiptSha256.isBlank()
                 ? null
@@ -314,8 +313,8 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReportR
                     + inspection.receiptFile() + ": expected " + normalizedExpectedSha256
                     + " but found " + inspection.receiptSha256());
         }
-        boolean schemaValid =
-                TrainingReportQualityProfileCiGateManifestVerificationReportReceiptSchema.verify(inspection, failures);
+        boolean schemaValid = TrainingReportQualityProfileCiGateManifestVerificationReportReceiptSchema
+                .verify(inspection, failures);
         TrainingReportQualityProfileCiGateManifestVerificationReport.ReportVerification reportVerification = null;
         if (schemaValid) {
             try {

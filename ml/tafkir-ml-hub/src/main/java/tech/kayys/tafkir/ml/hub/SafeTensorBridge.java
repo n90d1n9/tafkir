@@ -1,9 +1,9 @@
 package tech.kayys.tafkir.ml.hub;
 
 import tech.kayys.tafkir.ml.autograd.GradTensor;
-import tech.kayys.aljabr.safetensor.loader.SafetensorFFMLoader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorLoadResult;
-import tech.kayys.aljabr.safetensor.loader.SafetensorTensor;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorFFMLoader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorLoadResult;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorTensor;
 
 import java.io.IOException;
 import java.nio.file.Path;

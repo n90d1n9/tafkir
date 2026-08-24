@@ -7,7 +7,8 @@ import java.nio.file.Path;
 
 /**
  * Stub LiteRT (TFLite) exporter.
- * Real implementation lives in {@code runner:litert:aljabr-litert-core} (currently disabled).
+ * Real implementation lives in {@code runner:litert:alkhawarizm-litert-core}
+ * (currently disabled).
  */
 public final class LiteRTExporter {
 
@@ -25,6 +26,6 @@ public final class LiteRTExporter {
 
     public void export(Path outputPath) throws IOException {
         throw new UnsupportedOperationException(
-                "LiteRTExporter is a stub — enable :runner:litert:aljabr-litert-core for full support");
+                "LiteRTExporter is a stub — enable :runner:litert:alkhawarizm-litert-core for full support");
     }
 }

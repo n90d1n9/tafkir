@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 import tech.kayys.tafkir.train.data.Dataset;
 
 import java.io.BufferedReader;
@@ -17,13 +17,19 @@ import java.util.Objects;
 /**
  * JSONL-backed dataset for real multimodal corpora.
  *
- * <p>Each non-blank line is one sample. The loader supports a concise shorthand:
+ * <p>
+ * Each non-blank line is one sample. The loader supports a concise shorthand:
  * {@code {"text":"caption","image":"images/cat.png","audio":"clips/cat.wav"}}
- * and an explicit {@code parts} form for mixed or future modalities.</p>
+ * and an explicit {@code parts} form for mixed or future modalities.
+ * </p>
  *
- * <p>Relative asset paths are resolved against the manifest directory by default and
- * cannot escape that root. Binary assets are referenced as {@code file://} URIs unless
- * {@link Options#inlineBinaryAssets()} is enabled.</p>
+ * <p>
+ * Relative asset paths are resolved against the manifest directory by default
+ * and
+ * cannot escape that root. Binary assets are referenced as {@code file://} URIs
+ * unless
+ * {@link Options#inlineBinaryAssets()} is enabled.
+ * </p>
  */
 public final class MultimodalManifestDataset implements Dataset<List<MultimodalContent>> {
     public record Options(

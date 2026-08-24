@@ -11,7 +11,7 @@ class ByteLatentHistoryCsvTest {
 
     @Test
     void writesAndReadsEpochHistoryRows() throws Exception {
-        Path file = Files.createTempFile("aljabr-byte-history", ".csv");
+        Path file = Files.createTempFile("alkhawarizm-byte-history", ".csv");
         List<ByteLatentHistoryRow> rows = List.of(
                 new ByteLatentHistoryRow(1, 2, 2, 0.5d),
                 new ByteLatentHistoryRow(2, 4, 2, 0.25d));

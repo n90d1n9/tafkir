@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.nlp;
 
-import tech.kayys.aljabr.tokenizer.TokenizerFactory;
-import tech.kayys.aljabr.tokenizer.spi.*;
+import tech.kayys.alkhawarizm.tokenizer.TokenizerFactory;
+import tech.kayys.alkhawarizm.tokenizer.spi.*;
 
 import java.util.Arrays;
 

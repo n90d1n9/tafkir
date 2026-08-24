@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "tech.kayys.aljabr"
+group = "tech.kayys.alkhawarizm"
 version = "0.1.0-SNAPSHOT"
 
 java {

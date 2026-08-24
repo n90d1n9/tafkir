@@ -36,7 +36,7 @@ class DirectSafetensorRunProfileTest {
         DirectSafetensorRunProfile profile = DirectSafetensorRunProfile.load(tempDir);
 
         assertTrue(profile.gemma4Unified());
-        assertTrue(profile.gemma4Text());
+        assertTrue(profile.nativeBf16Matvec());
         assertFalse(profile.runtimeTraits().perLayerInputPath());
         assertTrue(profile.runtimeTraits().skipDefaultSystemPromptInjection());
         assertTrue(profile.runtimeTraits().visionModel());
@@ -59,7 +59,7 @@ class DirectSafetensorRunProfileTest {
 
         DirectSafetensorRunProfile profile = DirectSafetensorRunProfile.load(tempDir);
 
-        assertTrue(profile.gemma4Text());
+        assertTrue(profile.nativeBf16Matvec());
         assertTrue(profile.runtimeTraits().perLayerInputPath());
     }
 
@@ -80,7 +80,7 @@ class DirectSafetensorRunProfileTest {
         DirectSafetensorRunProfile profile = DirectSafetensorRunProfile.load(tempDir);
 
         assertTrue(profile.gemma4Unified());
-        assertTrue(profile.gemma4Text());
+        assertTrue(profile.nativeBf16Matvec());
         assertTrue(profile.runtimeTraits().perLayerInputPath());
         assertTrue(profile.runtimeTraits().visionModel());
         assertTrue(profile.runtimeTraits().multimodalModel());

@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "tech.kayys.aljabr"
+group = "tech.kayys.alkhawarizm"
 version = "0.1.0-SNAPSHOT"
 
 java {
@@ -19,14 +19,14 @@ repositories {
 
 sourceSets {
     named("main") {
-        java.exclude("tech/kayys/aljabr/ml/runner/**")
+        java.exclude("tech/kayys/alkhawarizm/ml/runner/**")
     }
 }
 
 dependencies {
     api(project(":ml:tafkir-ml-runner-api"))
-  //  api(project(":trainer:aljabr-trainer-api"))
-  //  implementation(project(":trainer:aljabr-trainer"))
+  //  api(project(":trainer:alkhawarizm-trainer-api"))
+  //  implementation(project(":trainer:alkhawarizm-trainer"))
     api(project(":ml:tafkir-ml-autograd"))
     api(project(":ml:tafkir-ml-core"))
     api(project(":ml:tafkir-ml-data"))
@@ -39,7 +39,7 @@ dependencies {
     api(project(":ml:tafkir-ml-optimize"))
     api(project(":ml:tafkir-ml-hub"))
     api(project(":ml:tafkir-ml-export"))
-   // implementation(project(":sdk:aljabr-sdk-api"))
+   // implementation(project(":sdk:alkhawarizm-sdk-api"))
     api(project(":ml:tafkir-ml-multimodal"))
     api(project(":ml:tafkir-ml-cnn"))
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter")

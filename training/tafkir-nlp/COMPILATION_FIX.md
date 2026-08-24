@@ -18,41 +18,41 @@ Fixed compilation failures in `tafkir-ml-nlp` module caused by incorrect package
      ```
 
 2. **EmbeddingPipeline.java**
-   - **Issue**: Imported from non-existent `tech.kayys.aljabr.lib.api`
-   - **Fix**: Changed to correct `tech.kayys.aljabr.sdk.api` package
+   - **Issue**: Imported from non-existent `tech.kayys.alkhawarizm.lib.api`
+   - **Fix**: Changed to correct `tech.kayys.alkhawarizm.sdk.api` package
    - **Changes**:
      ```java
-     - import tech.kayys.aljabr.lib.api.AljabrSdk;
-     - import tech.kayys.aljabr.lib.api.AljabrSdkProvider;
-     + import tech.kayys.aljabr.sdk.api.AljabrSdk;
-     + import tech.kayys.aljabr.sdk.api.AljabrSdkProvider;
+     - import tech.kayys.alkhawarizm.lib.api.AljabrSdk;
+     - import tech.kayys.alkhawarizm.lib.api.AljabrSdkProvider;
+     + import tech.kayys.alkhawarizm.sdk.api.AljabrSdk;
+     + import tech.kayys.alkhawarizm.sdk.api.AljabrSdkProvider;
      ```
 
 3. **TextClassificationPipeline.java**
    - **Issue**: Same incorrect SDK package
-   - **Fix**: Updated to `tech.kayys.aljabr.sdk.api`
+   - **Fix**: Updated to `tech.kayys.alkhawarizm.sdk.api`
    - **Changes**:
      ```java
-     - import tech.kayys.aljabr.lib.api.AljabrSdk;
-     - import tech.kayys.aljabr.lib.api.AljabrSdkProvider;
-     + import tech.kayys.aljabr.sdk.api.AljabrSdk;
-     + import tech.kayys.aljabr.sdk.api.AljabrSdkProvider;
+     - import tech.kayys.alkhawarizm.lib.api.AljabrSdk;
+     - import tech.kayys.alkhawarizm.lib.api.AljabrSdkProvider;
+     + import tech.kayys.alkhawarizm.sdk.api.AljabrSdk;
+     + import tech.kayys.alkhawarizm.sdk.api.AljabrSdkProvider;
      ```
 
 4. **TextGenerationPipeline.java**
    - **Issue**: Same incorrect SDK package
-   - **Fix**: Updated to `tech.kayys.aljabr.sdk.api`
+   - **Fix**: Updated to `tech.kayys.alkhawarizm.sdk.api`
    - **Changes**:
      ```java
-     - import tech.kayys.aljabr.lib.api.AljabrSdk;
-     - import tech.kayys.aljabr.lib.api.AljabrSdkProvider;
-     + import tech.kayys.aljabr.sdk.api.AljabrSdk;
-     + import tech.kayys.aljabr.sdk.api.AljabrSdkProvider;
+     - import tech.kayys.alkhawarizm.lib.api.AljabrSdk;
+     - import tech.kayys.alkhawarizm.lib.api.AljabrSdkProvider;
+     + import tech.kayys.alkhawarizm.sdk.api.AljabrSdk;
+     + import tech.kayys.alkhawarizm.sdk.api.AljabrSdkProvider;
      ```
 
 ## Root Cause
 
-The files were using an outdated/incorrect package path `tech.kayys.aljabr.lib.api` which doesn't exist. The correct package is `tech.kayys.aljabr.sdk.api`.
+The files were using an outdated/incorrect package path `tech.kayys.alkhawarizm.lib.api` which doesn't exist. The correct package is `tech.kayys.alkhawarizm.sdk.api`.
 
 Additionally, `Embedding.java` was missing imports for neural network classes (`NNModule`, `Parameter`) which live in the separate `tafkir-ml-nn` module.
 
@@ -63,15 +63,15 @@ All required dependencies are correctly declared in `pom.xml`:
 ```xml
 <!-- Neural network module (provides NNModule, Parameter) -->
 <dependency>
-    <groupId>tech.kayys.aljabr</groupId>
+    <groupId>tech.kayys.alkhawarizm</groupId>
     <artifactId>tafkir-ml-nn</artifactId>
     <version>${project.version}</version>
 </dependency>
 
 <!-- SDK API (provides AljabrSdk, AljabrSdkProvider) -->
 <dependency>
-    <groupId>tech.kayys.aljabr</groupId>
-    <artifactId>aljabr-sdk-api</artifactId>
+    <groupId>tech.kayys.alkhawarizm</groupId>
+    <artifactId>alkhawarizm-sdk-api</artifactId>
     <version>${project.version}</version>
 </dependency>
 ```
@@ -79,22 +79,22 @@ All required dependencies are correctly declared in `pom.xml`:
 ## Package Structure Reference
 
 ### Aljabr SDK
-- **Package**: `tech.kayys.aljabr.sdk.api`
-- **Location**: `aljabr/sdk/aljabr-sdk-api/src/main/java/tech/kayys/aljabr/sdk/api/`
+- **Package**: `tech.kayys.alkhawarizm.sdk.api`
+- **Location**: `alkhawarizm/sdk/alkhawarizm-sdk-api/src/main/java/tech/kayys/alkhawarizm/sdk/api/`
 - **Classes**:
   - `AljabrSdk` - Main SDK interface
   - `AljabrSdkProvider` - Provider interface for ServiceLoader
 
 ### Aljabr ML NN
 - **Package**: `tech.kayys.tafkir.ml.nn`
-- **Location**: `aljabr/framework/lib/tafkir-ml-nn/src/main/java/tech/kayys/aljabr/ml/nn/`
+- **Location**: `alkhawarizm/framework/lib/tafkir-ml-nn/src/main/java/tech/kayys/alkhawarizm/ml/nn/`
 - **Classes**:
   - `NNModule` - Base class for neural network modules
   - `Parameter` - Neural network parameter wrapper
 
 ### Aljabr ML NLP (this module)
 - **Package**: `tech.kayys.tafkir.ml.nlp`
-- **Location**: `aljabr/framework/lib/tafkir-ml-nlp/src/main/java/tech/kayys/aljabr/ml/nlp/`
+- **Location**: `alkhawarizm/framework/lib/tafkir-ml-nlp/src/main/java/tech/kayys/alkhawarizm/ml/nlp/`
 - **Classes**:
   - `Embedding` - Neural network embedding layer
   - `EmbeddingPipeline` - Text embedding pipeline
@@ -107,7 +107,7 @@ To verify the fixes compile correctly:
 
 ```bash
 # Compile the module
-mvn clean compile -pl aljabr/framework/lib/tafkir-ml-nlp -am -DskipTests
+mvn clean compile -pl alkhawarizm/framework/lib/tafkir-ml-nlp -am -DskipTests
 
 # Expected result: BUILD SUCCESS
 ```

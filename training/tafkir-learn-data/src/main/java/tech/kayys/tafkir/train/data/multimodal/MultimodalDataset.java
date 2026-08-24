@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
 import tech.kayys.tafkir.train.data.Dataset;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,39 +9,48 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * A generic multimodal dataset that yields lists of {@link MultimodalContent} objects.
+ * A generic multimodal dataset that yields lists of {@link MultimodalContent}
+ * objects.
  *
- * <p>This dataset implementation provides flexibility for handling collections of multimodal data,
- * where each sample contains a list of content items that may include mixed modalities (e.g., text,
+ * <p>
+ * This dataset implementation provides flexibility for handling collections of
+ * multimodal data,
+ * where each sample contains a list of content items that may include mixed
+ * modalities (e.g., text,
  * images, audio, video, or custom modalities).
  *
- * <p><b>Use Cases:</b>
+ * <p>
+ * <b>Use Cases:</b>
  * <ul>
- *   <li>Pre-loaded multimodal datasets: Data generated dynamically or loaded from JSONL format</li>
- *   <li>Mixed modality collections: Handle variable numbers of modalities per sample</li>
- *   <li>Flexible data sources: Data can be sourced from any origin (database, API, file, etc.)</li>
+ * <li>Pre-loaded multimodal datasets: Data generated dynamically or loaded from
+ * JSONL format</li>
+ * <li>Mixed modality collections: Handle variable numbers of modalities per
+ * sample</li>
+ * <li>Flexible data sources: Data can be sourced from any origin (database,
+ * API, file, etc.)</li>
  * </ul>
  *
- * <p><b>Example Usage:</b>
+ * <p>
+ * <b>Example Usage:</b>
+ * 
  * <pre>
  * List&lt;List&lt;MultimodalContent&gt;&gt; samples = List.of(
- *     List.of(
- *         MultimodalContent.text("A cat"),
- *         MultimodalContent.image(imageTensor1),
- *         MultimodalContent.audio(audioBytes1)
- *     ),
- *     List.of(
- *         MultimodalContent.text("A dog"),
- *         MultimodalContent.image(imageTensor2),
- *         MultimodalContent.audio(audioBytes2)
- *     )
- * );
+ *         List.of(
+ *                 MultimodalContent.text("A cat"),
+ *                 MultimodalContent.image(imageTensor1),
+ *                 MultimodalContent.audio(audioBytes1)),
+ *         List.of(
+ *                 MultimodalContent.text("A dog"),
+ *                 MultimodalContent.image(imageTensor2),
+ *                 MultimodalContent.audio(audioBytes2)));
  * 
  * MultimodalDataset dataset = new MultimodalDataset(samples);
  * List&lt;MultimodalContent&gt; firstSample = dataset.get(0);
  * </pre>
  *
- * <p><b>Thread Safety:</b> This class is thread-safe for reading. Modifications to the backing
+ * <p>
+ * <b>Thread Safety:</b> This class is thread-safe for reading. Modifications to
+ * the backing
  * store must be handled externally.
  *
  * @see MultimodalContent
@@ -54,8 +63,10 @@ public class MultimodalDataset implements Dataset<List<MultimodalContent>> {
     /**
      * Constructs a multimodal dataset with pre-loaded data.
      *
-     * @param preloadedData a list of multimodal content lists, where each inner list
-     *                      represents a single sample containing one or more content items
+     * @param preloadedData a list of multimodal content lists, where each inner
+     *                      list
+     *                      represents a single sample containing one or more
+     *                      content items
      *                      of potentially different modalities. Must not be null.
      * @throws NullPointerException if {@code preloadedData} is null
      */
@@ -71,13 +82,15 @@ public class MultimodalDataset implements Dataset<List<MultimodalContent>> {
     /**
      * Retrieves a sample at the specified index.
      *
-     * <p>Each sample is a list of {@link MultimodalContent} objects representing different
+     * <p>
+     * Each sample is a list of {@link MultimodalContent} objects representing
+     * different
      * modalities (text, image, audio, etc.) for that sample.
      *
      * @param index the zero-based index of the sample to retrieve
      * @return a list of multimodal content for the requested sample
      * @throws IndexOutOfBoundsException if the index is out of range
-     *         ({@code index < 0 || index >= size()})
+     *                                   ({@code index < 0 || index >= size()})
      */
     @Override
     public List<MultimodalContent> get(int index) {
@@ -97,8 +110,10 @@ public class MultimodalDataset implements Dataset<List<MultimodalContent>> {
     /**
      * Returns an immutable snapshot of all samples.
      *
-     * <p>This is useful when dataset manifests, train/validation splits, or small
-     * in-memory examples need a stable view that cannot be mutated by caller code.</p>
+     * <p>
+     * This is useful when dataset manifests, train/validation splits, or small
+     * in-memory examples need a stable view that cannot be mutated by caller code.
+     * </p>
      */
     public List<List<MultimodalContent>> samples() {
         return backingStore;

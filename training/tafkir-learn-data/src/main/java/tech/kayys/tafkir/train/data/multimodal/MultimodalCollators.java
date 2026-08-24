@@ -1,8 +1,8 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
 import tech.kayys.tafkir.ml.autograd.GradTensor;
-import tech.kayys.aljabr.spi.model.ModalityType;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -168,7 +168,8 @@ public final class MultimodalCollators {
             if (offsets.length == 0) {
                 throw new IllegalArgumentException("audio batch must not be empty");
             }
-            if (offsets.length != lengths.length || offsets.length != texts.size() || offsets.length != mimeTypes.size()) {
+            if (offsets.length != lengths.length || offsets.length != texts.size()
+                    || offsets.length != mimeTypes.size()) {
                 throw new IllegalArgumentException("audio batch arrays must have the same sample count");
             }
             for (int i = 0; i < lengths.length; i++) {
@@ -176,7 +177,8 @@ public final class MultimodalCollators {
                     throw new IllegalArgumentException("audio length must be positive at sample " + i);
                 }
                 if (offsets[i] < 0 || offsets[i] + lengths[i] > audioBytes.length) {
-                    throw new IllegalArgumentException("audio offset/length is outside concatenated buffer at sample " + i);
+                    throw new IllegalArgumentException(
+                            "audio offset/length is outside concatenated buffer at sample " + i);
                 }
             }
             audioBytes = audioBytes.clone();

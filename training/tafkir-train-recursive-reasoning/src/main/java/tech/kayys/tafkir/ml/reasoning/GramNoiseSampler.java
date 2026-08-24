@@ -1,6 +1,6 @@
 package tech.kayys.tafkir.ml.reasoning;
 
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 /**
  * Provides epsilon noise for GRAM's reparameterized latent sampling.

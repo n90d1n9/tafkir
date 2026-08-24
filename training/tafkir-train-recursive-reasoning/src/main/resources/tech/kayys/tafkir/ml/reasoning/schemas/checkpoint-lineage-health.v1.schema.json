@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://aljabr.ai/schemas/training/checkpoint-lineage-health.v1.schema.json",
+  "$id": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health.v1.schema.json",
   "title": "Aljabr checkpoint lineage health",
   "description": "Stable checkpoint lineage health payload emitted by recursive-reasoning checkpoint inspectors.",
   "type": "object",
@@ -40,7 +40,7 @@
       "const": "checkpoint-lineage-health"
     },
     "schemaVersion": {
-      "const": "aljabr.checkpoint-lineage-health.v1"
+      "const": "alkhawarizm.checkpoint-lineage-health.v1"
     },
     "rootDir": {
       "type": "string",
@@ -208,7 +208,7 @@
         },
         "code": {
           "type": "string",
-          "pattern": "^ALJABR_LINEAGE_[A-Z0-9_]+$"
+          "pattern": "^ALKHAWARIZM_LINEAGE_[A-Z0-9_]+$"
         },
         "severity": {
           "enum": [
@@ -273,7 +273,7 @@
         },
         "code": {
           "type": "string",
-          "pattern": "^ALJABR_LINEAGE_[A-Z0-9_]+$"
+          "pattern": "^ALKHAWARIZM_LINEAGE_[A-Z0-9_]+$"
         },
         "label": {
           "type": "string"

@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import tech.kayys.aljabr.tokenizer.spi.DecodeOptions;
-import tech.kayys.aljabr.tokenizer.spi.EncodeOptions;
-import tech.kayys.aljabr.tokenizer.spi.Tokenizer;
+import tech.kayys.alkhawarizm.tokenizer.spi.DecodeOptions;
+import tech.kayys.alkhawarizm.tokenizer.spi.EncodeOptions;
+import tech.kayys.alkhawarizm.tokenizer.spi.Tokenizer;
 
 class TokenizedDatasetTest {
 
@@ -29,10 +29,10 @@ class TokenizedDatasetTest {
         Files.writeString(first, "changed after loading");
 
         assertEquals(2, dataset.size());
-        assertArrayEquals(new float[] {1f, 2f, 99f}, dataset.get(0).input().data(), 1e-6f);
-        assertArrayEquals(new float[] {2f, 99f, 3f}, dataset.get(0).label().data(), 1e-6f);
-        assertArrayEquals(new float[] {99f, 3f, 4f}, dataset.get(1).input().data(), 1e-6f);
-        assertArrayEquals(new float[] {3f, 4f, 5f}, dataset.get(1).label().data(), 1e-6f);
+        assertArrayEquals(new float[] { 1f, 2f, 99f }, dataset.get(0).input().data(), 1e-6f);
+        assertArrayEquals(new float[] { 2f, 99f, 3f }, dataset.get(0).label().data(), 1e-6f);
+        assertArrayEquals(new float[] { 99f, 3f, 4f }, dataset.get(1).input().data(), 1e-6f);
+        assertArrayEquals(new float[] { 3f, 4f, 5f }, dataset.get(1).label().data(), 1e-6f);
     }
 
     @Test
@@ -44,10 +44,10 @@ class TokenizedDatasetTest {
         TokenizedDataset dataset = TokenizedDataset.fromDirectoryCorpus(tempDir, tokenizer(99), 2, 1);
 
         assertEquals(2, dataset.size());
-        assertArrayEquals(new float[] {1f, 2f}, dataset.get(0).input().data(), 1e-6f);
-        assertArrayEquals(new float[] {2f, 99f}, dataset.get(0).label().data(), 1e-6f);
-        assertArrayEquals(new float[] {2f, 99f}, dataset.get(1).input().data(), 1e-6f);
-        assertArrayEquals(new float[] {99f, 3f}, dataset.get(1).label().data(), 1e-6f);
+        assertArrayEquals(new float[] { 1f, 2f }, dataset.get(0).input().data(), 1e-6f);
+        assertArrayEquals(new float[] { 2f, 99f }, dataset.get(0).label().data(), 1e-6f);
+        assertArrayEquals(new float[] { 2f, 99f }, dataset.get(1).input().data(), 1e-6f);
+        assertArrayEquals(new float[] { 99f, 3f }, dataset.get(1).label().data(), 1e-6f);
     }
 
     @Test
@@ -114,7 +114,7 @@ class TokenizedDatasetTest {
 
             @Override
             public int[] allStopTokenIds() {
-                return eosTokenId >= 0 ? new int[] {eosTokenId} : new int[0];
+                return eosTokenId >= 0 ? new int[] { eosTokenId } : new int[0];
             }
         };
     }

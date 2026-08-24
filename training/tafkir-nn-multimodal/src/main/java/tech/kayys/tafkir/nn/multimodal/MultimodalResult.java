@@ -1,8 +1,8 @@
 package tech.kayys.tafkir.ml.multimodal;
 
-import tech.kayys.aljabr.spi.model.ModalityType;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
-import tech.kayys.aljabr.spi.model.MultimodalResponse;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.MultimodalResponse;
 
 import java.util.Arrays;
 import java.util.List;

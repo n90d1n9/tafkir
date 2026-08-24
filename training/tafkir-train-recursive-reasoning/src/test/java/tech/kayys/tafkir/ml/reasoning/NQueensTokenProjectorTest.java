@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import tech.kayys.aljabr.core.backend.ComputeBackend;
-import tech.kayys.aljabr.core.tensor.DType;
-import tech.kayys.aljabr.core.tensor.DeviceType;
-import tech.kayys.aljabr.core.tensor.Shape;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.backend.ComputeBackend;
+import tech.kayys.alkhawarizm.core.tensor.DType;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.Shape;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 class NQueensTokenProjectorTest {
     @Test
@@ -88,16 +88,16 @@ class NQueensTokenProjectorTest {
         RecursiveReasoningState previous = new RecursiveReasoningState("root", 0, 0, 0, tensor, Map.of());
         GramTransitionSample sample = priorSample(tensor);
         int[] expectedTokens = NQueensSolution.ofColumns(1, 3, 0, 2).toTokens();
-        GramNextStateFactory delegate = (ignoredPrevious, ignoredContext, transitionSample) ->
-                new RecursiveReasoningState(
+        GramNextStateFactory delegate = (ignoredPrevious, ignoredContext,
+                transitionSample) -> new RecursiveReasoningState(
                         "next",
                         0,
                         1,
                         0,
                         transitionSample.latentState(),
                         Map.of("existing", "metadata"));
-        NQueensTokenPredictionHead head = (proposed, ignoredContext, ignoredSample, problem) ->
-                new NQueensTokenProjectionResult(
+        NQueensTokenPredictionHead head = (proposed, ignoredContext, ignoredSample,
+                problem) -> new NQueensTokenProjectionResult(
                         expectedTokens,
                         NQueensTokenProjectionMode.CELL_ARGMAX,
                         Map.of("source", "test-head"));
@@ -178,80 +178,190 @@ class NQueensTokenProjectorTest {
         }
 
         @Override
-        public Tensor add(Tensor other) { return this; }
+        public Tensor add(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor sub(Tensor other) { return this; }
+        public Tensor sub(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor mul(Tensor other) { return this; }
+        public Tensor mul(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor mul(float scalar) { return this; }
+        public Tensor mul(float scalar) {
+            return this;
+        }
+
         @Override
-        public Tensor div(float scalar) { return this; }
+        public Tensor div(float scalar) {
+            return this;
+        }
+
         @Override
-        public Tensor matmul(Tensor other) { return this; }
+        public Tensor matmul(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor reshape(long... newShape) { return this; }
+        public Tensor reshape(long... newShape) {
+            return this;
+        }
+
         @Override
-        public Tensor softmax() { return this; }
+        public Tensor softmax() {
+            return this;
+        }
+
         @Override
-        public Tensor slice(long[] offsets, long[] sizes) { return this; }
+        public Tensor slice(long[] offsets, long[] sizes) {
+            return this;
+        }
+
         @Override
-        public Tensor pow(float exponent) { return this; }
+        public Tensor pow(float exponent) {
+            return this;
+        }
+
         @Override
-        public Tensor mean() { return this; }
+        public Tensor mean() {
+            return this;
+        }
+
         @Override
-        public Tensor abs() { return this; }
+        public Tensor abs() {
+            return this;
+        }
+
         @Override
-        public Tensor crossEntropy(Tensor target) { return this; }
+        public Tensor crossEntropy(Tensor target) {
+            return this;
+        }
+
         @Override
-        public Tensor binaryCrossEntropy(Tensor target) { return this; }
+        public Tensor binaryCrossEntropy(Tensor target) {
+            return this;
+        }
+
         @Override
-        public Tensor div(Tensor other) { return this; }
+        public Tensor div(Tensor other) {
+            return this;
+        }
+
         @Override
-        public Tensor add(float scalar) { return this; }
+        public Tensor add(float scalar) {
+            return this;
+        }
+
         @Override
-        public Tensor zerosLike() { return this; }
+        public Tensor zerosLike() {
+            return this;
+        }
+
         @Override
-        public Tensor sqrt() { return this; }
+        public Tensor sqrt() {
+            return this;
+        }
+
         @Override
-        public Tensor cast(DType dtype) { return this; }
+        public Tensor cast(DType dtype) {
+            return this;
+        }
+
         @Override
-        public Tensor to(DeviceType device) { return this; }
+        public Tensor to(DeviceType device) {
+            return this;
+        }
+
         @Override
-        public float item() { return 0f; }
+        public float item() {
+            return 0f;
+        }
+
         @Override
-        public void backward() {}
+        public void backward() {
+        }
+
         @Override
-        public Tensor grad() { return this; }
+        public Tensor grad() {
+            return this;
+        }
+
         @Override
-        public void setGrad(Tensor grad) {}
+        public void setGrad(Tensor grad) {
+        }
+
         @Override
-        public boolean requiresGrad() { return false; }
+        public boolean requiresGrad() {
+            return false;
+        }
+
         @Override
-        public void setRequiresGrad(boolean requiresGrad) {}
+        public void setRequiresGrad(boolean requiresGrad) {
+        }
+
         @Override
-        public Tensor relu() { return this; }
+        public Tensor relu() {
+            return this;
+        }
+
         @Override
-        public Tensor sigmoid() { return this; }
+        public Tensor sigmoid() {
+            return this;
+        }
+
         @Override
-        public Tensor tanh() { return this; }
+        public Tensor tanh() {
+            return this;
+        }
+
         @Override
-        public Tensor log() { return this; }
+        public Tensor log() {
+            return this;
+        }
+
         @Override
-        public Tensor exp() { return this; }
+        public Tensor exp() {
+            return this;
+        }
+
         @Override
-        public Tensor silu() { return this; }
+        public Tensor silu() {
+            return this;
+        }
+
         @Override
-        public Tensor flatten() { return this; }
+        public Tensor flatten() {
+            return this;
+        }
+
         @Override
-        public Tensor unsqueeze(int dim) { return this; }
+        public Tensor unsqueeze(int dim) {
+            return this;
+        }
+
         @Override
-        public Tensor squeeze() { return this; }
+        public Tensor squeeze() {
+            return this;
+        }
+
         @Override
-        public Tensor transpose() { return this; }
+        public Tensor transpose() {
+            return this;
+        }
+
         @Override
-        public Tensor transpose(int dim0, int dim1) { return this; }
+        public Tensor transpose(int dim0, int dim1) {
+            return this;
+        }
+
         @Override
-        public long numel() { return 1L; }
+        public long numel() {
+            return 1L;
+        }
     }
 }

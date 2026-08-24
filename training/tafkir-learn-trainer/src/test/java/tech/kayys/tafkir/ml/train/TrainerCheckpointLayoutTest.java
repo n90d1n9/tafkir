@@ -27,7 +27,7 @@ class TrainerCheckpointLayoutTest {
 
     @Test
     void fromCheckpointDirectoryResolvesCanonicalFileNames() {
-        Path checkpointDir = Path.of("/tmp/aljabr-checkpoint-layout");
+        Path checkpointDir = Path.of("/tmp/alkhawarizm-checkpoint-layout");
         TrainerCheckpointLayout layout = TrainerCheckpointLayout.from(checkpointDir);
 
         assertEquals(checkpointDir.resolve(TrainerCheckpointLayout.MODEL_FILE_NAME), layout.model());
@@ -44,7 +44,7 @@ class TrainerCheckpointLayoutTest {
 
     @Test
     void manifestArtifactsKeepStableNamesAndOrder() {
-        TrainerCheckpointLayout layout = TrainerCheckpointLayout.from(Path.of("/tmp/aljabr-checkpoint-layout"));
+        TrainerCheckpointLayout layout = TrainerCheckpointLayout.from(Path.of("/tmp/alkhawarizm-checkpoint-layout"));
 
         assertEquals(
                 List.of(

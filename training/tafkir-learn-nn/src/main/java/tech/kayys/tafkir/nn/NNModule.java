@@ -18,6 +18,7 @@ import java.util.stream.Stream;
  * a hierarchy that mirrors the neural network architecture.
  *
  * <h3>Defining a custom module</h3>
+ * 
  * <pre>{@code
  * public class MyModel extends NNModule {
  *     private final Linear fc1 = register(new Linear(784, 128));
@@ -165,9 +166,12 @@ public abstract class NNModule {
     /** Human-readable parameter count. */
     public String parameterCountFormatted() {
         long count = parameterCount();
-        if (count >= 1_000_000_000) return String.format("%.1fB", count / 1e9);
-        if (count >= 1_000_000) return String.format("%.1fM", count / 1e6);
-        if (count >= 1_000) return String.format("%.1fK", count / 1e3);
+        if (count >= 1_000_000_000)
+            return String.format("%.1fB", count / 1e9);
+        if (count >= 1_000_000)
+            return String.format("%.1fM", count / 1e6);
+        if (count >= 1_000)
+            return String.format("%.1fK", count / 1e3);
         return String.valueOf(count);
     }
 
@@ -183,8 +187,6 @@ public abstract class NNModule {
             oos.writeObject(stateDict);
         }
     }
-
-
 
     /** Save model weights in the universal Safetensor format. */
     public void saveSafetensors(Path path) throws IOException {
@@ -217,7 +219,8 @@ public abstract class NNModule {
         for (var entry : namedParameters().entrySet()) {
             stateDict.put(entry.getKey(), entry.getValue().data());
         }
-        GgufWriter.save(path, stateDict, Map.of("general.architecture", tech.kayys.tafkir.ml.gguf.GgufMetaValue.ofString("aljabr")));
+        GgufWriter.save(path, stateDict,
+                Map.of("general.architecture", tech.kayys.tafkir.ml.gguf.GgufMetaValue.ofString("alkhawarizm")));
     }
 
     /** Save model weights in the GGUF format. */
@@ -264,7 +267,7 @@ public abstract class NNModule {
                     System.arraycopy(data, 0, param.data().data(), 0, data.length);
                 } else {
                     System.err.println("Warning: Shape mismatch for " + entry.getKey() +
-                                       ". Expected " + param.data().numel() + " elements, got " + data.length);
+                            ". Expected " + param.data().numel() + " elements, got " + data.length);
                 }
             } else {
                 System.err.println("Warning: Parameter " + entry.getKey() + " not found in model.");
@@ -285,7 +288,8 @@ public abstract class NNModule {
     }
 
     /**
-     * Load parameters from a state dict. Strict mode (default): all keys must match.
+     * Load parameters from a state dict. Strict mode (default): all keys must
+     * match.
      */
     public void loadStateDict(Map<String, GradTensor> state) {
         loadStateDict(state, true);
@@ -294,23 +298,26 @@ public abstract class NNModule {
     /**
      * Load parameters from a state dict.
      *
-     * @param strict if true, throws on missing/unexpected keys; if false, loads what matches
+     * @param strict if true, throws on missing/unexpected keys; if false, loads
+     *               what matches
      */
     public void loadStateDict(Map<String, GradTensor> state, boolean strict) {
         Map<String, Parameter> params = namedParameters();
         for (var entry : state.entrySet()) {
             Parameter p = params.get(entry.getKey());
             if (p == null) {
-                if (strict) throw new IllegalArgumentException(
-                    "loadStateDict: unexpected key '" + entry.getKey() + "'");
+                if (strict)
+                    throw new IllegalArgumentException(
+                            "loadStateDict: unexpected key '" + entry.getKey() + "'");
                 continue;
             }
             float[] src = entry.getValue().data();
             float[] dst = p.data().data();
             if (src.length != dst.length) {
-                if (strict) throw new IllegalArgumentException(
-                    "loadStateDict: size mismatch for '" + entry.getKey() +
-                    "': expected " + dst.length + ", got " + src.length);
+                if (strict)
+                    throw new IllegalArgumentException(
+                            "loadStateDict: size mismatch for '" + entry.getKey() +
+                                    "': expected " + dst.length + ", got " + src.length);
                 continue;
             }
             System.arraycopy(src, 0, dst, 0, src.length);

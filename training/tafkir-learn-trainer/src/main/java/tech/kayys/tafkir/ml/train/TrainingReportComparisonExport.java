@@ -11,7 +11,7 @@ import java.util.Set;
 public record TrainingReportComparisonExport(
         List<Map<String, Object>> metricRows,
         List<Map<String, Object>> findingRows) {
-    public static final String SCHEMA = "aljabr.training.report.comparison-export.v1";
+    public static final String SCHEMA = "alkhawarizm.training.report.comparison-export.v1";
 
     private static final List<String> METRIC_COLUMNS = List.of(
             "metric",
@@ -62,7 +62,8 @@ public record TrainingReportComparisonExport(
         if (schema != null && !SCHEMA.equals(String.valueOf(schema))) {
             throw new IllegalArgumentException("Unsupported comparison export schema: " + schema);
         }
-        return new TrainingReportComparisonExport(rows(map.get("metrics"), "metrics"), rows(map.get("findings"), "findings"));
+        return new TrainingReportComparisonExport(rows(map.get("metrics"), "metrics"),
+                rows(map.get("findings"), "findings"));
     }
 
     public static TrainingReportComparisonExport empty() {

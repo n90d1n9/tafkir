@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.train.diffusion.api;
 
 import java.util.Map;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 /**
  * Runtime observer hook for diffusion OPD integrations that need to collect

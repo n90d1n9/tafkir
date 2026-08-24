@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "tech.kayys.aljabr"
+group = "tech.kayys.alkhawarizm"
 version = "0.1.0-SNAPSHOT"
 
 java {
@@ -15,7 +15,7 @@ java {
 sourceSets {
     named("main") {
         java.srcDir(project.file("../../training/tafkir-train-api/src/main/java"))
-        java.include("tech/kayys/aljabr/ml/runner/**")
+        java.include("tech/kayys/alkhawarizm/ml/runner/**")
     }
 }
 
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":core:aljabr-tensor"))
+    implementation(project(":core:alkhawarizm-tensor"))
 }
 
 publishing {

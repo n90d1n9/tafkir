@@ -3,7 +3,7 @@ package tech.kayys.tafkir.quantizer.awq;
 import tech.kayys.tafkir.quantizer.awq.AWQConfig;
 import tech.kayys.tafkir.quantizer.awq.AWQLayer;
 import tech.kayys.tafkir.quantizer.gptq.MemoryAllocator;
-import tech.kayys.aljabr.safetensor.loader.SafetensorHeader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorHeader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,22 +19,28 @@ import java.util.regex.Pattern;
  * Loads AWQ-quantized models from .safetensors files using the
  * safetensor-loader module's infrastructure (SafetensorHeaderParser, FFM API).
  *
- * <p>Handles both single-file and multi-shard models:
+ * <p>
+ * Handles both single-file and multi-shard models:
+ * 
  * <pre>
  * model.safetensors                          → single-file
  * model-00001-of-00003.safetensors           → sharded
  * </pre>
  *
- * <p>The loader:
+ * <p>
+ * The loader:
  * <ol>
- *   <li>Discovers all .safetensors files in a directory</li>
- *   <li>Parses headers via {@link SafetensorHeaderParser} to build a tensor→shard index</li>
- *   <li>Auto-detects AWQ config from tensor naming patterns</li>
- *   <li>Loads quantized tensors into off-heap FFM memory</li>
- *   <li>Groups tensors into {@link AWQLayer} instances</li>
+ * <li>Discovers all .safetensors files in a directory</li>
+ * <li>Parses headers via {@link SafetensorHeaderParser} to build a tensor→shard
+ * index</li>
+ * <li>Auto-detects AWQ config from tensor naming patterns</li>
+ * <li>Loads quantized tensors into off-heap FFM memory</li>
+ * <li>Groups tensors into {@link AWQLayer} instances</li>
  * </ol>
  *
- * <p><b>AWQ Tensor Naming (AutoAWQ convention):</b>
+ * <p>
+ * <b>AWQ Tensor Naming (AutoAWQ convention):</b>
+ * 
  * <pre>
  * model.layers.N.self_attn.q_proj.qweight
  * model.layers.N.self_attn.q_proj.qzeros
@@ -42,7 +48,8 @@ import java.util.regex.Pattern;
  * model.layers.N.self_attn.q_proj.bias   (optional)
  * </pre>
  *
- * <p><b>AWQ vs GPTQ Layout Difference:</b>
+ * <p>
+ * <b>AWQ vs GPTQ Layout Difference:</b>
  * AWQ qweight shape: [inF/pack, outF] — groups along INPUT dimension
  * GPTQ qweight shape: [outF/pack, inF] — groups along OUTPUT dimension
  */

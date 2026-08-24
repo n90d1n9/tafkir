@@ -14,7 +14,7 @@ public record HubConfig(
 
     public static final HubConfig DEFAULT = new HubConfig(
             "main",
-            Path.of(System.getProperty("user.home"), ".aljabr", "models"),
+            Path.of(System.getProperty("user.home"), ".alkhawarizm", "models"),
             null,
             false,
             300);
@@ -25,7 +25,7 @@ public record HubConfig(
 
     public static final class Builder {
         private String revision = "main";
-        private Path cacheDir = Path.of(System.getProperty("user.home"), ".aljabr", "models");
+        private Path cacheDir = Path.of(System.getProperty("user.home"), ".alkhawarizm", "models");
         private String token;
         private boolean forceDownload;
         private int timeoutSeconds = 300;

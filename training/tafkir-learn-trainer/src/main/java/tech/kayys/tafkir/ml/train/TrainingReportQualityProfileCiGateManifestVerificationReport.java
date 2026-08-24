@@ -14,14 +14,10 @@ import java.util.Objects;
  * JSON/Markdown/JUnit artifact bundle for manifest verification evidence.
  */
 public final class TrainingReportQualityProfileCiGateManifestVerificationReport {
-    public static final String FORMAT =
-            "aljabr.training.quality-profile.ci-gate.manifest.verification.v1";
-    public static final String DEFAULT_JSON_FILE_NAME =
-            "quality-profile-ci-gate-manifest-verification.json";
-    public static final String DEFAULT_MARKDOWN_FILE_NAME =
-            "quality-profile-ci-gate-manifest-verification.md";
-    public static final String DEFAULT_JUNIT_XML_FILE_NAME =
-            "quality-profile-ci-gate-manifest-verification.junit.xml";
+    public static final String FORMAT = "alkhawarizm.training.quality-profile.ci-gate.manifest.verification.v1";
+    public static final String DEFAULT_JSON_FILE_NAME = "quality-profile-ci-gate-manifest-verification.json";
+    public static final String DEFAULT_MARKDOWN_FILE_NAME = "quality-profile-ci-gate-manifest-verification.md";
+    public static final String DEFAULT_JUNIT_XML_FILE_NAME = "quality-profile-ci-gate-manifest-verification.junit.xml";
 
     private TrainingReportQualityProfileCiGateManifestVerificationReport() {
     }
@@ -212,15 +208,16 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReport 
 
     public static String renderMarkdown(
             TrainingReportQualityProfileCiGateManifest.ManifestVerification verification) {
-        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolved =
-                Objects.requireNonNull(verification, "verification must not be null");
+        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolved = Objects.requireNonNull(verification,
+                "verification must not be null");
         TrainingReportQualityProfileCiGateManifestSummary summary = resolved.summary();
         StringBuilder markdown = new StringBuilder();
         appendLine(markdown, "# Aljabr Training Quality Profile CI Gate Manifest Verification");
         appendLine(markdown, "");
         appendLine(markdown, "**Status:** `" + (summary.passed() ? "PASS" : "FAIL") + "`");
         appendLine(markdown, "**Ready for release:** `" + summary.readyForRelease() + "`");
-        appendLine(markdown, "**Profile:** `" + inline(summary.profileId().isBlank() ? "unknown" : summary.profileId()) + "`");
+        appendLine(markdown,
+                "**Profile:** `" + inline(summary.profileId().isBlank() ? "unknown" : summary.profileId()) + "`");
         appendLine(markdown, "**Artifacts:** `" + summary.artifactCount() + "`");
         appendLine(markdown, "**Failures:** `" + summary.failureCount() + "`");
         appendLine(markdown, "**Manifest directory:** `" + inline(summary.directory().toString()) + "`");
@@ -244,8 +241,8 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReport 
         Path resolvedDirectory = Objects.requireNonNull(outputDirectory, "outputDirectory must not be null")
                 .toAbsolutePath()
                 .normalize();
-        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolvedVerification =
-                Objects.requireNonNull(verification, "verification must not be null");
+        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolvedVerification = Objects
+                .requireNonNull(verification, "verification must not be null");
         Options resolvedOptions = options == null ? Options.defaults() : options;
         Path jsonFile = resolvedDirectory.resolve(resolvedOptions.jsonFileName());
         Path markdownFile = resolvedDirectory.resolve(resolvedOptions.markdownFileName());
@@ -255,8 +252,8 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReport 
 
         TrainerCheckpointIO.writeStringAtomically(jsonFile, json);
         TrainerCheckpointIO.writeStringAtomically(markdownFile, markdown);
-        TrainingReportQualityProfileCiGateManifestJUnitXml.Report junitXmlReport =
-                TrainingReportQualityProfileCiGateManifestJUnitXml.write(junitXmlFile, resolvedVerification);
+        TrainingReportQualityProfileCiGateManifestJUnitXml.Report junitXmlReport = TrainingReportQualityProfileCiGateManifestJUnitXml
+                .write(junitXmlFile, resolvedVerification);
         TrainingReportArtifactFingerprint jsonFingerprint = TrainingReportArtifactFingerprint.of(jsonFile);
         TrainingReportArtifactFingerprint markdownFingerprint = TrainingReportArtifactFingerprint.of(markdownFile);
 
@@ -300,12 +297,11 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReport 
         String json = Files.readString(resolvedJsonFile, StandardCharsets.UTF_8);
         String markdown = Files.readString(resolvedMarkdownFile, StandardCharsets.UTF_8);
         String junitXml = Files.readString(resolvedJunitXmlFile, StandardCharsets.UTF_8);
-        TrainingReportArtifactFingerprint jsonFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedJsonFile);
-        TrainingReportArtifactFingerprint markdownFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedMarkdownFile);
-        TrainingReportArtifactFingerprint junitXmlFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedJunitXmlFile);
+        TrainingReportArtifactFingerprint jsonFingerprint = TrainingReportArtifactFingerprint.of(resolvedJsonFile);
+        TrainingReportArtifactFingerprint markdownFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedMarkdownFile);
+        TrainingReportArtifactFingerprint junitXmlFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedJunitXmlFile);
         return new ReportInspection(
                 commonDirectory(resolvedJsonFile, resolvedMarkdownFile, resolvedJunitXmlFile),
                 resolvedJsonFile,
@@ -337,16 +333,16 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReport 
             ReportInspection inspection,
             TrainingReportQualityProfileCiGateManifest.ManifestVerification verification) {
         ReportInspection resolvedInspection = Objects.requireNonNull(inspection, "inspection must not be null");
-        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolvedVerification =
-                Objects.requireNonNull(verification, "verification must not be null");
+        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolvedVerification = Objects
+                .requireNonNull(verification, "verification must not be null");
         boolean formatValid = FORMAT.equals(resolvedInspection.format());
         boolean jsonMatches = renderJson(resolvedVerification).equals(resolvedInspection.json());
         boolean markdownMatches = renderMarkdown(resolvedVerification).equals(resolvedInspection.markdown());
         boolean junitXmlMatches = TrainingReportQualityProfileCiGateManifestJUnitXml
                 .render(resolvedVerification)
                 .equals(resolvedInspection.junitXml());
-        TrainingReportQualityProfileCiGateManifestJUnitXmlContract.Inspection junitXmlContract =
-                TrainingReportQualityProfileCiGateManifestJUnitXmlContract.inspect(
+        TrainingReportQualityProfileCiGateManifestJUnitXmlContract.Inspection junitXmlContract = TrainingReportQualityProfileCiGateManifestJUnitXmlContract
+                .inspect(
                         resolvedInspection.junitXml(),
                         resolvedVerification);
         boolean junitXmlWellFormed = junitXmlContract.wellFormed();
@@ -390,8 +386,8 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReport 
 
     private static Map<String, Object> reportMap(
             TrainingReportQualityProfileCiGateManifest.ManifestVerification verification) {
-        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolved =
-                Objects.requireNonNull(verification, "verification must not be null");
+        TrainingReportQualityProfileCiGateManifest.ManifestVerification resolved = Objects.requireNonNull(verification,
+                "verification must not be null");
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("format", FORMAT);
         map.put("summary", resolved.summary().toMap());
@@ -415,9 +411,9 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReport 
         appendLine(markdown, "| Category | Count |");
         appendLine(markdown, "| --- | ---: |");
         for (String categoryId : summary.failedCategories()) {
-            TrainingReportQualityProfileCiGateManifestFailureCategory category =
-                    TrainingReportQualityProfileCiGateManifestFailureCategory.fromId(categoryId)
-                            .orElse(TrainingReportQualityProfileCiGateManifestFailureCategory.UNKNOWN);
+            TrainingReportQualityProfileCiGateManifestFailureCategory category = TrainingReportQualityProfileCiGateManifestFailureCategory
+                    .fromId(categoryId)
+                    .orElse(TrainingReportQualityProfileCiGateManifestFailureCategory.UNKNOWN);
             appendLine(markdown, "| `" + inline(category.id()) + "` | " + summary.count(category) + " |");
         }
         appendLine(markdown, "");
@@ -440,8 +436,8 @@ public final class TrainingReportQualityProfileCiGateManifestVerificationReport 
     private static void appendJunitXmlContract(
             StringBuilder markdown,
             TrainingReportQualityProfileCiGateManifest.ManifestVerification verification) {
-        TrainingReportQualityProfileCiGateManifestJUnitXmlContract.Inspection contract =
-                TrainingReportQualityProfileCiGateManifestJUnitXmlContract.inspect(
+        TrainingReportQualityProfileCiGateManifestJUnitXmlContract.Inspection contract = TrainingReportQualityProfileCiGateManifestJUnitXmlContract
+                .inspect(
                         TrainingReportQualityProfileCiGateManifestJUnitXml.render(verification),
                         verification);
         appendLine(markdown, "");

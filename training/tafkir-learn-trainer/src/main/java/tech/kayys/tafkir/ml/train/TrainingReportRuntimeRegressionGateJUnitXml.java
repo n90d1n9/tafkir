@@ -15,7 +15,7 @@ public final class TrainingReportRuntimeRegressionGateJUnitXml {
         String markdown = result.markdown();
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.runtime.regression\" tests=\"1\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.runtime.regression\" tests=\"1\" failures=\""
                 + (result.passed() ? "0" : "1")
                 + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
@@ -25,7 +25,7 @@ public final class TrainingReportRuntimeRegressionGateJUnitXml {
         property(xml, "gate.findingCodes", findingCodes(result));
         property(xml, "runtimeRegression.regressed", Boolean.toString(result.runtimeRegression().regressed()));
         appendLine(xml, "  </properties>");
-        appendLine(xml, "  <testcase classname=\"aljabr.training.runtime.regression\" "
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.runtime.regression\" "
                 + "name=\"validate runtime regression\" time=\"0\">");
         if (!result.passed()) {
             appendLine(xml, "    <failure type=\"" + escapeXml(failureType(result))

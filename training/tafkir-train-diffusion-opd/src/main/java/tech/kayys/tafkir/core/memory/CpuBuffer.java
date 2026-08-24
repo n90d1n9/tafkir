@@ -1,4 +1,4 @@
-package tech.kayys.aljabr.core.memory;
+package tech.kayys.alkhawarizm.core.memory;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;

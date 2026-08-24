@@ -12,7 +12,8 @@ import java.util.concurrent.CompletableFuture;
  * Unified service for TurboQuant multi-format quantization operations.
  * 
  * This service provides:
- * - Quantization format auto-detection (GPTQ, AWQ, AutoRound, GGUF, BnB, HQQ, SqueezeLLM)
+ * - Quantization format auto-detection (GPTQ, AWQ, AutoRound, GGUF, BnB, HQQ,
+ * SqueezeLLM)
  * - TurboQuant online vector quantization (arXiv:2504.19874)
  * - KV cache quantization
  * - Model inspection and reporting
@@ -22,7 +23,9 @@ import java.util.concurrent.CompletableFuture;
  * - TurboQuant_prod: Unbiased inner product, E[⟨y,x̃⟩] = ⟨y,x⟩
  * 
  * Usage:
- * <pre>{@code
+ * 
+ * <pre>
+ * {@code
  * TurboQuantService service = new TurboQuantService();
  * 
  * // Auto-detect quantization format
@@ -36,7 +39,9 @@ import java.util.concurrent.CompletableFuture;
  * TurboQuantEngine.QuantProdResult quantized = engine.quantizeProd(vector);
  * float[] output = new float[vector.length];
  * engine.dequantizeProd(quantized, output);
- * }<pre>
+ * }
+ * 
+ * <pre>
  */
 public class TurboQuantService implements AutoCloseable {
 
@@ -64,7 +69,7 @@ public class TurboQuantService implements AutoCloseable {
     public QuantizerRegistry.Detection detectFormat(Path modelPath) throws IOException {
         log.info("Detecting quantization format for: {}", modelPath);
         QuantizerRegistry.Detection detection = QuantizerRegistry.detect(modelPath);
-        log.info("Detected format: {} (confidence: {}, evidence: {})", 
+        log.info("Detected format: {} (confidence: {}, evidence: {})",
                 detection.format(), detection.confidence(), detection.evidence());
         return detection;
     }
@@ -112,7 +117,7 @@ public class TurboQuantService implements AutoCloseable {
      * Dequantizes a TurboQuant result back to FP32.
      * 
      * @param quantized Quantized result
-     * @param config TurboQuant configuration
+     * @param config    TurboQuant configuration
      * @return Dequantized vector
      */
     public void dequantizeVector(TurboQuantEngine.QuantProdResult quantized, TurboQuantConfig config, float[] output) {
@@ -144,7 +149,7 @@ public class TurboQuantService implements AutoCloseable {
     public Object createDequantizer(QuantizerRegistry.QuantFormat format) {
         return switch (format) {
             case GPTQ -> null; // Use GPTQ module
-            case AWQ -> null;  // Use AWQ module
+            case AWQ -> null; // Use AWQ module
             case BNB_NF4, BNB_INT8 -> new BnBDequantizer();
             case HQQ -> new HQQDequantizer(4, 128, HQQDequantizer.QuantAxis.INPUT); // Default: 4-bit, groupSize=128
             case SQUEEZELLM -> new SqueezeLLMDequantizer();
@@ -155,7 +160,7 @@ public class TurboQuantService implements AutoCloseable {
 
     private Object createLegacyDequantizer() {
         try {
-            Class<?> dequantizerClass = Class.forName("tech.kayys.aljabr.spi.tensor.weights.Dequantizer");
+            Class<?> dequantizerClass = Class.forName("tech.kayys.alkhawarizm.spi.tensor.weights.Dequantizer");
             return dequantizerClass.getDeclaredConstructor().newInstance();
         } catch (ReflectiveOperationException e) {
             log.debug("GGUF dequantizer class not present on classpath: {}", e.getMessage());
@@ -175,13 +180,12 @@ public class TurboQuantService implements AutoCloseable {
     public ModelInspectionResult inspect(Path modelPath) throws IOException {
         log.info("Inspecting model: {}", modelPath);
         QuantizerRegistry.Detection detection = detectFormat(modelPath);
-        
+
         ModelInspectionResult result = new ModelInspectionResult(
                 detection,
                 modelPath,
-                estimateModelSize(modelPath)
-        );
-        
+                estimateModelSize(modelPath));
+
         log.info("Inspection complete: {}", result);
         return result;
     }
@@ -224,7 +228,7 @@ public class TurboQuantService implements AutoCloseable {
             QuantizerRegistry.Detection detection,
             Path modelPath,
             long totalSizeBytes) {
-        
+
         public double totalSizeMB() {
             return totalSizeBytes / (1024.0 * 1024.0);
         }

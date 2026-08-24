@@ -3,7 +3,7 @@ package tech.kayys.tafkir.train.diffusion.opd;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionOpdRuntimeObserver;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionOpdSession;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionPromptSample;
@@ -13,7 +13,8 @@ import tech.kayys.tafkir.train.diffusion.api.DiffusionTask;
  * Reusable runtime observer that records per-task conditioning lane usage and
  * loss aggregates into the standard DiffusionOPD summary/history artifacts.
  *
- * <p>This observer owns conditioning-specific diagnostics only. General
+ * <p>
+ * This observer owns conditioning-specific diagnostics only. General
  * task/teacher/stage loss aggregation is handled by
  * {@link TeacherStageTaskMetricsObserver}.
  */
@@ -27,7 +28,8 @@ public final class ConditioningTaskMetricsObserver implements DiffusionOpdRuntim
     private final String taskConditioningFixtures;
 
     /**
-     * Creates the conditioning-oriented observer with optional preseeded task modes, fixture roots,
+     * Creates the conditioning-oriented observer with optional preseeded task
+     * modes, fixture roots,
      * and a human-readable fixture summary string for downstream report metadata.
      */
     public ConditioningTaskMetricsObserver(

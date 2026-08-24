@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.train.data.multimodal;
 
-import tech.kayys.aljabr.spi.model.ModalityType;
-import tech.kayys.aljabr.spi.model.MultimodalContent;
+import tech.kayys.alkhawarizm.spi.model.ModalityType;
+import tech.kayys.alkhawarizm.spi.model.MultimodalContent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,9 +13,11 @@ import java.util.Set;
 /**
  * Immutable mini-batch for mixed-modality trainer pipelines.
  *
- * <p>The batch keeps each sample's parts grouped together while exposing
+ * <p>
+ * The batch keeps each sample's parts grouped together while exposing
  * modality summaries that trainer/model adapters can use for routing image,
- * text, audio, document, embedding, or time-series towers.</p>
+ * text, audio, document, embedding, or time-series towers.
+ * </p>
  */
 public record MultimodalBatch(
         List<List<MultimodalContent>> samples,

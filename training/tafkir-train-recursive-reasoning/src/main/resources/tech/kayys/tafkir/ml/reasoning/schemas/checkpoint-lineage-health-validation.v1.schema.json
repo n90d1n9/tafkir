@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-validation.v1.schema.json",
+  "$id": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-validation.v1.schema.json",
   "title": "Aljabr checkpoint lineage health validation report",
   "description": "Stable valid/invalid report emitted when recursive-reasoning checkpoint lineage health payloads are validated.",
   "type": "object",
@@ -23,7 +23,7 @@
       "const": "checkpoint-lineage-health-validation"
     },
     "schemaVersion": {
-      "const": "aljabr.checkpoint-lineage-health-validation.v1"
+      "const": "alkhawarizm.checkpoint-lineage-health-validation.v1"
     },
     "status": {
       "enum": [
@@ -36,10 +36,10 @@
     },
     "code": {
       "enum": [
-        "ALJABR_LINEAGE_HEALTH_VALID",
-        "ALJABR_LINEAGE_HEALTH_INVALID",
-        "ALJABR_LINEAGE_HEALTH_JSON_INVALID",
-        "ALJABR_LINEAGE_HEALTH_READ_ERROR"
+        "ALKHAWARIZM_LINEAGE_HEALTH_VALID",
+        "ALKHAWARIZM_LINEAGE_HEALTH_INVALID",
+        "ALKHAWARIZM_LINEAGE_HEALTH_JSON_INVALID",
+        "ALKHAWARIZM_LINEAGE_HEALTH_READ_ERROR"
       ]
     },
     "message": {
@@ -47,13 +47,13 @@
       "minLength": 1
     },
     "schemaId": {
-      "const": "https://aljabr.ai/schemas/training/checkpoint-lineage-health.v1.schema.json"
+      "const": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health.v1.schema.json"
     },
     "expectedKind": {
       "const": "checkpoint-lineage-health"
     },
     "expectedSchemaVersion": {
-      "const": "aljabr.checkpoint-lineage-health.v1"
+      "const": "alkhawarizm.checkpoint-lineage-health.v1"
     },
     "payloadSummary": {
       "$ref": "#/$defs/payloadSummary"
@@ -84,7 +84,7 @@
             "const": "valid"
           },
           "code": {
-            "const": "ALJABR_LINEAGE_HEALTH_VALID"
+            "const": "ALKHAWARIZM_LINEAGE_HEALTH_VALID"
           },
           "errors": {
             "maxItems": 0
@@ -110,9 +110,9 @@
           },
           "code": {
             "enum": [
-              "ALJABR_LINEAGE_HEALTH_INVALID",
-              "ALJABR_LINEAGE_HEALTH_JSON_INVALID",
-              "ALJABR_LINEAGE_HEALTH_READ_ERROR"
+              "ALKHAWARIZM_LINEAGE_HEALTH_INVALID",
+              "ALKHAWARIZM_LINEAGE_HEALTH_JSON_INVALID",
+              "ALKHAWARIZM_LINEAGE_HEALTH_READ_ERROR"
             ]
           },
           "errors": {

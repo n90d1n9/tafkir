@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json",
+  "$id": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json",
   "title": "Aljabr checkpoint lineage health schema lock",
   "description": "Stable lock payload for pinning the recursive-reasoning checkpoint lineage health schema set.",
   "type": "object",
@@ -22,7 +22,7 @@
       "const": "checkpoint-lineage-health-schema-lock"
     },
     "schemaVersion": {
-      "const": "aljabr.checkpoint-lineage-health-schema-lock.v1"
+      "const": "alkhawarizm.checkpoint-lineage-health-schema-lock.v1"
     },
     "schemaSetSha256": {
       "$ref": "#/$defs/sha256"
@@ -34,13 +34,13 @@
       "$ref": "#/$defs/nonNegativeInteger"
     },
     "catalogSchemaId": {
-      "const": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-catalog.v1.schema.json"
+      "const": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-catalog.v1.schema.json"
     },
     "catalogSchemaSha256": {
       "$ref": "#/$defs/sha256"
     },
     "lockSchemaId": {
-      "const": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json"
+      "const": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json"
     },
     "contracts": {
       "type": "array",

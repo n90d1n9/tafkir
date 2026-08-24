@@ -1,15 +1,17 @@
-package tech.kayys.aljabr.safetensor.loader;
+package tech.kayys.alkhawarizm.safetensor.loader;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
 /**
  * Stub — FFM-backed loader for safetensor files.
- * Real implementation uses memory-mapped I/O via JDK Foreign Function Memory API.
+ * Real implementation uses memory-mapped I/O via JDK Foreign Function Memory
+ * API.
  */
 public class SafetensorFFMLoader {
 
-    public SafetensorFFMLoader() {}
+    public SafetensorFFMLoader() {
+    }
 
     /**
      * Opens a safetensor file and returns a {@link SafetensorLoadResult}.
@@ -22,6 +24,6 @@ public class SafetensorFFMLoader {
     public SafetensorLoadResult load(Path path) throws IOException {
         throw new UnsupportedOperationException(
                 "SafetensorFFMLoader stub — real implementation not yet linked. "
-                + "Path requested: " + path);
+                        + "Path requested: " + path);
     }
 }

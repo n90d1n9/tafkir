@@ -2,12 +2,12 @@ package tech.kayys.tafkir.train.examples;
 
 import java.lang.foreign.MemorySegment;
 import java.util.Arrays;
-import tech.kayys.aljabr.core.tensor.DType;
-import tech.kayys.aljabr.core.tensor.DefaultTensor;
-import tech.kayys.aljabr.core.tensor.Tensor;
-import tech.kayys.aljabr.metal.binding.MetalBinding;
-import tech.kayys.aljabr.safetensor.core.tensor.AccelTensor;
-import tech.kayys.aljabr.safetensor.runner.sd.PNDMScheduler;
+import tech.kayys.alkhawarizm.core.tensor.DType;
+import tech.kayys.alkhawarizm.core.tensor.DefaultTensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.metal.binding.MetalBinding;
+import tech.kayys.alkhawarizm.safetensor.core.tensor.AccelTensor;
+import tech.kayys.alkhawarizm.safetensor.runner.sd.PNDMScheduler;
 import tech.kayys.tafkir.train.diffusion.opd.adapter.StableDiffusionRunnerAdapters;
 
 /**
@@ -15,7 +15,8 @@ import tech.kayys.tafkir.train.diffusion.opd.adapter.StableDiffusionRunnerAdapte
  * inference stack with the Java-first DiffusionOPD training adapters on the
  * Metal accelerator boundary.
  *
- * <p>Reference:
+ * <p>
+ * Reference:
  * Quanhao Li et al., "DiffusionOPD: A Unified Perspective of On-Policy
  * Distillation in Diffusion Models", arXiv:2605.15055, 2026.
  */

@@ -7,10 +7,10 @@ group = "tech.kayys.tafkir"
 version = "0.3.0-SNAPSHOT"
 
 dependencies {
-    implementation(project(":ml:tafkir-ml-aljabr"))
+    implementation(project(":ml:tafkir-ml-alkhawarizm"))
     implementation(project(":trainer:tafkir-trainer-api"))
-    implementation(project(":core:aljabr-tensor"))
-    implementation(project(":core:aljabr-nn"))
+    implementation(project(":core:alkhawarizm-tensor"))
+    implementation(project(":core:alkhawarizm-nn"))
 }
 
 java {
@@ -29,7 +29,7 @@ publishing {
         create<MavenPublication>("maven") {
             from(components["java"])
             groupId = "tech.kayys.tafkir"
-            artifactId = "tafkir-trainer-aljabr"
+            artifactId = "tafkir-trainer-alkhawarizm"
             version = "0.3.0-SNAPSHOT"
         }
     }

@@ -20,7 +20,7 @@
  * Derived fields (byteLength, numElements) are computed lazily and cached
  * to avoid redundant arithmetic during hot-path tensor access.
  */
-package tech.kayys.aljabr.safetensor.loader;
+package tech.kayys.alkhawarizm.safetensor.loader;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

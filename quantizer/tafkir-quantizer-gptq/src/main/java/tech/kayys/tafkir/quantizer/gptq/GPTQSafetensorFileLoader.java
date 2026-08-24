@@ -2,9 +2,9 @@ package tech.kayys.tafkir.quantizer.gptq;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import tech.kayys.aljabr.safetensor.loader.SafetensorHeader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorHeaderParser;
-import tech.kayys.aljabr.safetensor.loader.SafetensorLoadResult;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorHeader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorHeaderParser;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorLoadResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +20,15 @@ import java.nio.file.StandardOpenOption;
 /**
  * Standalone (non-CDI) SafeTensors file loader for the GPTQ quantizer module.
  *
- * <p>This class wraps the core safetensor-loader infrastructure
+ * <p>
+ * This class wraps the core safetensor-loader infrastructure
  * ({@link SafetensorHeaderParser}, FFM API) without requiring CDI injection.
  * It is designed for use in standalone contexts where the Quarkus container
  * is not available.
  *
- * <p>Usage:
+ * <p>
+ * Usage:
+ * 
  * <pre>{@code
  * try (GPTQSafetensorFileLoader loader = new GPTQSafetensorFileLoader()) {
  *     GPTQSafetensorShard shard = loader.loadShard(path);
@@ -92,7 +95,7 @@ public class GPTQSafetensorFileLoader implements AutoCloseable {
         validatePath(resolved);
 
         try (Arena arena = Arena.ofConfined();
-             FileChannel channel = FileChannel.open(resolved, StandardOpenOption.READ)) {
+                FileChannel channel = FileChannel.open(resolved, StandardOpenOption.READ)) {
 
             long fileSize = channel.size();
             if (fileSize == 0) {

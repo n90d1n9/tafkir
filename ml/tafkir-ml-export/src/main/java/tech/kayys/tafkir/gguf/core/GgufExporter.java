@@ -1,4 +1,4 @@
-package tech.kayys.aljabr.gguf.core;
+package tech.kayys.alkhawarizm.gguf.core;
 
 import tech.kayys.tafkir.ml.nn.NNModule;
 
@@ -8,7 +8,8 @@ import java.util.Map;
 
 /**
  * Stub GGUF exporter.
- * Real implementation lives in {@code runner:gguf:aljabr-gguf-core} (currently disabled).
+ * Real implementation lives in {@code runner:gguf:alkhawarizm-gguf-core}
+ * (currently disabled).
  */
 public final class GgufExporter {
 
@@ -32,7 +33,7 @@ public final class GgufExporter {
 
     public void export(Path outputPath) throws IOException {
         throw new UnsupportedOperationException(
-                "GgufExporter is a stub — enable :runner:gguf:aljabr-gguf-core for full support");
+                "GgufExporter is a stub — enable :runner:gguf:alkhawarizm-gguf-core for full support");
     }
 
     public enum Quantization {

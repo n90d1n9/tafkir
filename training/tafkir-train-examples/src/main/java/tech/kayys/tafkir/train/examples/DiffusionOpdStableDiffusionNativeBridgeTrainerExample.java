@@ -4,12 +4,12 @@ import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import tech.kayys.aljabr.core.tensor.Tensor;
-import tech.kayys.aljabr.metal.binding.MetalBinding;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.metal.binding.MetalBinding;
 import tech.kayys.tafkir.ml.Aljabr;
-import tech.kayys.aljabr.safetensor.core.tensor.AccelTensor;
-import tech.kayys.aljabr.safetensor.runner.sd.PNDMScheduler;
-import tech.kayys.aljabr.safetensor.runner.sd.UNetModel;
+import tech.kayys.alkhawarizm.safetensor.core.tensor.AccelTensor;
+import tech.kayys.alkhawarizm.safetensor.runner.sd.PNDMScheduler;
+import tech.kayys.alkhawarizm.safetensor.runner.sd.UNetModel;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionOpdListener;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionOpdSession;
 import tech.kayys.tafkir.train.diffusion.api.DiffusionPromptSample;
@@ -26,7 +26,8 @@ import tech.kayys.tafkir.trainer.api.TrainingSummary;
  * native bridge surfaces together: the executable PNDM scheduler adapter and
  * the UNet denoiser adapter.
  *
- * <p>Reference:
+ * <p>
+ * Reference:
  * Quanhao Li et al., "DiffusionOPD: A Unified Perspective of On-Policy
  * Distillation in Diffusion Models", arXiv:2605.15055, 2026.
  */
@@ -50,11 +51,15 @@ public final class DiffusionOpdStableDiffusionNativeBridgeTrainerExample {
         var diffusionScheduler = StableDiffusionRunnerAdapters.scheduler(scheduler, bridge);
 
         List<DiffusionPromptSample> ocrPrompts = List.of(
-                promptSample("clean poster typography with readable ALJABR headline", 21L, StableDiffusionNativeTextFixtures.OCR),
-                promptSample("document scan with crisp invoice text and layout", 22L, StableDiffusionNativeTextFixtures.OCR));
+                promptSample("clean poster typography with readable ALKHAWARIZM headline", 21L,
+                        StableDiffusionNativeTextFixtures.OCR),
+                promptSample("document scan with crisp invoice text and layout", 22L,
+                        StableDiffusionNativeTextFixtures.OCR));
         List<DiffusionPromptSample> aestheticsPrompts = List.of(
-                promptSample("premium watch campaign with dramatic reflections", 31L, StableDiffusionNativeTextFixtures.AESTHETICS),
-                promptSample("magazine beauty portrait with soft cinematic bloom", 32L, StableDiffusionNativeTextFixtures.AESTHETICS));
+                promptSample("premium watch campaign with dramatic reflections", 31L,
+                        StableDiffusionNativeTextFixtures.AESTHETICS),
+                promptSample("magazine beauty portrait with soft cinematic bloom", 32L,
+                        StableDiffusionNativeTextFixtures.AESTHETICS));
         DiffusionTask ocrTask = new DiffusionTask(
                 "ocr",
                 "OCR",
@@ -80,8 +85,10 @@ public final class DiffusionOpdStableDiffusionNativeBridgeTrainerExample {
                         1.10d),
                 aestheticsPrompts);
         List<DiffusionTask> tasks = List.of(ocrTask, aestheticsTask);
-        boolean useAnyRealUnet = roleFixtures.fixturesByRole().values().stream().anyMatch(StableDiffusionNativeModelFixture::isUsable);
-        boolean useAnyRealTextConditioning = textFixtures.fixturesByTask().values().stream().anyMatch(StableDiffusionNativeModelFixture::isUsable);
+        boolean useAnyRealUnet = roleFixtures.fixturesByRole().values().stream()
+                .anyMatch(StableDiffusionNativeModelFixture::isUsable);
+        boolean useAnyRealTextConditioning = textFixtures.fixturesByTask().values().stream()
+                .anyMatch(StableDiffusionNativeModelFixture::isUsable);
         try (RoleLoadedUnets loadedUnets = loadRoleUnets(roleFixtures);
                 TaskLoadedTextConditioners textConditioners = loadTaskTextConditioners(textFixtures)) {
             UNetModel student = loadedUnets.modelOrFallback(
@@ -138,7 +145,8 @@ public final class DiffusionOpdStableDiffusionNativeBridgeTrainerExample {
             System.out.println("fixtureRoles=" + roleFixtures.summary());
             System.out.println("textFixtures=" + textFixtures.summary());
             System.out.println("fixtureMode=" + (useAnyRealUnet ? "mixed-or-real-unet" : "stub-unet"));
-            System.out.println("conditioningMode=" + (useAnyRealTextConditioning ? "task-real-clip-or-shared" : "synthetic"));
+            System.out.println(
+                    "conditioningMode=" + (useAnyRealTextConditioning ? "task-real-clip-or-shared" : "synthetic"));
             System.out.println("fixtureOverride=" + fixture.overrideHint());
             System.out.println("textFixtureOverrideExamples="
                     + StableDiffusionNativeTextFixtures.envNameForTask(StableDiffusionNativeTextFixtures.OCR) + ", "
@@ -190,8 +198,7 @@ public final class DiffusionOpdStableDiffusionNativeBridgeTrainerExample {
             DiffusionPromptSample sample,
             TaskLoadedTextConditioners textConditioners) {
         String taskId = String.valueOf(sample.metadata().getOrDefault("taskId", ""));
-        StableDiffusionNativeFixtureLoader.LoadedTextConditioner textConditioner =
-                textConditioners.get(taskId);
+        StableDiffusionNativeFixtureLoader.LoadedTextConditioner textConditioner = textConditioners.get(taskId);
         if (textConditioner == null) {
             return Tensor.full(0.25f, 1, 77, 768);
         }
@@ -201,16 +208,15 @@ public final class DiffusionOpdStableDiffusionNativeBridgeTrainerExample {
     private static Map<String, String> conditioningModes(
             StableDiffusionNativeTextFixtures textFixtures) {
         Map<String, String> modes = new LinkedHashMap<>();
-        textFixtures.fixturesByTask().forEach((taskId, fixture) ->
-                modes.put(taskId, fixture.isUsable() ? "real-clip" : "synthetic"));
+        textFixtures.fixturesByTask()
+                .forEach((taskId, fixture) -> modes.put(taskId, fixture.isUsable() ? "real-clip" : "synthetic"));
         return Map.copyOf(modes);
     }
 
     private static Map<String, String> conditioningFixtureBaseDirs(
             StableDiffusionNativeTextFixtures textFixtures) {
         Map<String, String> baseDirs = new LinkedHashMap<>();
-        textFixtures.fixturesByTask().forEach((taskId, fixture) ->
-                baseDirs.put(taskId, fixture.baseDir().toString()));
+        textFixtures.fixturesByTask().forEach((taskId, fixture) -> baseDirs.put(taskId, fixture.baseDir().toString()));
         return Map.copyOf(baseDirs);
     }
 
@@ -285,8 +291,7 @@ public final class DiffusionOpdStableDiffusionNativeBridgeTrainerExample {
     }
 
     private static final class TaskLoadedTextConditioners implements AutoCloseable {
-        private final Map<String, StableDiffusionNativeFixtureLoader.LoadedTextConditioner> loaded =
-                new LinkedHashMap<>();
+        private final Map<String, StableDiffusionNativeFixtureLoader.LoadedTextConditioner> loaded = new LinkedHashMap<>();
 
         private void put(String taskId, StableDiffusionNativeFixtureLoader.LoadedTextConditioner textConditioner) {
             loaded.put(taskId, textConditioner);

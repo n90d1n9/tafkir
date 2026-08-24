@@ -3,7 +3,7 @@ package tech.kayys.tafkir.quantizer.turboquant;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import tech.kayys.aljabr.spi.tensor.weights.Dequantizer;
+import tech.kayys.alkhawarizm.spi.tensor.weights.Dequantizer;
 
 /**
  * Tests covering GGUF, BnB NF4, HQQ, SqueezeLLM, Registry, and infrastructure.

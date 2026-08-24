@@ -18,7 +18,7 @@ public class PythonBridge {
      */
     public static void exportToPython(BaseEstimator model, String basePath) throws IOException {
         // Save model in Aljabr native format
-        String modelPath = basePath + ".aljabr";
+        String modelPath = basePath + ".alkhawarizm";
         ModelPersistence.save(model, modelPath);
 
         // Save as Python pickle
@@ -33,7 +33,7 @@ public class PythonBridge {
         Map<String, Object> metadata = new LinkedHashMap<>();
         metadata.put("model_class", model.getClass().getName());
         metadata.put("pickle_version", "4");
-        metadata.put("aljabr_version", "0.1.0");
+        metadata.put("alkhawarizm_version", "0.1.0");
         metadata.put("feature_count", getFeatureCount(model));
         metadata.put("class_count", getClassCount(model));
 

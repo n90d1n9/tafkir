@@ -9,8 +9,10 @@ import java.util.Map;
 /**
  * Resolves per-role Stable Diffusion native fixtures for student and teachers.
  *
- * <p>Resolution order for each role:
- * 1. Role-specific env var such as {@code ALJABR_SD_NATIVE_MODEL_DIR_OCR_EARLY}
+ * <p>
+ * Resolution order for each role:
+ * 1. Role-specific env var such as
+ * {@code ALKHAWARIZM_SD_NATIVE_MODEL_DIR_OCR_EARLY}
  * 2. A role-named subdirectory under the shared base dir
  * 3. Shared base fixture fallback
  */
@@ -87,6 +89,6 @@ public final class StableDiffusionNativeRoleFixtures {
     }
 
     public static String envNameForRole(String role) {
-        return "ALJABR_SD_NATIVE_MODEL_DIR_" + role.toUpperCase().replace('-', '_');
+        return "ALKHAWARIZM_SD_NATIVE_MODEL_DIR_" + role.toUpperCase().replace('-', '_');
     }
 }

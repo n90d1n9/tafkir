@@ -2,8 +2,8 @@
 
 > **PyTorch-like API in pure Java 25** — with JDK 25 Vector API (SIMD) and FFM (Foreign Function & Memory) support.
 
-[![Build Status](https://github.com/bhangun/aljabr/actions/workflows/ci.yml/badge.svg)](https://github.com/bhangun/aljabr/actions)
-[![License](https://img.shields.io/github/license/bhangun/aljabr)](LICENSE)
+[![Build Status](https://github.com/bhangun/alkhawarizm/actions/workflows/ci.yml/badge.svg)](https://github.com/bhangun/alkhawarizm/actions)
+[![License](https://img.shields.io/github/license/bhangun/alkhawarizm)](LICENSE)
 [![Java](https://img.shields.io/badge/Java-25-blue)](https://openjdk.org/projects/jdk/25/)
 
 ## Overview
@@ -39,8 +39,8 @@ Aljabr ML is a **pure-Java machine learning framework** designed to provide PyTo
 
 ```bash
 # Clone the repository
-git clone https://github.com/bhangun/aljabr.git
-cd aljabr
+git clone https://github.com/bhangun/alkhawarizm.git
+cd alkhawarizm
 
 # Build (requires JDK 25)
 mvn clean install -pl framework/lib -am -DskipTests
@@ -50,8 +50,8 @@ mvn clean install -pl framework/lib -am -DskipTests
 
 ```xml
 <dependency>
-    <groupId>tech.kayys.aljabr</groupId>
-    <artifactId>aljabr-ml-api</artifactId>
+    <groupId>tech.kayys.alkhawarizm</groupId>
+    <artifactId>alkhawarizm-ml-api</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -59,8 +59,8 @@ mvn clean install -pl framework/lib -am -DskipTests
 ### Tensor Basics
 
 ```java
-import tech.kayys.aljabr.ml.Aljabr;
-import tech.kayys.aljabr.ml.autograd.GradTensor;
+import tech.kayys.alkhawarizm.ml.Aljabr;
+import tech.kayys.alkhawarizm.ml.autograd.GradTensor;
 
 // Create tensors
 var x = Aljabr.tensor(new float[]{1, 2, 3, 4}, 2, 2);
@@ -88,10 +88,10 @@ w.grad();  // ∂y/∂w
 ### Building Neural Networks
 
 ```java
-import tech.kayys.aljabr.ml.nn.layer.*;
-import tech.kayys.aljabr.ml.nn.*;
-import tech.kayys.aljabr.ml.nn.loss.*;
-import tech.kayys.aljabr.ml.optim.*;
+import tech.kayys.alkhawarizm.ml.nn.layer.*;
+import tech.kayys.alkhawarizm.ml.nn.*;
+import tech.kayys.alkhawarizm.ml.nn.loss.*;
+import tech.kayys.alkhawarizm.ml.optim.*;
 
 // Sequential model
 var model = new Sequential(
@@ -137,7 +137,7 @@ for (int epoch = 0; epoch < 10; epoch++) {
 ### DataLoader
 
 ```java
-import tech.kayys.aljabr.ml.data.DataLoader;
+import tech.kayys.alkhawarizm.ml.data.DataLoader;
 
 var dataset = new DataLoader.TensorDataset(inputs, targets);
 var loader = DataLoader.tensorBuilder(dataset)
@@ -156,9 +156,9 @@ for (DataLoader.Batch batch : loader) {
 ### Model Hub
 
 ```java
-import tech.kayys.aljabr.ml.Aljabr;
-import tech.kayys.aljabr.ml.hub.HubConfig;
-import tech.kayys.aljabr.ml.nn.layer.*;
+import tech.kayys.alkhawarizm.ml.Aljabr;
+import tech.kayys.alkhawarizm.ml.hub.HubConfig;
+import tech.kayys.alkhawarizm.ml.nn.layer.*;
 
 // Download and load weights
 var model = new Sequential(
@@ -178,8 +178,8 @@ Aljabr.Hub.loadInto(
 ### Export
 
 ```java
-import tech.kayys.aljabr.ml.Aljabr;
-import tech.kayys.aljabr.ml.export.ModelExporter;
+import tech.kayys.alkhawarizm.ml.Aljabr;
+import tech.kayys.alkhawarizm.ml.export.ModelExporter;
 
 ModelExporter exporter = Aljabr.Export.model(model)
     .inputShape(1, 3, 224, 224)
@@ -193,7 +193,7 @@ exporter.toLiteRT("model.litert");
 ### Training with Trainer (PyTorch Lightning Style)
 
 ```java
-import tech.kayys.aljabr.sdk.train.*;
+import tech.kayys.alkhawarizm.sdk.train.*;
 
 Trainer trainer = Trainer.builder()
     .model(input -> model.forward(input))
@@ -215,27 +215,27 @@ trainer.fit(trainLoader, valLoader);
 ## Architecture
 
 ```
-aljabr/
-├── ml/aljabr-ml-autograd/      # GradTensor, autograd, GGUF compatibility
-├── ml/aljabr-ml-core/          # BaseEstimator, BaseTransformer foundations
-├── ml/aljabr-ml-nn/            # NNModule, layers, activations, losses
-├── ml/aljabr-ml-cnn/           # CNN-focused model/layer extensions
-├── ml/aljabr-ml-data/          # DataLoader, Dataset, Csv/Text datasets
-├── ml/aljabr-ml-optimize/      # Optimizers, memory/runtime helpers
-├── ml/aljabr-ml-selection/     # Metrics, CV, search, evaluation
-├── ml/aljabr-ml-hub/           # ModelHub, HF/local repositories, SafeTensors
-├── ml/aljabr-ml-export/        # ONNX, GGUF, LiteRT exporters and benchmark
-├── ml/aljabr-ml-byte-latent/   # Planned byte-latent language-model family
-├── training/aljabr-train-recursive-reasoning/ # Recursive reasoning family (GRAM-style), :ml:aljabr-ml-recursive-reasoning
-├── ml/aljabr-ml-api/           # Aljabr.java umbrella ML entry point
-├── trainer/aljabr-trainer-api/ # Canonical trainer session/config contracts
-├── trainer/aljabr-trainer/     # Trainer bridge/runtime facade
-└── examples/aljabr-ml-examples/# Samples and migration-era examples
+alkhawarizm/
+├── ml/alkhawarizm-ml-autograd/      # GradTensor, autograd, GGUF compatibility
+├── ml/alkhawarizm-ml-core/          # BaseEstimator, BaseTransformer foundations
+├── ml/alkhawarizm-ml-nn/            # NNModule, layers, activations, losses
+├── ml/alkhawarizm-ml-cnn/           # CNN-focused model/layer extensions
+├── ml/alkhawarizm-ml-data/          # DataLoader, Dataset, Csv/Text datasets
+├── ml/alkhawarizm-ml-optimize/      # Optimizers, memory/runtime helpers
+├── ml/alkhawarizm-ml-selection/     # Metrics, CV, search, evaluation
+├── ml/alkhawarizm-ml-hub/           # ModelHub, HF/local repositories, SafeTensors
+├── ml/alkhawarizm-ml-export/        # ONNX, GGUF, LiteRT exporters and benchmark
+├── ml/alkhawarizm-ml-byte-latent/   # Planned byte-latent language-model family
+├── training/alkhawarizm-train-recursive-reasoning/ # Recursive reasoning family (GRAM-style), :ml:alkhawarizm-ml-recursive-reasoning
+├── ml/alkhawarizm-ml-api/           # Aljabr.java umbrella ML entry point
+├── trainer/alkhawarizm-trainer-api/ # Canonical trainer session/config contracts
+├── trainer/alkhawarizm-trainer/     # Trainer bridge/runtime facade
+└── examples/alkhawarizm-ml-examples/# Samples and migration-era examples
 ```
 
 ## Verification
 
-Run the Gradle-wired training module checks from `aljabr/`:
+Run the Gradle-wired training module checks from `alkhawarizm/`:
 
 ```bash
 ./gradlew --no-daemon checkTrainingModules
@@ -296,13 +296,13 @@ logs, `training-gradle-parity-summary.json`, and a human-readable `README.md`:
 ```bash
 bash scripts/test-training-fast-gradle-parity.sh \
   --candidate audio,vision \
-  --artifact-dir /tmp/aljabr-training-gradle-parity
+  --artifact-dir /tmp/alkhawarizm-training-gradle-parity
 ```
 
 Without `--candidate`, the parity test uses
-`ALJABR_TRAINING_PARITY_CANDIDATES` or picks the first available advisory
+`ALKHAWARIZM_TRAINING_PARITY_CANDIDATES` or picks the first available advisory
 candidates from the generated coverage report. Without `--artifact-dir`, it
-uses `ALJABR_TRAINING_PARITY_ARTIFACT_DIR` when set.
+uses `ALKHAWARIZM_TRAINING_PARITY_ARTIFACT_DIR` when set.
 
 CI runs the same fast metadata gate through
 `.github/workflows/training-fast-gate.yml` for training registry, lock, and
@@ -343,7 +343,7 @@ Validate the generated report/schema contract:
 ./gradlew --no-daemon validateTrainingModuleChecksReportContract
 ```
 
-Write advisory coverage for all Gradle-included projects under `aljabr/training`:
+Write advisory coverage for all Gradle-included projects under `alkhawarizm/training`:
 
 ```bash
 ./gradlew --no-daemon writeTrainingModuleCoverageReport
@@ -371,16 +371,16 @@ hard gate:
 Run only selected advisory candidates by label:
 
 ```bash
-./gradlew --no-daemon validateTrainingModuleCandidateSelection -PaljabrTrainingCandidate=audio
-./gradlew --no-daemon printTrainingModuleCandidateSelectionJson -PaljabrTrainingCandidate=audio
-./gradlew --no-daemon checkTrainingModuleCandidateTests -PaljabrTrainingCandidate=audio
-./gradlew --no-daemon checkTrainingModuleCandidateTests -PaljabrTrainingCandidate=audio,vision
+./gradlew --no-daemon validateTrainingModuleCandidateSelection -PalkhawarizmTrainingCandidate=audio
+./gradlew --no-daemon printTrainingModuleCandidateSelectionJson -PalkhawarizmTrainingCandidate=audio
+./gradlew --no-daemon checkTrainingModuleCandidateTests -PalkhawarizmTrainingCandidate=audio
+./gradlew --no-daemon checkTrainingModuleCandidateTests -PalkhawarizmTrainingCandidate=audio,vision
 ```
 
 Print copy-pasteable registry snippets for promotion:
 
 ```bash
-./gradlew --no-daemon printTrainingModuleCandidatePromotionSnippets -PaljabrTrainingCandidate=audio
+./gradlew --no-daemon printTrainingModuleCandidatePromotionSnippets -PalkhawarizmTrainingCandidate=audio
 ```
 
 Generate a guarded fast promotion plan without editing the registry:
@@ -396,8 +396,8 @@ Validate an existing promotion plan artifact without regenerating reports:
 
 ```bash
 scripts/verify-training-advisory-gates-fast.py \
-  --validate-promotion-plan build/reports/aljabr/training-module-promotion-plan.json \
-  --promotion-plan-validation-report-file build/reports/aljabr/training-module-promotion-plan-validation.json
+  --validate-promotion-plan build/reports/alkhawarizm/training-module-promotion-plan.json \
+  --promotion-plan-validation-report-file build/reports/alkhawarizm/training-module-promotion-plan-validation.json
 ```
 
 Apply an intentional selected-candidate promotion and refresh the checked-in
@@ -424,7 +424,7 @@ default so experimental modules can remain visible without immediately breaking
 CI. The `candidateChecks` section lists ready-to-consider `TrainingModuleCheck`
 entries for tested projects that are not yet part of the hard gate. The
 candidate selection report also includes `nextCommands` with the selected
-`-PaljabrTrainingCandidate=...` value preserved and a stable SHA-256
+`-PalkhawarizmTrainingCandidate=...` value preserved and a stable SHA-256
 `selectionFingerprint` over the selected candidate rows.
 
 Write or refresh the checked-in registry lock after an intentional gate change:
@@ -455,23 +455,23 @@ Write or validate the optional advisory candidate lock:
 
 The report and schema are written to:
 
-- `aljabr/build/reports/aljabr/training-module-checks.json`
-- `aljabr/build/reports/aljabr/training-module-checks.v2.schema.json`
-- `aljabr/build/reports/aljabr/training-module-checks-lock-drift.json`
-- `aljabr/build/reports/aljabr/training-module-coverage.json`
-- `aljabr/build/reports/aljabr/training-module-candidate-selection.json`
-- `aljabr/build/reports/aljabr/training-module-candidates-lock-drift.json`
-- `aljabr/build/reports/aljabr/training-module-fast-gate-summary.json`
+- `alkhawarizm/build/reports/alkhawarizm/training-module-checks.json`
+- `alkhawarizm/build/reports/alkhawarizm/training-module-checks.v2.schema.json`
+- `alkhawarizm/build/reports/alkhawarizm/training-module-checks-lock-drift.json`
+- `alkhawarizm/build/reports/alkhawarizm/training-module-coverage.json`
+- `alkhawarizm/build/reports/alkhawarizm/training-module-candidate-selection.json`
+- `alkhawarizm/build/reports/alkhawarizm/training-module-candidates-lock-drift.json`
+- `alkhawarizm/build/reports/alkhawarizm/training-module-fast-gate-summary.json`
 
 The checked-in lock lives at
-`aljabr/gradle/training-module-checks.lock.json`.
+`alkhawarizm/gradle/training-module-checks.lock.json`.
 The optional advisory candidate lock lives at
-`aljabr/gradle/training-module-candidates.lock.json`.
+`alkhawarizm/gradle/training-module-candidates.lock.json`.
 
 The training gate build logic lives in
-`aljabr/buildSrc/src/main/kotlin/aljabr.training-gates.gradle.kts`.
+`alkhawarizm/buildSrc/src/main/kotlin/alkhawarizm.training-gates.gradle.kts`.
 The compatibility entry point remains
-`aljabr/gradle/training-module-checks.gradle.kts`.
+`alkhawarizm/gradle/training-module-checks.gradle.kts`.
 
 For the recursive reasoning family only:
 
@@ -481,18 +481,18 @@ For the recursive reasoning family only:
 
 ## Adding a Gradle-Wired Training Module
 
-1. Include the module in `aljabr/settings.gradle.kts` with the intended
+1. Include the module in `alkhawarizm/settings.gradle.kts` with the intended
    project path.
 2. Run `./gradlew --no-daemon printTrainingModuleCoverageSummary` to confirm
    the module appears in training coverage and review suggested gate entries.
 3. Generate a dry-run promotion plan:
    `scripts/verify-training-advisory-gates-fast.py --candidate <label> --promote-selected --dry-run`.
 4. Validate the focused advisory selection:
-   `./gradlew --no-daemon validateTrainingModuleCandidateSelection -PaljabrTrainingCandidate=<label>`.
+   `./gradlew --no-daemon validateTrainingModuleCandidateSelection -PalkhawarizmTrainingCandidate=<label>`.
 5. Write or inspect the candidate selection report:
-   `./gradlew --no-daemon printTrainingModuleCandidateSelectionJson -PaljabrTrainingCandidate=<label>`.
+   `./gradlew --no-daemon printTrainingModuleCandidateSelectionJson -PalkhawarizmTrainingCandidate=<label>`.
 6. Run a focused advisory readiness pass before promotion:
-   `./gradlew --no-daemon checkTrainingModuleCandidateTests -PaljabrTrainingCandidate=<label>`.
+   `./gradlew --no-daemon checkTrainingModuleCandidateTests -PalkhawarizmTrainingCandidate=<label>`.
 7. Apply the selected promotion and refresh both training metadata locks:
    `scripts/verify-training-advisory-gates-fast.py --candidate <label> --promote-selected`.
 8. Run `./gradlew --no-daemon verifyTrainingGates` before handing the change
@@ -500,13 +500,13 @@ For the recursive reasoning family only:
 
 Fast Byte Latent Transformer style work belongs in a new byte-latent language
 modeling family, not in the diffusion OPD stack. See
-`aljabr/docs/FAST_BYTE_LATENT_TRANSFORMER_INTEGRATION_PLAN.md` for the paper
+`alkhawarizm/docs/FAST_BYTE_LATENT_TRANSFORMER_INTEGRATION_PLAN.md` for the paper
 mapping and the code paths that should be reused.
 
 Generative Recursive Reasoning / GRAM style work belongs in a new recursive
 reasoning family, not in the diffusion OPD stack or the byte-latent language
 modeling family. See
-`aljabr/docs/GENERATIVE_RECURSIVE_REASONING_INTEGRATION_PLAN.md` for the paper
+`alkhawarizm/docs/GENERATIVE_RECURSIVE_REASONING_INTEGRATION_PLAN.md` for the paper
 mapping and the code paths that should be reused.
 
 ## JVM Flags Required
@@ -546,7 +546,7 @@ Maven compiler plugin is pre-configured in `framework/pom.xml`:
 |-----------|--------|---------|
 | **0.2.0** | Q2 2026 | FFM-based CUDA backend, full einsum, distributed training |
 | **0.3.0** | Q3 2026 | Metal backend (Apple Silicon), Python bindings (GraalPy) |
-| **0.4.0** | Q4 2026 | `pip install aljabr`, HuggingFace transformers integration |
+| **0.4.0** | Q4 2026 | `pip install alkhawarizm`, HuggingFace transformers integration |
 | **1.0.0** | Q1 2027 | Production-ready, comprehensive benchmarks, enterprise features |
 
 ## License

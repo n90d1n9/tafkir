@@ -1,25 +1,25 @@
 rootProject.name = "tafkir-engine"
 
 // Aljabr is the compute engine — required composite build
-includeBuild("../aljabr") {
+includeBuild("../alkhawarizm") {
     dependencySubstitution {
-        substitute(module("tech.kayys.aljabr:aljabr-core"))
-            .using(project(":core:aljabr-core"))
-        substitute(module("tech.kayys.aljabr:aljabr-tensor"))
-            .using(project(":core:aljabr-tensor"))
-        substitute(module("tech.kayys.aljabr:aljabr-backend-cpu"))
-            .using(project(":backend:cpu:aljabr-backend-cpu"))
-        substitute(module("tech.kayys.aljabr:aljabr-nn"))
-            .using(project(":core:aljabr-nn"))
-        substitute(module("tech.kayys.aljabr:aljabr-autograd"))
+        substitute(module("tech.kayys.alkhawarizm:alkhawarizm-core"))
+            .using(project(":core:alkhawarizm-core"))
+        substitute(module("tech.kayys.alkhawarizm:alkhawarizm-tensor"))
+            .using(project(":core:alkhawarizm-tensor"))
+        substitute(module("tech.kayys.alkhawarizm:alkhawarizm-backend-cpu"))
+            .using(project(":backend:cpu:alkhawarizm-backend-cpu"))
+        substitute(module("tech.kayys.alkhawarizm:alkhawarizm-nn"))
+            .using(project(":core:alkhawarizm-nn"))
+        substitute(module("tech.kayys.alkhawarizm:alkhawarizm-autograd"))
             .using(project(":autograd"))
     }
 }
 
 // Tafkir modules
-include("ml:tafkir-ml-aljabr")
+include("ml:tafkir-ml-alkhawarizm")
 include("trainer:tafkir-trainer-api")
-include("trainer:tafkir-trainer-aljabr")
+include("trainer:tafkir-trainer-alkhawarizm")
 include("data:tafkir-data")
 include("distributed:tafkir-distributed")
 include("checkpoint:tafkir-checkpoint")

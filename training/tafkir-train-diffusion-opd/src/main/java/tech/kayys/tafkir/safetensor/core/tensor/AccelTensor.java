@@ -1,9 +1,12 @@
-package tech.kayys.aljabr.safetensor.core.tensor;
+package tech.kayys.alkhawarizm.safetensor.core.tensor;
 
 /**
- * Stub — accelerator-native tensor used by the safetensor Stable Diffusion runner.
+ * Stub — accelerator-native tensor used by the safetensor Stable Diffusion
+ * runner.
  *
- * <p>This is a bridge transport type; the real implementation is in the safetensor runner module.
+ * <p>
+ * This is a bridge transport type; the real implementation is in the safetensor
+ * runner module.
  * Close via try-with-resources to release native memory.
  */
 public class AccelTensor implements AutoCloseable {

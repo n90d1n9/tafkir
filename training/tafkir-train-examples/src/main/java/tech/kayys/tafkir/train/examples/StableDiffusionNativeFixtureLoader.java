@@ -7,17 +7,17 @@ import java.lang.reflect.Proxy;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Map;
-import tech.kayys.aljabr.safetensor.core.tensor.AccelTensor;
-import tech.kayys.aljabr.safetensor.loader.SafetensorFFMLoader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorMetrics;
-import tech.kayys.aljabr.safetensor.loader.SafetensorShardLoader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorShardLoader.SafetensorShardSession;
-import tech.kayys.aljabr.safetensor.quantization.bridge.AccelWeightBridge;
-import tech.kayys.aljabr.safetensor.runner.sd.CLIPModel;
-import tech.kayys.aljabr.safetensor.runner.sd.UNetModel;
-import tech.kayys.aljabr.tokenizer.runtime.TokenizerFactory;
-import tech.kayys.aljabr.tokenizer.spi.EncodeOptions;
-import tech.kayys.aljabr.tokenizer.spi.Tokenizer;
+import tech.kayys.alkhawarizm.safetensor.core.tensor.AccelTensor;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorFFMLoader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorMetrics;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorShardLoader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorShardLoader.SafetensorShardSession;
+import tech.kayys.alkhawarizm.safetensor.quantization.bridge.AccelWeightBridge;
+import tech.kayys.alkhawarizm.safetensor.runner.sd.CLIPModel;
+import tech.kayys.alkhawarizm.safetensor.runner.sd.UNetModel;
+import tech.kayys.alkhawarizm.tokenizer.runtime.TokenizerFactory;
+import tech.kayys.alkhawarizm.tokenizer.spi.EncodeOptions;
+import tech.kayys.alkhawarizm.tokenizer.spi.Tokenizer;
 
 /**
  * Plain-Java utility that wires the safetensor-native UNet loader path without
@@ -131,9 +131,10 @@ public final class StableDiffusionNativeFixtureLoader {
     }
 
     private static Object standaloneConfig() {
-        Class<?> loaderConfigType = loadClass("tech.kayys.aljabr.safetensor.loader.SafetensorLoaderConfig");
-        Class<?> validationType = loadClass("tech.kayys.aljabr.safetensor.loader.SafetensorLoaderConfig$Validation");
-        Class<?> cacheType = loadClass("tech.kayys.aljabr.safetensor.loader.SafetensorLoaderConfig$Cache");
+        Class<?> loaderConfigType = loadClass("tech.kayys.alkhawarizm.safetensor.loader.SafetensorLoaderConfig");
+        Class<?> validationType = loadClass(
+                "tech.kayys.alkhawarizm.safetensor.loader.SafetensorLoaderConfig$Validation");
+        Class<?> cacheType = loadClass("tech.kayys.alkhawarizm.safetensor.loader.SafetensorLoaderConfig$Cache");
         InvocationHandler handler = new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) {

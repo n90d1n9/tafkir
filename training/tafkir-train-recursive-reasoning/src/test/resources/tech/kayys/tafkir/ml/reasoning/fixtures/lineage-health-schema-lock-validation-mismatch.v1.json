@@ -1,9 +1,9 @@
 {
-  "actualLockSchemaId": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json",
+  "actualLockSchemaId": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json",
   "actualSchemaCount": 2,
   "actualSchemaSetSha256": "0ee19c061c152241861d69323dee15fb539274b41c3121118c0295b7e49ae60d",
-  "code": "ALJABR_LINEAGE_HEALTH_SCHEMA_LOCK_MISMATCH",
-  "expectedLockSchemaId": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json",
+  "code": "ALKHAWARIZM_LINEAGE_HEALTH_SCHEMA_LOCK_MISMATCH",
+  "expectedLockSchemaId": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json",
   "expectedSchemaCount": 2,
   "expectedSchemaSetSha256": "0000000000000000000000000000000000000000000000000000000000000000",
   "kind": "checkpoint-lineage-health-schema-lock-validation",
@@ -18,10 +18,10 @@
     }
   ],
   "schemaSetMatch": false,
-  "schemaVersion": "aljabr.checkpoint-lineage-health-schema-lock-validation.v1",
+  "schemaVersion": "alkhawarizm.checkpoint-lineage-health-schema-lock-validation.v1",
   "status": "invalid",
   "summary": "checkpoint lineage health schema lock mismatch: 1 issue(s)",
   "valid": false,
-  "validationSchemaId": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock-validation.v1.schema.json",
-  "validationSchemaResource": "tech/kayys/aljabr/ml/reasoning/schemas/checkpoint-lineage-health-schema-lock-validation.v1.schema.json"
+  "validationSchemaId": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock-validation.v1.schema.json",
+  "validationSchemaResource": "tech/kayys/alkhawarizm/ml/reasoning/schemas/checkpoint-lineage-health-schema-lock-validation.v1.schema.json"
 }

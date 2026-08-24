@@ -10,67 +10,58 @@ import java.util.Map;
  */
 public final class DiscreteTokenDatasetCheckpointLineageHealthSchemaCatalog {
     public static final String KIND = "checkpoint-lineage-health-schema-catalog";
-    public static final String SCHEMA_VERSION = "aljabr.checkpoint-lineage-health-schema-catalog.v1";
+    public static final String SCHEMA_VERSION = "alkhawarizm.checkpoint-lineage-health-schema-catalog.v1";
     public static final String LOCK_KIND = "checkpoint-lineage-health-schema-lock";
-    public static final String LOCK_SCHEMA_VERSION = "aljabr.checkpoint-lineage-health-schema-lock.v1";
+    public static final String LOCK_SCHEMA_VERSION = "alkhawarizm.checkpoint-lineage-health-schema-lock.v1";
     public static final String LOCK_VALIDATION_KIND = "checkpoint-lineage-health-schema-lock-validation";
-    public static final String LOCK_VALIDATION_SCHEMA_VERSION =
-            "aljabr.checkpoint-lineage-health-schema-lock-validation.v1";
-    public static final String JSON_SCHEMA_ID =
-            "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-catalog.v1.schema.json";
-    public static final String JSON_SCHEMA_RESOURCE =
-            "tech/kayys/aljabr/ml/reasoning/schemas/checkpoint-lineage-health-schema-catalog.v1.schema.json";
-    public static final String LOCK_JSON_SCHEMA_ID =
-            "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json";
-    public static final String LOCK_JSON_SCHEMA_RESOURCE =
-            "tech/kayys/aljabr/ml/reasoning/schemas/checkpoint-lineage-health-schema-lock.v1.schema.json";
-    public static final String LOCK_VALIDATION_JSON_SCHEMA_ID =
-            "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-lock-validation.v1.schema.json";
-    public static final String LOCK_VALIDATION_JSON_SCHEMA_RESOURCE =
-            "tech/kayys/aljabr/ml/reasoning/schemas/checkpoint-lineage-health-schema-lock-validation.v1.schema.json";
+    public static final String LOCK_VALIDATION_SCHEMA_VERSION = "alkhawarizm.checkpoint-lineage-health-schema-lock-validation.v1";
+    public static final String JSON_SCHEMA_ID = "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-catalog.v1.schema.json";
+    public static final String JSON_SCHEMA_RESOURCE = "tech/kayys/alkhawarizm/ml/reasoning/schemas/checkpoint-lineage-health-schema-catalog.v1.schema.json";
+    public static final String LOCK_JSON_SCHEMA_ID = "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock.v1.schema.json";
+    public static final String LOCK_JSON_SCHEMA_RESOURCE = "tech/kayys/alkhawarizm/ml/reasoning/schemas/checkpoint-lineage-health-schema-lock.v1.schema.json";
+    public static final String LOCK_VALIDATION_JSON_SCHEMA_ID = "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-lock-validation.v1.schema.json";
+    public static final String LOCK_VALIDATION_JSON_SCHEMA_RESOURCE = "tech/kayys/alkhawarizm/ml/reasoning/schemas/checkpoint-lineage-health-schema-lock-validation.v1.schema.json";
 
-    private static final DiscreteTokenDatasetSchemaContract HEALTH_CONTRACT =
-            new DiscreteTokenDatasetSchemaContract(
-                    DiscreteTokenDatasetCheckpointLineageHealthSnapshot.class,
-                    "checkpointLineageHealth",
-                    "Checkpoint lineage health",
-                    DiscreteTokenDatasetCheckpointLineageHealthSnapshot.KIND,
-                    DiscreteTokenDatasetCheckpointLineageHealthSnapshot.SCHEMA_VERSION,
-                    DiscreteTokenDatasetCheckpointLineageHealthSnapshot.JSON_SCHEMA_ID,
-                    DiscreteTokenDatasetCheckpointLineageHealthSnapshot.JSON_SCHEMA_RESOURCE,
-                    List.of("lineageHealth", "lineageHealthSchema"));
-    private static final DiscreteTokenDatasetSchemaContract HEALTH_VALIDATION_CONTRACT =
-            new DiscreteTokenDatasetSchemaContract(
-                    DiscreteTokenDatasetCheckpointLineageHealthValidationReport.class,
-                    "checkpointLineageHealthValidation",
-                    "Checkpoint lineage health validation report",
-                    DiscreteTokenDatasetCheckpointLineageHealthValidationReport.KIND,
-                    DiscreteTokenDatasetCheckpointLineageHealthValidationReport.SCHEMA_VERSION,
-                    DiscreteTokenDatasetCheckpointLineageHealthValidationReport.JSON_SCHEMA_ID,
-                    DiscreteTokenDatasetCheckpointLineageHealthValidationReport.JSON_SCHEMA_RESOURCE,
-                    List.of("lineageHealthValidation", "lineageHealthValidationSchema"));
-    private static final DiscreteTokenDatasetSchemaBundle BUNDLE =
-            DiscreteTokenDatasetSchemaBundle
-                    .builder(DiscreteTokenDatasetCheckpointLineageHealthSchemaCatalog.class)
-                    .catalog(KIND, SCHEMA_VERSION, JSON_SCHEMA_ID, JSON_SCHEMA_RESOURCE)
-                    .lock(LOCK_KIND, LOCK_SCHEMA_VERSION, LOCK_JSON_SCHEMA_ID, LOCK_JSON_SCHEMA_RESOURCE)
-                    .lockValidation(
-                            LOCK_VALIDATION_KIND,
-                            LOCK_VALIDATION_SCHEMA_VERSION,
-                            LOCK_VALIDATION_JSON_SCHEMA_ID,
-                            LOCK_VALIDATION_JSON_SCHEMA_RESOURCE)
-                    .labels(
-                            "checkpoint lineage health schema catalog",
-                            "checkpoint lineage health schema lock",
-                            "checkpoint lineage health schema lock validation")
-                    .codes(
-                            "ALJABR_LINEAGE_HEALTH_SCHEMA_LOCK_VALID",
-                            "ALJABR_LINEAGE_HEALTH_SCHEMA_LOCK_MISMATCH")
-                    .addContract(HEALTH_CONTRACT)
-                    .addContract(HEALTH_VALIDATION_CONTRACT)
-                    .build();
+    private static final DiscreteTokenDatasetSchemaContract HEALTH_CONTRACT = new DiscreteTokenDatasetSchemaContract(
+            DiscreteTokenDatasetCheckpointLineageHealthSnapshot.class,
+            "checkpointLineageHealth",
+            "Checkpoint lineage health",
+            DiscreteTokenDatasetCheckpointLineageHealthSnapshot.KIND,
+            DiscreteTokenDatasetCheckpointLineageHealthSnapshot.SCHEMA_VERSION,
+            DiscreteTokenDatasetCheckpointLineageHealthSnapshot.JSON_SCHEMA_ID,
+            DiscreteTokenDatasetCheckpointLineageHealthSnapshot.JSON_SCHEMA_RESOURCE,
+            List.of("lineageHealth", "lineageHealthSchema"));
+    private static final DiscreteTokenDatasetSchemaContract HEALTH_VALIDATION_CONTRACT = new DiscreteTokenDatasetSchemaContract(
+            DiscreteTokenDatasetCheckpointLineageHealthValidationReport.class,
+            "checkpointLineageHealthValidation",
+            "Checkpoint lineage health validation report",
+            DiscreteTokenDatasetCheckpointLineageHealthValidationReport.KIND,
+            DiscreteTokenDatasetCheckpointLineageHealthValidationReport.SCHEMA_VERSION,
+            DiscreteTokenDatasetCheckpointLineageHealthValidationReport.JSON_SCHEMA_ID,
+            DiscreteTokenDatasetCheckpointLineageHealthValidationReport.JSON_SCHEMA_RESOURCE,
+            List.of("lineageHealthValidation", "lineageHealthValidationSchema"));
+    private static final DiscreteTokenDatasetSchemaBundle BUNDLE = DiscreteTokenDatasetSchemaBundle
+            .builder(DiscreteTokenDatasetCheckpointLineageHealthSchemaCatalog.class)
+            .catalog(KIND, SCHEMA_VERSION, JSON_SCHEMA_ID, JSON_SCHEMA_RESOURCE)
+            .lock(LOCK_KIND, LOCK_SCHEMA_VERSION, LOCK_JSON_SCHEMA_ID, LOCK_JSON_SCHEMA_RESOURCE)
+            .lockValidation(
+                    LOCK_VALIDATION_KIND,
+                    LOCK_VALIDATION_SCHEMA_VERSION,
+                    LOCK_VALIDATION_JSON_SCHEMA_ID,
+                    LOCK_VALIDATION_JSON_SCHEMA_RESOURCE)
+            .labels(
+                    "checkpoint lineage health schema catalog",
+                    "checkpoint lineage health schema lock",
+                    "checkpoint lineage health schema lock validation")
+            .codes(
+                    "ALKHAWARIZM_LINEAGE_HEALTH_SCHEMA_LOCK_VALID",
+                    "ALKHAWARIZM_LINEAGE_HEALTH_SCHEMA_LOCK_MISMATCH")
+            .addContract(HEALTH_CONTRACT)
+            .addContract(HEALTH_VALIDATION_CONTRACT)
+            .build();
 
-    private DiscreteTokenDatasetCheckpointLineageHealthSchemaCatalog() {}
+    private DiscreteTokenDatasetCheckpointLineageHealthSchemaCatalog() {
+    }
 
     public static Map<String, Object> catalogMetadata() {
         return catalogMetadata(false);

@@ -10,39 +10,26 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * One-call packaging API for promotion gate artifacts plus their provenance manifest.
+ * One-call packaging API for promotion gate artifacts plus their provenance
+ * manifest.
  */
 public final class TrainingReportPromotionGateArtifactPackage {
     public static final String DEFAULT_VERIFICATION_REPORT_FILE_NAME = "promotion-gate-package-verification.json";
     public static final String DEFAULT_VERIFICATION_MARKDOWN_FILE_NAME = "promotion-gate-package-verification.md";
-    public static final String DEFAULT_VERIFICATION_JUNIT_XML_FILE_NAME =
-            "promotion-gate-package-verification.junit.xml";
-    public static final String DEFAULT_VERIFICATION_INDEX_FILE_NAME =
-            "promotion-gate-package-verification.index.json";
-    public static final String DEFAULT_VERIFICATION_INDEX_RECEIPT_FILE_NAME =
-            "promotion-gate-package-verification.index.receipt.json";
-    public static final String DEFAULT_VERIFICATION_INDEX_PACKAGE_AUDIT_FILE_NAME =
-            "promotion-gate-package-verification.index.package-audit.json";
-    public static final String DEFAULT_VERIFICATION_REPORT_BUNDLE_RECEIPT_FILE_NAME =
-            "promotion-gate-package-verification.reports.receipt.json";
-    public static final String DEFAULT_VERIFICATION_EVIDENCE_FILE_NAME =
-            "promotion-gate-package-verification.evidence.json";
-    public static final String DEFAULT_VERIFICATION_EVIDENCE_RECEIPT_FILE_NAME =
-            "promotion-gate-package-verification.evidence.receipt.json";
-    public static final String VERIFICATION_INDEX_FORMAT =
-            "aljabr.training.promotion.package.verification.index.v1";
-    public static final String VERIFICATION_INDEX_RECEIPT_FORMAT =
-            "aljabr.training.promotion.package.verification.index.receipt.v1";
-    public static final String VERIFICATION_INDEX_PACKAGE_AUDIT_FORMAT =
-            "aljabr.training.promotion.package.verification.index.package-audit.v1";
-    public static final String VERIFICATION_REPORT_FORMAT =
-            "aljabr.training.promotion.package.verification.report.v1";
-    public static final String VERIFICATION_REPORT_BUNDLE_RECEIPT_FORMAT =
-            "aljabr.training.promotion.package.verification.reports.receipt.v1";
-    public static final String VERIFICATION_EVIDENCE_FORMAT =
-            "aljabr.training.promotion.package.verification.evidence.v1";
-    public static final String VERIFICATION_EVIDENCE_RECEIPT_FORMAT =
-            "aljabr.training.promotion.package.verification.evidence.receipt.v1";
+    public static final String DEFAULT_VERIFICATION_JUNIT_XML_FILE_NAME = "promotion-gate-package-verification.junit.xml";
+    public static final String DEFAULT_VERIFICATION_INDEX_FILE_NAME = "promotion-gate-package-verification.index.json";
+    public static final String DEFAULT_VERIFICATION_INDEX_RECEIPT_FILE_NAME = "promotion-gate-package-verification.index.receipt.json";
+    public static final String DEFAULT_VERIFICATION_INDEX_PACKAGE_AUDIT_FILE_NAME = "promotion-gate-package-verification.index.package-audit.json";
+    public static final String DEFAULT_VERIFICATION_REPORT_BUNDLE_RECEIPT_FILE_NAME = "promotion-gate-package-verification.reports.receipt.json";
+    public static final String DEFAULT_VERIFICATION_EVIDENCE_FILE_NAME = "promotion-gate-package-verification.evidence.json";
+    public static final String DEFAULT_VERIFICATION_EVIDENCE_RECEIPT_FILE_NAME = "promotion-gate-package-verification.evidence.receipt.json";
+    public static final String VERIFICATION_INDEX_FORMAT = "alkhawarizm.training.promotion.package.verification.index.v1";
+    public static final String VERIFICATION_INDEX_RECEIPT_FORMAT = "alkhawarizm.training.promotion.package.verification.index.receipt.v1";
+    public static final String VERIFICATION_INDEX_PACKAGE_AUDIT_FORMAT = "alkhawarizm.training.promotion.package.verification.index.package-audit.v1";
+    public static final String VERIFICATION_REPORT_FORMAT = "alkhawarizm.training.promotion.package.verification.report.v1";
+    public static final String VERIFICATION_REPORT_BUNDLE_RECEIPT_FORMAT = "alkhawarizm.training.promotion.package.verification.reports.receipt.v1";
+    public static final String VERIFICATION_EVIDENCE_FORMAT = "alkhawarizm.training.promotion.package.verification.evidence.v1";
+    public static final String VERIFICATION_EVIDENCE_RECEIPT_FORMAT = "alkhawarizm.training.promotion.package.verification.evidence.receipt.v1";
 
     private TrainingReportPromotionGateArtifactPackage() {
     }
@@ -255,7 +242,8 @@ public final class TrainingReportPromotionGateArtifactPackage {
             List<String> failures) {
         public PackageVerification {
             inspection = Objects.requireNonNull(inspection, "inspection must not be null");
-            manifestVerification = Objects.requireNonNull(manifestVerification, "manifestVerification must not be null");
+            manifestVerification = Objects.requireNonNull(manifestVerification,
+                    "manifestVerification must not be null");
             sourceSnapshotVerification = Objects.requireNonNull(
                     sourceSnapshotVerification,
                     "sourceSnapshotVerification must not be null");
@@ -846,8 +834,8 @@ public final class TrainingReportPromotionGateArtifactPackage {
             List<String> failures) {
         public VerificationReportBundleReceiptVerification {
             inspection = Objects.requireNonNull(inspection, "inspection must not be null");
-            expectedReceiptSha256 =
-                    TrainingReportSha256.normalizeOptional(expectedReceiptSha256, "expectedReceiptSha256");
+            expectedReceiptSha256 = TrainingReportSha256.normalizeOptional(expectedReceiptSha256,
+                    "expectedReceiptSha256");
             failures = failures == null ? List.of() : List.copyOf(failures);
         }
 
@@ -1110,8 +1098,8 @@ public final class TrainingReportPromotionGateArtifactPackage {
             List<String> failures) {
         public VerificationIndexReceiptVerification {
             inspection = Objects.requireNonNull(inspection, "inspection must not be null");
-            expectedReceiptSha256 =
-                    TrainingReportSha256.normalizeOptional(expectedReceiptSha256, "expectedReceiptSha256");
+            expectedReceiptSha256 = TrainingReportSha256.normalizeOptional(expectedReceiptSha256,
+                    "expectedReceiptSha256");
             failures = failures == null ? List.of() : List.copyOf(failures);
         }
 
@@ -1552,8 +1540,8 @@ public final class TrainingReportPromotionGateArtifactPackage {
             List<String> failures) {
         public VerificationEvidenceReceiptVerification {
             inspection = Objects.requireNonNull(inspection, "inspection must not be null");
-            expectedReceiptSha256 =
-                    TrainingReportSha256.normalizeOptional(expectedReceiptSha256, "expectedReceiptSha256");
+            expectedReceiptSha256 = TrainingReportSha256.normalizeOptional(expectedReceiptSha256,
+                    "expectedReceiptSha256");
             failures = failures == null ? List.of() : List.copyOf(failures);
         }
 
@@ -2464,10 +2452,11 @@ public final class TrainingReportPromotionGateArtifactPackage {
             Path evidenceFile,
             String expectedEvidenceSha256,
             Path receiptFile) throws IOException {
-        return TrainingReportPromotionGatePackageVerificationArtifacts.verifyVerificationEvidenceManifestAndWriteReceipt(
-                evidenceFile,
-                expectedEvidenceSha256,
-                receiptFile);
+        return TrainingReportPromotionGatePackageVerificationArtifacts
+                .verifyVerificationEvidenceManifestAndWriteReceipt(
+                        evidenceFile,
+                        expectedEvidenceSha256,
+                        receiptFile);
     }
 
     public static VerificationEvidenceReceiptInspection readVerificationEvidenceReceipt(Path receiptFile)

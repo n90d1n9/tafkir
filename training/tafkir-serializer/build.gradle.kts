@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
 
-   // implementation(project(":core:aljabr-core"))
+   // implementation(project(":core:alkhawarizm-core"))
     implementation(project(":ml:tafkir-ml-core"))
     implementation(project(":ml:tafkir-ml-persistence"))
     implementation(project(":ml:tafkir-ml-estimator"))

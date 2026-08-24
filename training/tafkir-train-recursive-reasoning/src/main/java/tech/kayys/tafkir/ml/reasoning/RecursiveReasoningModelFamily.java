@@ -9,8 +9,7 @@ public final class RecursiveReasoningModelFamily {
     public static final String FAMILY_ID = "generative-recursive-reasoning";
     public static final String DISPLAY_NAME = "Generative Recursive Reasoning Models";
     public static final String SHORT_NAME = "GRAM";
-    public static final String PAPER_CITATION =
-            "Junyeob Baek et al., Generative Recursive Reasoning, arXiv:2605.19376 (2026)";
+    public static final String PAPER_CITATION = "Junyeob Baek et al., Generative Recursive Reasoning, arXiv:2605.19376 (2026)";
     public static final String DOI = "10.48550/arXiv.2605.19376";
 
     private RecursiveReasoningModelFamily() {
@@ -20,6 +19,6 @@ public final class RecursiveReasoningModelFamily {
         return List.of(
                 "ml:tafkir-ml-reasoning-core",
                 "ml:tafkir-ml-recursive-reasoning",
-                "trainer:aljabr-trainer-recursive-reasoning");
+                "trainer:alkhawarizm-trainer-recursive-reasoning");
     }
 }

@@ -16,25 +16,29 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * <h2>Implemented Schemes</h2>
  * <ul>
- *   <li><b>INT8:</b> Symmetric per-tensor quantization: scale = max(|w|)/127</li>
- *   <li><b>INT4:</b> Asymmetric per-channel: scale = (max-min)/15, zero_point = -round(min/scale)</li>
- *   <li><b>FP8:</b> E4M3 format (1 sign, 4 exponent, 3 mantissa)</li>
- *   <li><b>AWQ:</b> Activation-aware weight quantization with salience scoring</li>
- *   <li><b>GPTQ:</b> Layer-by-layer quantization with Hessian-weighted error minimization</li>
+ * <li><b>INT8:</b> Symmetric per-tensor quantization: scale = max(|w|)/127</li>
+ * <li><b>INT4:</b> Asymmetric per-channel: scale = (max-min)/15, zero_point =
+ * -round(min/scale)</li>
+ * <li><b>FP8:</b> E4M3 format (1 sign, 4 exponent, 3 mantissa)</li>
+ * <li><b>AWQ:</b> Activation-aware weight quantization with salience
+ * scoring</li>
+ * <li><b>GPTQ:</b> Layer-by-layer quantization with Hessian-weighted error
+ * minimization</li>
  * </ul>
  *
  * <h2>Usage</h2>
+ * 
  * <pre>
- *   QuantizedModel qModel = QuantizationEngine.builder()
- *       .modelPath("model.safetensors")
- *       .scheme(QuantizationScheme.AWQ)
- *       .targetPrecision(Precision.INT4)
- *       .calibrationData(calibrationDataset)
- *       .build()
- *       .quantize();
+ * QuantizedModel qModel = QuantizationEngine.builder()
+ *         .modelPath("model.safetensors")
+ *         .scheme(QuantizationScheme.AWQ)
+ *         .targetPrecision(Precision.INT4)
+ *         .calibrationData(calibrationDataset)
+ *         .build()
+ *         .quantize();
  *
- *   // INT4 inference: 4x faster, 4x less memory
- *   qModel.infer(input);
+ * // INT4 inference: 4x faster, 4x less memory
+ * qModel.infer(input);
  * </pre>
  *
  * @since 0.3.0
@@ -66,7 +70,8 @@ public class QuantizationEngine {
      * Runs quantization and returns the compressed model.
      */
     public QuantizedModel quantize() {
-        if (quantizedModel != null) return quantizedModel;
+        if (quantizedModel != null)
+            return quantizedModel;
 
         // Read model weights from file
         float[][] weights = readModelWeights(modelPath);
@@ -82,20 +87,20 @@ public class QuantizationEngine {
 
         // Save quantized model
         Path quantizedPath = modelPath.resolveSibling(
-            modelPath.getFileName() + ".q" + targetPrecision.name().toLowerCase());
+                modelPath.getFileName() + ".q" + targetPrecision.name().toLowerCase());
         saveQuantizedWeights(result, quantizedPath);
 
         // Compute accuracy metrics if calibration data provided
         Map<String, Double> accuracyMetrics = computeAccuracyMetrics(weights, result, calibrationData);
 
         quantizedModel = QuantizedModel.builder()
-            .originalPath(modelPath)
-            .quantizedPath(quantizedPath)
-            .scheme(scheme)
-            .precision(targetPrecision)
-            .compressionRatio(result.compressionRatio)
-            .accuracyMetrics(accuracyMetrics)
-            .build();
+                .originalPath(modelPath)
+                .quantizedPath(quantizedPath)
+                .scheme(scheme)
+                .precision(targetPrecision)
+                .compressionRatio(result.compressionRatio)
+                .accuracyMetrics(accuracyMetrics)
+                .build();
 
         return quantizedModel;
     }
@@ -104,8 +109,9 @@ public class QuantizationEngine {
      * Reads model weights from the model file.
      * Supports a small text format for local experiments where each non-comment
      * line is one tensor row:
+     * 
      * <pre>
-     * # aljabr.weights.v1
+     * # alkhawarizm.weights.v1
      * 0.1, -0.2, 0.3
      * tensor dense.bias: 0.01 0.02
      * </pre>
@@ -137,7 +143,7 @@ public class QuantizationEngine {
                 Files.createDirectories(parent);
             }
             StringBuilder text = new StringBuilder();
-            text.append("schema=aljabr.quantized.weights.v1\n");
+            text.append("schema=alkhawarizm.quantized.weights.v1\n");
             text.append("scheme=").append(scheme).append('\n');
             text.append("precision=").append(targetPrecision).append('\n');
             text.append("tensorCount=").append(result.quantizedWeights.length).append('\n');
@@ -171,8 +177,8 @@ public class QuantizationEngine {
      * Computes accuracy metrics by comparing quantized outputs with original.
      */
     private Map<String, Double> computeAccuracyMetrics(float[][] original,
-                                                        QuantizationResult result,
-                                                        float[][] calibrationData) {
+            QuantizationResult result,
+            float[][] calibrationData) {
         if (calibrationData == null || calibrationData.length == 0) {
             return baseAccuracyMetrics(original, result);
         }
@@ -303,7 +309,8 @@ public class QuantizationEngine {
 
     private float[] runInference(float[][] weights, float[] input) {
         // Simple linear transform for accuracy estimation
-        if (weights.length == 0 || weights[0].length == 0) return input;
+        if (weights.length == 0 || weights[0].length == 0)
+            return input;
 
         float[] output = new float[weights.length];
         for (int i = 0; i < weights.length; i++) {
@@ -616,11 +623,13 @@ public class QuantizationEngine {
 
         // FP8 E4M3: exponent bias = 7
         int fp8Exp = exp - 127 + 7;
-        int fp8Mantissa = mantissa >>> 20;  // Take top 3 bits
+        int fp8Mantissa = mantissa >>> 20; // Take top 3 bits
 
         // Handle overflow/underflow
-        if (fp8Exp <= 0) return 0;
-        if (fp8Exp >= 15) return sign != 0 ? -448.0f : 448.0f;
+        if (fp8Exp <= 0)
+            return 0;
+        if (fp8Exp >= 15)
+            return sign != 0 ? -448.0f : 448.0f;
 
         // Reconstruct FP8 value
         int fp8Bits = (sign << 7) | (fp8Exp << 3) | fp8Mantissa;
@@ -675,7 +684,8 @@ public class QuantizationEngine {
 
         // Normalize to [0, 1]
         float maxSalience = 0;
-        for (float s : salience) maxSalience = Math.max(maxSalience, s);
+        for (float s : salience)
+            maxSalience = Math.max(maxSalience, s);
         if (maxSalience > 0) {
             for (int i = 0; i < salience.length; i++) {
                 salience[i] /= maxSalience;
@@ -691,7 +701,8 @@ public class QuantizationEngine {
      */
     private float[][] computeHessian(float[][] weights, float[][] calibrationData) {
         int dim = weights.length > 0 ? weights[0].length : 0;
-        if (dim == 0) return new float[0][0];
+        if (dim == 0)
+            return new float[0][0];
 
         float[][] hessian = new float[dim][dim];
 
@@ -734,7 +745,8 @@ public class QuantizationEngine {
      */
     private float[] flatten(float[][] weights) {
         int total = 0;
-        for (float[] w : weights) total += w.length;
+        for (float[] w : weights)
+            total += w.length;
         float[] flat = new float[total];
         int idx = 0;
         for (float[] w : weights) {
@@ -748,24 +760,24 @@ public class QuantizationEngine {
      * Quantization result.
      */
     private record QuantizationResult(
-        float[][] quantizedWeights,
-        int[][] quantizedCodes,
-        float[] scales,
-        float[] zeroPoints,
-        int[] bitsPerTensor,
-        double compressionRatio,
-        double meanSquaredError,
-        double cosineSimilarity
-    ) {}
+            float[][] quantizedWeights,
+            int[][] quantizedCodes,
+            float[] scales,
+            float[] zeroPoints,
+            int[] bitsPerTensor,
+            double compressionRatio,
+            double meanSquaredError,
+            double cosineSimilarity) {
+    }
 
     private record TensorQuantization(
-        float[] dequantized,
-        int[] codes,
-        float scale,
-        float zeroPoint,
-        int bits,
-        double squaredError
-    ) {}
+            float[] dequantized,
+            int[] codes,
+            float scale,
+            float zeroPoint,
+            int bits,
+            double squaredError) {
+    }
 
     /**
      * Quantization scheme.
@@ -785,13 +797,12 @@ public class QuantizationEngine {
      * Quantized model result.
      */
     public record QuantizedModel(
-        Path originalPath,
-        Path quantizedPath,
-        QuantizationScheme scheme,
-        Precision precision,
-        double compressionRatio,
-        Map<String, Double> accuracyMetrics
-    ) {
+            Path originalPath,
+            Path quantizedPath,
+            QuantizationScheme scheme,
+            Precision precision,
+            double compressionRatio,
+            Map<String, Double> accuracyMetrics) {
         public static Builder builder() {
             return new Builder();
         }
@@ -804,17 +815,42 @@ public class QuantizationEngine {
             private double compressionRatio = 1.0;
             private Map<String, Double> accuracyMetrics = Map.of();
 
-            Builder() {}
+            Builder() {
+            }
 
-            public Builder originalPath(Path p) { this.originalPath = p; return this; }
-            public Builder quantizedPath(Path p) { this.quantizedPath = p; return this; }
-            public Builder scheme(QuantizationScheme s) { this.scheme = s; return this; }
-            public Builder precision(Precision p) { this.precision = p; return this; }
-            public Builder compressionRatio(double r) { this.compressionRatio = r; return this; }
-            public Builder accuracyMetrics(Map<String, Double> m) { this.accuracyMetrics = m; return this; }
+            public Builder originalPath(Path p) {
+                this.originalPath = p;
+                return this;
+            }
+
+            public Builder quantizedPath(Path p) {
+                this.quantizedPath = p;
+                return this;
+            }
+
+            public Builder scheme(QuantizationScheme s) {
+                this.scheme = s;
+                return this;
+            }
+
+            public Builder precision(Precision p) {
+                this.precision = p;
+                return this;
+            }
+
+            public Builder compressionRatio(double r) {
+                this.compressionRatio = r;
+                return this;
+            }
+
+            public Builder accuracyMetrics(Map<String, Double> m) {
+                this.accuracyMetrics = m;
+                return this;
+            }
 
             public QuantizedModel build() {
-                return new QuantizedModel(originalPath, quantizedPath, scheme, precision, compressionRatio, accuracyMetrics);
+                return new QuantizedModel(originalPath, quantizedPath, scheme, precision, compressionRatio,
+                        accuracyMetrics);
             }
         }
     }
@@ -830,18 +866,47 @@ public class QuantizationEngine {
         private float[][] sourceWeights;
         private final Map<String, Object> options = new ConcurrentHashMap<>();
 
-        Builder() {}
+        Builder() {
+        }
 
-        public Builder modelPath(Path p) { this.modelPath = p; return this; }
-        public Builder modelPath(String p) { this.modelPath = Path.of(p); return this; }
-        public Builder scheme(QuantizationScheme s) { this.scheme = s; return this; }
-        public Builder targetPrecision(Precision p) { this.targetPrecision = p; return this; }
-        public Builder calibrationData(float[][] d) { this.calibrationData = d; return this; }
-        public Builder weights(float[][] weights) { this.sourceWeights = copyAndValidateWeights(weights); return this; }
-        public Builder option(String k, Object v) { this.options.put(k, v); return this; }
+        public Builder modelPath(Path p) {
+            this.modelPath = p;
+            return this;
+        }
+
+        public Builder modelPath(String p) {
+            this.modelPath = Path.of(p);
+            return this;
+        }
+
+        public Builder scheme(QuantizationScheme s) {
+            this.scheme = s;
+            return this;
+        }
+
+        public Builder targetPrecision(Precision p) {
+            this.targetPrecision = p;
+            return this;
+        }
+
+        public Builder calibrationData(float[][] d) {
+            this.calibrationData = d;
+            return this;
+        }
+
+        public Builder weights(float[][] weights) {
+            this.sourceWeights = copyAndValidateWeights(weights);
+            return this;
+        }
+
+        public Builder option(String k, Object v) {
+            this.options.put(k, v);
+            return this;
+        }
 
         public QuantizationEngine build() {
-            if (modelPath == null) throw new IllegalStateException("modelPath is required");
+            if (modelPath == null)
+                throw new IllegalStateException("modelPath is required");
             return new QuantizationEngine(this);
         }
     }

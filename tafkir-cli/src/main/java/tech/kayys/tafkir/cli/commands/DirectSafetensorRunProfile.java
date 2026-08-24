@@ -56,8 +56,8 @@ record DirectSafetensorRunProfile(
         return new DirectSafetensorRunProfile(null, "", ModelRuntimeTraits.EMPTY);
     }
 
-    boolean gemma4Text() {
-        return runtimeTraits.gemma4Text();
+    boolean nativeBf16Matvec() {
+        return runtimeTraits.nativeBf16Matvec();
     }
 
     boolean gemma4Unified() {

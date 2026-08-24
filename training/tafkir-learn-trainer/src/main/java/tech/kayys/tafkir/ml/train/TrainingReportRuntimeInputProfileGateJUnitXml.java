@@ -15,7 +15,7 @@ public final class TrainingReportRuntimeInputProfileGateJUnitXml {
         String markdown = result.markdown();
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.runtime.input\" tests=\"1\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.runtime.input\" tests=\"1\" failures=\""
                 + (result.passed() ? "0" : "1")
                 + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
@@ -30,7 +30,7 @@ public final class TrainingReportRuntimeInputProfileGateJUnitXml {
         property(xml, "policy.maxTrainToValidationTotalRatio",
                 Double.toString(result.policy().maxTrainToValidationTotalRatio()));
         appendLine(xml, "  </properties>");
-        appendLine(xml, "  <testcase classname=\"aljabr.training.runtime.input\" "
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.runtime.input\" "
                 + "name=\"validate runtime input profile\" time=\"0\">");
         if (!result.passed()) {
             appendLine(xml, "    <failure type=\"" + escapeXml(failureType(result))

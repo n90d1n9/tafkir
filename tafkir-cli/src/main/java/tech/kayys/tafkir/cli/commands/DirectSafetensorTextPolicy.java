@@ -23,7 +23,7 @@ final class DirectSafetensorTextPolicy {
     }
 
     static float normalizeRepeatPenalty(DirectSafetensorRunProfile profile, double requestedRepeatPenalty) {
-        if (profile.gemma4Text() && Math.abs(requestedRepeatPenalty - 1.1d) < 1.0e-6) {
+        if (profile.nativeBf16Matvec() && Math.abs(requestedRepeatPenalty - 1.1d) < 1.0e-6) {
             return 1.0f;
         }
         return (float) requestedRepeatPenalty;
@@ -59,7 +59,7 @@ final class DirectSafetensorTextPolicy {
         if (response == null || response.getContent() == null) {
             return response;
         }
-        if (!profile.gemma4Text()) {
+        if (!profile.nativeBf16Matvec()) {
             return response;
         }
 
@@ -80,7 +80,7 @@ final class DirectSafetensorTextPolicy {
         if (profile.modelType().isBlank()) {
             return false;
         }
-        if (profile.gemma4Text()) {
+        if (profile.nativeBf16Matvec()) {
             return profile.gemma4Unified();
         }
         if (profile.gemma3Text() || profile.qwenText()) {

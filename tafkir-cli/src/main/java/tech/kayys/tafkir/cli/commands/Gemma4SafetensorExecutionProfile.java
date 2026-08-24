@@ -34,7 +34,7 @@ record Gemma4SafetensorExecutionProfile(
                 && runProfile.config() != null
                 && runProfile.config().requiresGemma4PackedMoeRuntime();
         boolean textReady = unified
-                && runProfile.gemma4Text()
+                && runProfile.nativeBf16Matvec()
                 && !packedMoe
                 && !mobileQatCheckpoint;
         return new Gemma4SafetensorExecutionProfile(

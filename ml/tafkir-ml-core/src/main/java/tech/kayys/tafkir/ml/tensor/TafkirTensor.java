@@ -1,13 +1,13 @@
 package tech.kayys.tafkir.ml.tensor;
 
-import tech.kayys.aljabr.core.backend.ComputeBackend;
-import tech.kayys.aljabr.core.memory.Buffer;
-import tech.kayys.aljabr.core.tensor.DefaultTensor;
-import tech.kayys.aljabr.core.tensor.DType;
-import tech.kayys.aljabr.core.tensor.DeviceType;
-import tech.kayys.aljabr.core.tensor.Shape;
-import tech.kayys.aljabr.core.tensor.Tensor;
-import tech.kayys.aljabr.backend.cpu.CpuBackend;
+import tech.kayys.alkhawarizm.core.backend.ComputeBackend;
+import tech.kayys.alkhawarizm.core.memory.Buffer;
+import tech.kayys.alkhawarizm.core.tensor.DefaultTensor;
+import tech.kayys.alkhawarizm.core.tensor.DType;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.Shape;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.backend.cpu.CpuBackend;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
@@ -48,7 +48,7 @@ public final class TafkirTensor implements Tensor {
                             " (expected " + expected + " elements)");
         }
 
-        Buffer buffer = cpu.bufferFactory().allocate(s.numel() * DType.F32.sizeBytes());
+        Buffer buffer = new tech.kayys.alkhawarizm.core.memory.CpuBuffer(s.numel() * DType.F32.blockByteSize());
         MemorySegment seg = buffer.segment();
         for (int i = 0; i < data.length; i++) {
             seg.set(ValueLayout.JAVA_FLOAT, i * 4L, data[i]);
@@ -60,25 +60,48 @@ public final class TafkirTensor implements Tensor {
 
     public static TafkirTensor zeros(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Tensor t = cpu.zeros(new Shape(shape), DType.F32);
+        Shape s = new Shape(shape);
+        tech.kayys.alkhawarizm.core.memory.CpuBuffer buffer = new tech.kayys.alkhawarizm.core.memory.CpuBuffer(s.numel() * DType.F32.blockByteSize());
+        buffer.segment().fill((byte) 0);
+        Tensor t = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
         return new TafkirTensor(t, cpu);
     }
 
     public static TafkirTensor ones(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Tensor t = cpu.full(1.0f, new Shape(shape), DType.F32);
+        Shape s = new Shape(shape);
+        tech.kayys.alkhawarizm.core.memory.CpuBuffer buffer = new tech.kayys.alkhawarizm.core.memory.CpuBuffer(s.numel() * DType.F32.blockByteSize());
+        java.lang.foreign.MemorySegment seg = buffer.segment();
+        for (long i = 0; i < s.numel(); i++) {
+            seg.set(ValueLayout.JAVA_FLOAT, i * 4L, 1.0f);
+        }
+        Tensor t = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
         return new TafkirTensor(t, cpu);
     }
 
     public static TafkirTensor rand(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Tensor t = cpu.rand(new Shape(shape), DType.F32);
+        Shape s = new Shape(shape);
+        tech.kayys.alkhawarizm.core.memory.CpuBuffer buffer = new tech.kayys.alkhawarizm.core.memory.CpuBuffer(s.numel() * DType.F32.blockByteSize());
+        java.lang.foreign.MemorySegment seg = buffer.segment();
+        java.util.concurrent.ThreadLocalRandom rng = java.util.concurrent.ThreadLocalRandom.current();
+        for (long i = 0; i < s.numel(); i++) {
+            seg.set(ValueLayout.JAVA_FLOAT, i * 4L, rng.nextFloat());
+        }
+        Tensor t = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
         return new TafkirTensor(t, cpu);
     }
 
     public static TafkirTensor randn(long... shape) {
         CpuBackend cpu = TafkirBackend.cpu();
-        Tensor t = cpu.randn(new Shape(shape), DType.F32);
+        Shape s = new Shape(shape);
+        tech.kayys.alkhawarizm.core.memory.CpuBuffer buffer = new tech.kayys.alkhawarizm.core.memory.CpuBuffer(s.numel() * DType.F32.blockByteSize());
+        java.lang.foreign.MemorySegment seg = buffer.segment();
+        java.util.concurrent.ThreadLocalRandom rng = java.util.concurrent.ThreadLocalRandom.current();
+        for (long i = 0; i < s.numel(); i++) {
+            seg.set(ValueLayout.JAVA_FLOAT, i * 4L, (float) rng.nextGaussian());
+        }
+        Tensor t = new DefaultTensor(s, DType.F32, DeviceType.CPU, buffer, cpu);
         return new TafkirTensor(t, cpu);
     }
 
@@ -125,7 +148,14 @@ public final class TafkirTensor implements Tensor {
         return delegate.item();
     }
 
+    
     // ── Data Access ──────────────────────────────────────────────────────────
+
+    @Override
+    public float[] toFloatArray() {
+        return data();
+    }
+
 
     public float[] data() {
         long n = delegate.numel();
@@ -520,6 +550,12 @@ public final class TafkirTensor implements Tensor {
     @Override
     public Tensor to(DeviceType device) {
         return wrap(delegate.to(device));
+    }
+
+
+    @Override
+    public Tensor applyRoPE(int posOffset, float freqBase, boolean isNeox) {
+        return wrap(delegate.applyRoPE(posOffset, freqBase, isNeox));
     }
 
     @Override

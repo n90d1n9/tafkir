@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>tech.kayys.aljabr</groupId>
-        <artifactId>aljabr-framework-parent</artifactId>
+        <groupId>tech.kayys.alkhawarizm</groupId>
+        <artifactId>alkhawarizm-framework-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../../training/pom.xml</relativePath>
     </parent>
@@ -19,12 +19,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>tech.kayys.aljabr</groupId>
+            <groupId>tech.kayys.alkhawarizm</groupId>
             <artifactId>tafkir-ml-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>tech.kayys.aljabr</groupId>
+            <groupId>tech.kayys.alkhawarizm</groupId>
             <artifactId>tafkir-ml-autograd</artifactId>
             <version>${project.version}</version>
         </dependency>

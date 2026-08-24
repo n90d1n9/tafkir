@@ -18,7 +18,7 @@ class TrainerMetadataSupportTest {
 
     @Test
     void detectsPresentFilesOnly() throws Exception {
-        Path file = Files.createTempFile("aljabr-trainer-metadata", ".txt");
+        Path file = Files.createTempFile("alkhawarizm-trainer-metadata", ".txt");
         Path missing = file.resolveSibling(file.getFileName() + ".missing");
 
         assertTrue(TrainerMetadataSupport.filePresent(file));
@@ -75,8 +75,8 @@ class TrainerMetadataSupportTest {
 
     @Test
     void parameterSignaturesAreStableForNamedAndIndexedParameters() {
-        Parameter first = new Parameter(GradTensor.of(new float[] {1f, 2f}, 2));
-        Parameter second = new Parameter(GradTensor.of(new float[] {3f, 4f, 5f, 6f}, 2, 2));
+        Parameter first = new Parameter(GradTensor.of(new float[] { 1f, 2f }, 2));
+        Parameter second = new Parameter(GradTensor.of(new float[] { 3f, 4f, 5f, 6f }, 2, 2));
         Map<String, Parameter> named = new LinkedHashMap<>();
         named.put("weight", first);
         named.put("bias", second);

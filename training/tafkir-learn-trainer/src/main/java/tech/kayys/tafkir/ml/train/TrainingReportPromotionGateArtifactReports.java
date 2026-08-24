@@ -88,7 +88,7 @@ final class TrainingReportPromotionGateArtifactReports {
 
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.promotion\" tests=\"1\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.promotion\" tests=\"1\" failures=\""
                 + (passed ? "0" : "1")
                 + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
@@ -108,7 +108,7 @@ final class TrainingReportPromotionGateArtifactReports {
         property(xml, "sourceReports.count", Long.toString(mapList(sourceVerification.get("reports")).size()));
         property(xml, "sourceReports.failures", Long.toString(stringList(sourceVerification.get("failures")).size()));
         appendLine(xml, "  </properties>");
-        appendLine(xml, "  <testcase classname=\"aljabr.training.promotion\" name=\""
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.promotion\" name=\""
                 + escapeXml(baseline + " -> " + candidate)
                 + "\" time=\"0\">");
         if (!passed) {

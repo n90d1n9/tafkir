@@ -1,8 +1,8 @@
 package tech.kayys.tafkir.training.integration;
 
 import org.junit.jupiter.api.Test;
-import tech.kayys.aljabr.core.memory.UnifiedMemoryStore;
-import tech.kayys.aljabr.core.memory.helixdb.HelixDbMemoryStore;
+import tech.kayys.alkhawarizm.core.memory.UnifiedMemoryStore;
+import tech.kayys.alkhawarizm.core.memory.helixdb.HelixDbMemoryStore;
 import tech.kayys.tafkir.training.strategy.FineTuningStrategy;
 import tech.kayys.tafkir.training.strategy.LoRAStrategy;
 
@@ -20,7 +20,7 @@ public class ZeroCopyIntegrationTest {
     public void testDataFlowFromHelixDbToTafkirNative() {
         // 1. Initialize HelixDB simulated store
         try (UnifiedMemoryStore dbStore = new HelixDbMemoryStore("mock_path")) {
-            
+
             byte[] contextKey = "agent_context_1".getBytes();
             byte[] modelKey = "agent_adapter_1".getBytes();
 
@@ -28,14 +28,14 @@ public class ZeroCopyIntegrationTest {
             try (Arena tempArena = Arena.ofConfined()) {
                 MemorySegment contextData = tempArena.allocate(1024);
                 MemorySegment modelData = tempArena.allocate(1024);
-                
+
                 dbStore.put(contextKey, contextData);
                 dbStore.put(modelKey, modelData);
             }
 
             // 3. Begin Training Step (Wayang orchestrator triggers this)
             try (Arena trainingArena = Arena.ofConfined()) {
-                
+
                 // 4. Fetch zero-copy MemorySegment directly from DB
                 Optional<MemorySegment> optContextSegment = dbStore.getZeroCopy(contextKey, 0L, trainingArena);
                 Optional<MemorySegment> optModelSegment = dbStore.getZeroCopy(modelKey, 0L, trainingArena);
@@ -48,14 +48,17 @@ public class ZeroCopyIntegrationTest {
 
                 // 5. Hand off directly to Tafkir FFM Native Training Engine (Zero-Copy)
                 FineTuningStrategy strategy = new LoRAStrategy(16, 32.0f);
-                
+
                 try {
-                    // This will invoke FFM bindings. If LibTorch is not present in test env, it may throw.
+                    // This will invoke FFM bindings. If LibTorch is not present in test env, it may
+                    // throw.
                     // We catch and log, since we mainly want to verify the architectural flow.
-                    MemorySegment updatedAdapter = strategy.computeGradientsAndUpdate(contextSegment, modelSegment, trainingArena);
+                    MemorySegment updatedAdapter = strategy.computeGradientsAndUpdate(contextSegment, modelSegment,
+                            trainingArena);
                     assertNotNull(updatedAdapter);
                 } catch (RuntimeException e) {
-                    // Expected if LibTorch is not loaded/found natively on the machine running tests.
+                    // Expected if LibTorch is not loaded/found natively on the machine running
+                    // tests.
                     System.out.println("Native execution skipped because LibTorch is not available: " + e.getMessage());
                 }
             }

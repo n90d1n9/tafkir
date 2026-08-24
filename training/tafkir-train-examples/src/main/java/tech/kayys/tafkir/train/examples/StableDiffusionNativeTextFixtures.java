@@ -9,8 +9,10 @@ import java.util.Map;
 /**
  * Resolves per-task Stable Diffusion native text-conditioning fixtures.
  *
- * <p>Resolution order for each task:
- * 1. Task-specific env var such as {@code ALJABR_SD_NATIVE_MODEL_DIR_TEXT_OCR}
+ * <p>
+ * Resolution order for each task:
+ * 1. Task-specific env var such as
+ * {@code ALKHAWARIZM_SD_NATIVE_MODEL_DIR_TEXT_OCR}
  * 2. A {@code text-<taskId>} subdirectory under the shared base dir
  * 3. Shared base fixture fallback
  */
@@ -61,7 +63,7 @@ public final class StableDiffusionNativeTextFixtures {
     }
 
     public static String envNameForTask(String taskId) {
-        return "ALJABR_SD_NATIVE_MODEL_DIR_TEXT_" + taskId.toUpperCase().replace('-', '_');
+        return "ALKHAWARIZM_SD_NATIVE_MODEL_DIR_TEXT_" + taskId.toUpperCase().replace('-', '_');
     }
 
     private static StableDiffusionNativeModelFixture resolveTaskFixture(
@@ -75,8 +77,7 @@ public final class StableDiffusionNativeTextFixtures {
         Path sharedBaseDir = sharedFixture.baseDir();
         Path taskDir = sharedBaseDir.resolve("text-" + taskId);
         if (Files.isDirectory(taskDir)) {
-            StableDiffusionNativeModelFixture candidate =
-                    StableDiffusionNativeModelFixture.fromBaseDir(taskDir);
+            StableDiffusionNativeModelFixture candidate = StableDiffusionNativeModelFixture.fromBaseDir(taskDir);
             if (candidate.isUsable()) {
                 return candidate;
             }

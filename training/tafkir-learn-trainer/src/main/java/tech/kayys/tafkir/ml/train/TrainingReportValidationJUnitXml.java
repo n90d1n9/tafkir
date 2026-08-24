@@ -14,7 +14,7 @@ public final class TrainingReportValidationJUnitXml {
         String markdown = result.markdown();
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.report.validation\" tests=\"1\" failures=\""
+        appendLine(xml, "<testsuite name=\"alkhawarizm.training.report.validation\" tests=\"1\" failures=\""
                 + (result.passed() ? "0" : "1")
                 + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
@@ -23,10 +23,12 @@ public final class TrainingReportValidationJUnitXml {
         property(xml, "policy.maxDiagnosticSeverity", result.policy().maxDiagnosticSeverity().name());
         property(xml, "policy.requireRunHealthGate", Boolean.toString(result.policy().requireRunHealthGate()));
         property(xml, "policy.requireDataHealthGate", Boolean.toString(result.policy().requireDataHealthGate()));
-        property(xml, "policy.requireDataHealthAvailable", Boolean.toString(result.policy().requireDataHealthAvailable()));
+        property(xml, "policy.requireDataHealthAvailable",
+                Boolean.toString(result.policy().requireDataHealthAvailable()));
         property(xml, "policy.requireFreshDiagnostics", Boolean.toString(result.policy().requireFreshDiagnostics()));
         property(xml, "policy.requireValidation", Boolean.toString(result.policy().requireValidation()));
-        property(xml, "policy.requireCheckpointIntegrity", Boolean.toString(result.policy().requireCheckpointIntegrity()));
+        property(xml, "policy.requireCheckpointIntegrity",
+                Boolean.toString(result.policy().requireCheckpointIntegrity()));
         property(xml, "diagnostics.passed", Boolean.toString(result.diagnosticGate().passed()));
         property(xml, "diagnostics.highestSeverity", result.diagnosticGate().summary().highestSeverity());
         property(xml, "diagnostics.failingCodes", String.join(",", result.diagnosticGate().failingCodes()));
@@ -41,7 +43,8 @@ public final class TrainingReportValidationJUnitXml {
         property(xml, "checkpointIntegrity.passed", Boolean.toString(result.checkpointIntegrityPassed()));
         property(xml, "checkpointIntegrity.failureKeys", String.join(",", result.checkpointIntegrityFailureKeys()));
         appendLine(xml, "  </properties>");
-        appendLine(xml, "  <testcase classname=\"aljabr.training.report\" name=\"validate training report\" time=\"0\">");
+        appendLine(xml,
+                "  <testcase classname=\"alkhawarizm.training.report\" name=\"validate training report\" time=\"0\">");
         if (result.failed()) {
             appendLine(xml, "    <failure type=\"" + escapeXml(failureType(result))
                     + "\" message=\"" + escapeXml(result.message()) + "\">");

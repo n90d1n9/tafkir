@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.ml.tensor;
 
-import tech.kayys.aljabr.backend.cpu.CpuBackend;
-import tech.kayys.aljabr.core.backend.ComputeBackend;
+import tech.kayys.alkhawarizm.backend.cpu.CpuBackend;
+import tech.kayys.alkhawarizm.core.backend.ComputeBackend;
 
 /**
  * Provides access to Aljabr compute backends.
@@ -11,7 +11,8 @@ public final class TafkirBackend {
 
     private static CpuBackend CPU;
 
-    private TafkirBackend() {}
+    private TafkirBackend() {
+    }
 
     public static synchronized CpuBackend cpu() {
         if (CPU == null) {

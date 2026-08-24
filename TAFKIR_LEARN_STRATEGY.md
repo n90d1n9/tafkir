@@ -47,7 +47,7 @@ Position **Tafkir-Learn** as the premier JVM-native deep learning framework, ser
 
 ## Responsibility Boundaries
 
-### **Aljabr** (Backend - `github.com/bhangun/aljabr`)
+### **Aljabr** (Backend - `github.com/bhangun/alkhawarizm`)
 **Role:** Pure computational engine (equivalent to CUDA + cuDNN + ATen)
 
 **Should Contain:**
@@ -223,7 +223,7 @@ tafkir-engine/
 │   └── tafkir-learn-examples/       # Tutorials and examples
 │
 ├── tafkir-gollek-integration/       # Bridge to Gollek inference
-├── tafkir-aljabr-integration/       # Bridge to Aljabr backend
+├── tafkir-alkhawarizm-integration/       # Bridge to Aljabr backend
 │
 └── [models/]                        # Keep existing model implementations
     ├── tafkir-model-bert/

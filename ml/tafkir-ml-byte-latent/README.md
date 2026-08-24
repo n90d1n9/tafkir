@@ -54,7 +54,7 @@ JBang workflow:
 - `jbang trainer/trainer_byte_latent_demo.java`
 - `jbang trainer/trainer_byte_latent_infer_demo.java`
 - `jbang trainer/trainer_byte_latent_infer_demo.java "hi"`
-- `jbang trainer/trainer_byte_latent_infer_demo.java "aljabr" 6`
+- `jbang trainer/trainer_byte_latent_infer_demo.java "alkhawarizm" 6`
 - `jbang trainer/trainer_byte_latent_train_infer_demo.java`
 - `jbang trainer/trainer_byte_latent_train_infer_demo.java /tmp/byte-latent-train-infer "hi" 4`
 - `jbang trainer/trainer_byte_latent_train_infer_inspector.java /tmp/byte-latent-train-infer overview`
@@ -146,7 +146,7 @@ Smoke helper:
 - `./trainer/run_byte_latent_workflow.sh`
 - `./trainer/run_byte_latent_workflow.sh fresh`
 - `./trainer/run_byte_latent_workflow.sh resume`
-- `./trainer/run_byte_latent_workflow.sh full /tmp/aljabr-byte-latent`
+- `./trainer/run_byte_latent_workflow.sh full /tmp/alkhawarizm-byte-latent`
 - the smoke helpers now lead with `status`, `health`, and `ci` inspector checks
 - the workflow launcher now also prints `status`, `health`, and `ci` as its
   first checkpoint follow-up commands
@@ -234,12 +234,12 @@ Smoke helper:
 - the launcher prints ready-to-run manifest and bundle inspector commands after
   each run
 - `./trainer/run_byte_latent_smoke.sh`
-- `./trainer/run_byte_latent_smoke.sh /tmp/aljabr-byte-latent-smoke`
+- `./trainer/run_byte_latent_smoke.sh /tmp/alkhawarizm-byte-latent-smoke`
 
 Resume smoke helper:
 
 - `./trainer/run_byte_latent_resume_smoke.sh`
-- `./trainer/run_byte_latent_resume_smoke.sh /tmp/aljabr-byte-latent-resume-smoke`
+- `./trainer/run_byte_latent_resume_smoke.sh /tmp/alkhawarizm-byte-latent-resume-smoke`
 
 Paper reference:
 
@@ -249,4 +249,4 @@ Paper reference:
 
 See also:
 
-- `aljabr/docs/FAST_BYTE_LATENT_TRANSFORMER_INTEGRATION_PLAN.md`
+- `alkhawarizm/docs/FAST_BYTE_LATENT_TRANSFORMER_INTEGRATION_PLAN.md`

@@ -3,25 +3,31 @@
  * Copyright (c) 2026 Kayys.tech
  * SPDX-License-Identifier: Apache-2.0
  */
-package tech.kayys.aljabr.safetensor.exception;
+package tech.kayys.alkhawarizm.safetensor.exception;
 
 import java.nio.file.Path;
 
 /**
  * Base class for all SafeTensors loader and inference exceptions.
  *
- * <p>Carries the {@link Path} of the file that triggered the error so callers
- * can include it in error messages without re-parsing the exception message string.
+ * <p>
+ * Carries the {@link Path} of the file that triggered the error so callers
+ * can include it in error messages without re-parsing the exception message
+ * string.
  *
- * <p>Specialised subclasses cover the most common failure modes:
+ * <p>
+ * Specialised subclasses cover the most common failure modes:
  * <ul>
- *   <li>{@link HeaderParseException} — malformed JSON header</li>
- *   <li>{@link ValidationException} — tensor metadata fails invariant checks</li>
- *   <li>{@link TensorNotFoundException} — requested tensor name absent from file</li>
- *   <li>{@link DTypeConversionException} — unrecognised dtype string</li>
- *   <li>{@link IoException} — underlying I/O failure</li>
- *   <li>{@link ShardException} — error in a specific shard of a multi-file model</li>
- *   <li>{@link DTypeMismatchException} — operation requires a different dtype</li>
+ * <li>{@link HeaderParseException} — malformed JSON header</li>
+ * <li>{@link ValidationException} — tensor metadata fails invariant checks</li>
+ * <li>{@link TensorNotFoundException} — requested tensor name absent from
+ * file</li>
+ * <li>{@link DTypeConversionException} — unrecognised dtype string</li>
+ * <li>{@link IoException} — underlying I/O failure</li>
+ * <li>{@link ShardException} — error in a specific shard of a multi-file
+ * model</li>
+ * <li>{@link DTypeMismatchException} — operation requires a different
+ * dtype</li>
  * </ul>
  */
 public class SafetensorException extends RuntimeException {
@@ -104,7 +110,8 @@ public class SafetensorException extends RuntimeException {
     }
 
     /**
-     * Thrown when a tensor's metadata fails an invariant check (e.g. shape/dtype mismatch).
+     * Thrown when a tensor's metadata fails an invariant check (e.g. shape/dtype
+     * mismatch).
      */
     public static final class ValidationException extends SafetensorException {
         private final String tensorName;
@@ -160,7 +167,8 @@ public class SafetensorException extends RuntimeException {
     }
 
     /**
-     * Thrown when a dtype string from the JSON header cannot be mapped to a known type.
+     * Thrown when a dtype string from the JSON header cannot be mapped to a known
+     * type.
      */
     public static final class DTypeConversionException extends SafetensorException {
         private final String rawDType;
@@ -225,7 +233,10 @@ public class SafetensorException extends RuntimeException {
             this.shardPath = shardPath;
         }
 
-        /** @param message description; @param indexPath index path; @param shardPath shard path */
+        /**
+         * @param message description; @param indexPath index path; @param shardPath
+         *                shard path
+         */
         public ShardException(String message, Path indexPath, Path shardPath) {
             this(message, indexPath, shardPath, null);
         }
@@ -241,7 +252,8 @@ public class SafetensorException extends RuntimeException {
     }
 
     /**
-     * Thrown when a tensor's actual dtype does not match what an operation requires.
+     * Thrown when a tensor's actual dtype does not match what an operation
+     * requires.
      */
     public static final class DTypeMismatchException extends SafetensorException {
         private final String tensorName;
@@ -249,10 +261,10 @@ public class SafetensorException extends RuntimeException {
         private final String expectedDType;
 
         /**
-         * @param tensorName   name of the tensor
-         * @param actualDType  dtype found in the file
+         * @param tensorName    name of the tensor
+         * @param actualDType   dtype found in the file
          * @param expectedDType dtype required by the operation
-         * @param path         file path
+         * @param path          file path
          */
         public DTypeMismatchException(String tensorName, String actualDType,
                 String expectedDType, Path path) {
@@ -264,12 +276,18 @@ public class SafetensorException extends RuntimeException {
         }
 
         /** @return tensor name */
-        public String tensorName() { return tensorName; }
+        public String tensorName() {
+            return tensorName;
+        }
 
         /** @return actual dtype string found in the file */
-        public String actualDType() { return actualDType; }
+        public String actualDType() {
+            return actualDType;
+        }
 
         /** @return dtype string required by the operation */
-        public String expectedDType() { return expectedDType; }
+        public String expectedDType() {
+            return expectedDType;
+        }
     }
 }

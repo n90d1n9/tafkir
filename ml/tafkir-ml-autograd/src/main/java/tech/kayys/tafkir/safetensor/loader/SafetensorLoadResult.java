@@ -30,13 +30,13 @@
  * Arena is a shared arena (MMAP and COPY modes both use shared arenas).
  * The {@link #close()} method is idempotent and may be called from any thread.
  */
-package tech.kayys.aljabr.safetensor.loader;
-import org.slf4j.LoggerFactory;
+package tech.kayys.alkhawarizm.safetensor.loader;
 
+import org.slf4j.LoggerFactory;
 
 import org.slf4j.Logger;
 
-import tech.kayys.aljabr.safetensor.exception.SafetensorException;
+import tech.kayys.alkhawarizm.safetensor.exception.SafetensorException;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
@@ -106,7 +106,8 @@ public final class SafetensorLoadResult implements AutoCloseable {
     // ─────────────────────────────────────────────────────────────────────────
 
     /**
-     * Public constructor — used by {@link SafetensorFFMLoader} and standalone loaders.
+     * Public constructor — used by {@link SafetensorFFMLoader} and standalone
+     * loaders.
      */
     public SafetensorLoadResult(
             Path filePath,
@@ -145,7 +146,8 @@ public final class SafetensorLoadResult implements AutoCloseable {
         return closed.get();
     }
 
-    // ── AccelTensor access ─────────────────────────────────────────────────────────
+    // ── AccelTensor access
+    // ─────────────────────────────────────────────────────────
 
     /**
      * Retrieve a zero-copy tensor view by name.
@@ -241,7 +243,8 @@ public final class SafetensorLoadResult implements AutoCloseable {
         } catch (UnsupportedOperationException e) {
             log.debug("Arena is auto-managed, skipping explicit close for [{}]", filePath);
         } catch (Error e) {
-            // GraalVM throws UnsupportedFeatureError when attempting to close an auto/shared arena
+            // GraalVM throws UnsupportedFeatureError when attempting to close an
+            // auto/shared arena
             log.debug("Arena close unsupported (GraalVM) for [{}]: {}", filePath, e.getMessage());
         } catch (Exception e) {
             log.warn("Failed to close Arena for SafeTensors file [{}]", filePath, e);

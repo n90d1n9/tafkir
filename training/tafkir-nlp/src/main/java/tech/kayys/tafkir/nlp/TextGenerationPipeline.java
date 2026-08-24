@@ -1,9 +1,9 @@
 package tech.kayys.tafkir.nlp;
 
-import tech.kayys.aljabr.sdk.api.AljabrSdk;
-import tech.kayys.aljabr.sdk.api.AljabrSdkProvider;
-import tech.kayys.aljabr.spi.inference.InferenceRequest;
-import tech.kayys.aljabr.spi.inference.InferenceResponse;
+import tech.kayys.alkhawarizm.sdk.api.AljabrSdk;
+import tech.kayys.alkhawarizm.sdk.api.AljabrSdkProvider;
+import tech.kayys.alkhawarizm.spi.inference.InferenceRequest;
+import tech.kayys.alkhawarizm.spi.inference.InferenceResponse;
 
 /**
  * Text generation pipeline backed by the Aljabr inference engine.

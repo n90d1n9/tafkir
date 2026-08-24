@@ -1,6 +1,6 @@
-package tech.kayys.aljabr.diffusion.scheduler;
+package tech.kayys.alkhawarizm.diffusion.scheduler;
 
-import tech.kayys.aljabr.core.tensor.Tensor;
+import tech.kayys.alkhawarizm.core.tensor.Tensor;
 
 /**
  * SPI stub — Java-native diffusion scheduler contract.
@@ -10,9 +10,9 @@ public interface Scheduler {
     /**
      * Advance one denoising step.
      *
-     * @param xT             the current noisy latent
+     * @param xT              the current noisy latent
      * @param modelPrediction the UNet's noise prediction
-     * @param timestepIndex  index into the timestep schedule
+     * @param timestepIndex   index into the timestep schedule
      * @return the denoised latent after this step
      */
     Tensor step(Tensor xT, Tensor modelPrediction, int timestepIndex);

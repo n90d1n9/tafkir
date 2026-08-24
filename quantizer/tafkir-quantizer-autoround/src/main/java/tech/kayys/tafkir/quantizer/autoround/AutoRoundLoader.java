@@ -4,8 +4,8 @@ import tech.kayys.tafkir.quantizer.autoround.AutoRoundConfig;
 import tech.kayys.tafkir.quantizer.autoround.AutoRoundLayer;
 import tech.kayys.tafkir.quantizer.autoround.AutoRoundDequantizer;
 import tech.kayys.tafkir.quantizer.gptq.MemoryAllocator;
-import tech.kayys.aljabr.safetensor.loader.SafetensorHeader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorTensorInfo;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorHeader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorTensorInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -337,7 +337,8 @@ public class AutoRoundLoader implements AutoCloseable {
         int[] packed = readInt32FromMmap(parser, tensorName);
 
         SafetensorTensorInfo info = parser.getHeader().findTensor(tensorName).orElse(null);
-        if (info == null) return null;
+        if (info == null)
+            return null;
         int numGroups = (int) info.shape()[0];
         int outF = (int) (info.shape()[1] * config.packFactor());
 

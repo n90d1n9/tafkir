@@ -11,7 +11,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Writes runtime-regression gate results as small CI-uploadable artifact bundles.
+ * Writes runtime-regression gate results as small CI-uploadable artifact
+ * bundles.
  */
 public final class TrainingReportRuntimeRegressionGateArtifacts {
     public static final String DEFAULT_JSON_FILE_NAME = "runtime-regression-gate.json";
@@ -97,7 +98,7 @@ public final class TrainingReportRuntimeRegressionGateArtifacts {
 
         public Map<String, Object> artifactManifest() {
             Map<String, Object> manifest = new LinkedHashMap<>();
-            manifest.put("schema", "aljabr.training.runtime.regression.gate.artifacts.v1");
+            manifest.put("schema", "alkhawarizm.training.runtime.regression.gate.artifacts.v1");
             manifest.put("passed", passed());
             manifest.put("jsonFile", jsonFile.toString());
             manifest.put("markdownFile", markdownFile.toString());
@@ -309,14 +310,16 @@ public final class TrainingReportRuntimeRegressionGateArtifacts {
         Path resolvedManifestFile = Objects.requireNonNull(manifestFile, "manifestFile must not be null")
                 .toAbsolutePath()
                 .normalize();
-        TrainingReportRuntimeRegressionGate.Result resolvedResult =
-                Objects.requireNonNull(result, "result must not be null");
+        TrainingReportRuntimeRegressionGate.Result resolvedResult = Objects.requireNonNull(result,
+                "result must not be null");
         TrainerCheckpointIO.writeStringAtomically(resolvedJsonFile, TrainerJson.toJson(resolvedResult.toMap()) + "\n");
         TrainerCheckpointIO.writeStringAtomically(resolvedMarkdownFile, resolvedResult.markdown());
         TrainerCheckpointIO.writeStringAtomically(resolvedJunitXmlFile, resolvedResult.junitXml());
         TrainingReportArtifactFingerprint jsonFingerprint = TrainingReportArtifactFingerprint.of(resolvedJsonFile);
-        TrainingReportArtifactFingerprint markdownFingerprint = TrainingReportArtifactFingerprint.of(resolvedMarkdownFile);
-        TrainingReportArtifactFingerprint junitXmlFingerprint = TrainingReportArtifactFingerprint.of(resolvedJunitXmlFile);
+        TrainingReportArtifactFingerprint markdownFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedMarkdownFile);
+        TrainingReportArtifactFingerprint junitXmlFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedJunitXmlFile);
         ArtifactBundle bundle = new ArtifactBundle(
                 commonDirectory(resolvedJsonFile, resolvedMarkdownFile, resolvedJunitXmlFile),
                 resolvedJsonFile,
@@ -331,8 +334,8 @@ public final class TrainingReportRuntimeRegressionGateArtifacts {
         TrainerCheckpointIO.writeStringAtomically(
                 resolvedManifestFile,
                 TrainerJson.toJson(bundle.artifactManifest()) + "\n");
-        TrainingReportArtifactFingerprint manifestFingerprint =
-                TrainingReportArtifactFingerprint.of(resolvedManifestFile);
+        TrainingReportArtifactFingerprint manifestFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedManifestFile);
         return new ArtifactBundle(
                 bundle.directory(),
                 bundle.jsonFile(),
@@ -355,8 +358,8 @@ public final class TrainingReportRuntimeRegressionGateArtifacts {
                 .toAbsolutePath()
                 .normalize();
         Options resolvedOptions = options == null ? Options.defaults() : options;
-        TrainingReportRuntimeRegressionGate.Result result =
-                resultFromJsonFile(resolvedDirectory.resolve(resolvedOptions.jsonFileName()));
+        TrainingReportRuntimeRegressionGate.Result result = resultFromJsonFile(
+                resolvedDirectory.resolve(resolvedOptions.jsonFileName()));
         return write(resolvedDirectory, result, resolvedOptions);
     }
 
@@ -417,8 +420,10 @@ public final class TrainingReportRuntimeRegressionGateArtifacts {
                 ? Files.readString(resolvedManifestFile, StandardCharsets.UTF_8)
                 : null;
         TrainingReportArtifactFingerprint jsonFingerprint = TrainingReportArtifactFingerprint.of(resolvedJsonFile);
-        TrainingReportArtifactFingerprint markdownFingerprint = TrainingReportArtifactFingerprint.of(resolvedMarkdownFile);
-        TrainingReportArtifactFingerprint junitXmlFingerprint = TrainingReportArtifactFingerprint.of(resolvedJunitXmlFile);
+        TrainingReportArtifactFingerprint markdownFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedMarkdownFile);
+        TrainingReportArtifactFingerprint junitXmlFingerprint = TrainingReportArtifactFingerprint
+                .of(resolvedJunitXmlFile);
         TrainingReportArtifactFingerprint manifestFingerprint = manifestJson == null
                 ? null
                 : TrainingReportArtifactFingerprint.of(resolvedManifestFile);
@@ -467,12 +472,11 @@ public final class TrainingReportRuntimeRegressionGateArtifacts {
             String expectedJunitXmlSha256,
             String expectedManifestSha256) {
         Objects.requireNonNull(inspection, "inspection must not be null");
-        TrainingReportArtifactDescriptor.ChecksumMatch checksums =
-                inspection.artifact().checksumMatch(
-                        expectedJsonSha256,
-                        expectedMarkdownSha256,
-                        expectedJunitXmlSha256,
-                        expectedManifestSha256);
+        TrainingReportArtifactDescriptor.ChecksumMatch checksums = inspection.artifact().checksumMatch(
+                expectedJsonSha256,
+                expectedMarkdownSha256,
+                expectedJunitXmlSha256,
+                expectedManifestSha256);
         boolean junitXmlWellFormed = TrainingReportXml.isWellFormed(inspection.junitXml());
         boolean manifestMatchesFiles = !inspection.hasManifest()
                 || manifestMatchesFiles(inspection);
@@ -531,7 +535,8 @@ public final class TrainingReportRuntimeRegressionGateArtifacts {
 
     private static boolean manifestMatchesFiles(ArtifactInspection inspection) {
         Map<String, Object> manifest = inspection.manifest();
-        return "aljabr.training.runtime.regression.gate.artifacts.v1".equals(String.valueOf(manifest.get("schema")))
+        return "alkhawarizm.training.runtime.regression.gate.artifacts.v1"
+                .equals(String.valueOf(manifest.get("schema")))
                 && inspection.jsonFile().toString().equals(String.valueOf(manifest.get("jsonFile")))
                 && inspection.markdownFile().toString().equals(String.valueOf(manifest.get("markdownFile")))
                 && inspection.junitXmlFile().toString().equals(String.valueOf(manifest.get("junitXmlFile")))
@@ -560,7 +565,8 @@ public final class TrainingReportRuntimeRegressionGateArtifacts {
 
     private static String normalizeFileName(String value, String fallback, String field) {
         String normalized = value == null || value.isBlank() ? fallback : value.trim();
-        if (normalized.contains("/") || normalized.contains("\\") || ".".equals(normalized) || "..".equals(normalized)) {
+        if (normalized.contains("/") || normalized.contains("\\") || ".".equals(normalized)
+                || "..".equals(normalized)) {
             throw new IllegalArgumentException(field + " must be a plain file name");
         }
         return normalized;

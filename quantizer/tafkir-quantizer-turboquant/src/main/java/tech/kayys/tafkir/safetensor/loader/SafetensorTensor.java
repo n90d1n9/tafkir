@@ -1,4 +1,4 @@
-package tech.kayys.aljabr.safetensor.loader;
+package tech.kayys.alkhawarizm.safetensor.loader;
 
 import java.lang.foreign.MemorySegment;
 
@@ -7,10 +7,13 @@ import java.lang.foreign.MemorySegment;
  */
 public interface SafetensorTensor {
     String name();
+
     SafetensorDType dtype();
+
     long[] shape();
+
     /** Memory-mapped segment covering this tensor's data. */
     MemorySegment segment();
+
     float[] toFloatArray();
 }
-

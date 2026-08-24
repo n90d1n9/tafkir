@@ -22,7 +22,7 @@ class DirectSafetensorTextPolicyTest {
     @Test
     void gemma4DefaultRepeatPenaltyFallsBackToNeutral() {
         DirectSafetensorRunProfile profile = profile("gemma4", ModelRuntimeTraits.builder()
-                .gemma4Text()
+                .nativeBf16Matvec()
                 .build());
 
         assertEquals(1.0f, DirectSafetensorTextPolicy.normalizeRepeatPenalty(profile, 1.1d));
@@ -55,7 +55,7 @@ class DirectSafetensorTextPolicyTest {
     @Test
     void unguardedGemma4TextProfileKeepsRawPrompt() {
         DirectSafetensorRunProfile profile = profile("gemma4_text", ModelRuntimeTraits.builder()
-                .gemma4Text()
+                .nativeBf16Matvec()
                 .build());
 
         String prompt = "where is jakarta";
@@ -76,7 +76,7 @@ class DirectSafetensorTextPolicyTest {
     @Test
     void gemma4ChannelMarkupIsSanitized() {
         DirectSafetensorRunProfile profile = profile("gemma4", ModelRuntimeTraits.builder()
-                .gemma4Text()
+                .nativeBf16Matvec()
                 .build());
         InferenceResponse response = InferenceResponse.builder()
                 .requestId("req-test")
@@ -103,7 +103,7 @@ class DirectSafetensorTextPolicyTest {
                 }
                 """, ModelConfig.class);
         return new DirectSafetensorRunProfile(config, "gemma4_unified", ModelRuntimeTraits.builder()
-                .gemma4Text()
+                .nativeBf16Matvec()
                 .build());
     }
 }

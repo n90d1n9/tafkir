@@ -18,6 +18,6 @@ class RecursiveReasoningModelFamilyTest {
     void recommendsRecursiveReasoningModules() {
         List<String> modules = RecursiveReasoningModelFamily.recommendedModuleIds();
         assertTrue(modules.contains("ml:tafkir-ml-recursive-reasoning"));
-        assertTrue(modules.contains("trainer:aljabr-trainer-recursive-reasoning"));
+        assertTrue(modules.contains("trainer:alkhawarizm-trainer-recursive-reasoning"));
     }
 }

@@ -1,7 +1,7 @@
 package tech.kayys.tafkir.quantizer.gptq;
 
-import tech.kayys.aljabr.safetensor.loader.SafetensorHeader;
-import tech.kayys.aljabr.safetensor.loader.SafetensorTensorInfo;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorHeader;
+import tech.kayys.alkhawarizm.safetensor.loader.SafetensorTensorInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,22 +17,28 @@ import java.util.regex.Pattern;
  * Loads GPTQ-quantized models from .safetensors files using the
  * safetensor-loader module's infrastructure (SafetensorHeaderParser, FFM API).
  *
- * <p>Handles both single-file and multi-shard models:
+ * <p>
+ * Handles both single-file and multi-shard models:
+ * 
  * <pre>
  * model.safetensors                          → single-file
  * model-00001-of-00003.safetensors           → sharded
  * </pre>
  *
- * <p>The loader:
+ * <p>
+ * The loader:
  * <ol>
- *   <li>Discovers all .safetensors files in a directory</li>
- *   <li>Parses headers via {@link SafetensorHeaderParser} to build a tensor→shard index</li>
- *   <li>Auto-detects GPTQ config from tensor naming patterns</li>
- *   <li>Loads quantized tensors into off-heap FFM memory</li>
- *   <li>Groups tensors into {@link QuantizedLayer} instances</li>
+ * <li>Discovers all .safetensors files in a directory</li>
+ * <li>Parses headers via {@link SafetensorHeaderParser} to build a tensor→shard
+ * index</li>
+ * <li>Auto-detects GPTQ config from tensor naming patterns</li>
+ * <li>Loads quantized tensors into off-heap FFM memory</li>
+ * <li>Groups tensors into {@link QuantizedLayer} instances</li>
  * </ol>
  *
- * <p><b>GPTQ Tensor Naming (AutoGPTQ convention):</b>
+ * <p>
+ * <b>GPTQ Tensor Naming (AutoGPTQ convention):</b>
+ * 
  * <pre>
  * model.layers.N.self_attn.q_proj.qweight
  * model.layers.N.self_attn.q_proj.qzeros

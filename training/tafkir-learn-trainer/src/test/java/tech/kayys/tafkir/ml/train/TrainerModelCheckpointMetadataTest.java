@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 
 class TrainerModelCheckpointMetadataTest {
 
-    private static final TrainerModelCheckpointMetadata.ExpectedModel EXPECTED_MODEL =
-            new TrainerModelCheckpointMetadata.ExpectedModel("ExpectedModel", "weight:[2]:2;", 2L);
+    private static final TrainerModelCheckpointMetadata.ExpectedModel EXPECTED_MODEL = new TrainerModelCheckpointMetadata.ExpectedModel(
+            "ExpectedModel", "weight:[2]:2;", 2L);
 
     @Test
     void compatibilityAcceptsMissingOptionalMetadata() {
@@ -27,7 +27,7 @@ class TrainerModelCheckpointMetadataTest {
 
     @Test
     void compatibilityAcceptsMatchingMetadataAndIntegrity() throws Exception {
-        Path checkpoint = writeTempFile("aljabr-model-metadata-match", "abc");
+        Path checkpoint = writeTempFile("alkhawarizm-model-metadata-match", "abc");
         Properties metadata = matchingMetadata();
         metadata.setProperty("modelCheckpointBytes", "3");
         metadata.setProperty(
@@ -39,7 +39,7 @@ class TrainerModelCheckpointMetadataTest {
 
     @Test
     void checkReportsMissingMetadataAsCompatible() throws Exception {
-        Path checkpoint = writeTempFile("aljabr-model-metadata-missing", "abc");
+        Path checkpoint = writeTempFile("alkhawarizm-model-metadata-missing", "abc");
         Path metadata = checkpoint.resolveSibling(checkpoint.getFileName() + ".missing.properties");
 
         TrainerModelCheckpointMetadata.CompatibilityCheck check = TrainerModelCheckpointMetadata.check(
@@ -56,8 +56,8 @@ class TrainerModelCheckpointMetadataTest {
 
     @Test
     void writeAndCheckRoundTripIncludesCheckpointIntegrity() throws Exception {
-        Path checkpoint = writeTempFile("aljabr-model-metadata-roundtrip", "abc");
-        Path metadata = Files.createTempFile("aljabr-model-metadata-roundtrip", ".properties");
+        Path checkpoint = writeTempFile("alkhawarizm-model-metadata-roundtrip", "abc");
+        Path metadata = Files.createTempFile("alkhawarizm-model-metadata-roundtrip", ".properties");
         Files.delete(metadata);
 
         TrainerModelCheckpointMetadata.write(metadata, checkpoint, EXPECTED_MODEL, 1);
@@ -99,7 +99,7 @@ class TrainerModelCheckpointMetadataTest {
 
     @Test
     void compatibilityRejectsCheckpointIntegrityMismatch() throws Exception {
-        Path checkpoint = writeTempFile("aljabr-model-metadata-integrity", "abc");
+        Path checkpoint = writeTempFile("alkhawarizm-model-metadata-integrity", "abc");
         Properties metadata = matchingMetadata();
         metadata.setProperty("modelCheckpointBytes", "4");
 

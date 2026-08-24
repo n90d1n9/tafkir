@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-catalog.v1.schema.json",
+  "$id": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-catalog.v1.schema.json",
   "title": "Aljabr checkpoint lineage health schema catalog",
   "description": "Stable schema catalog for recursive-reasoning checkpoint lineage health payload contracts.",
   "type": "object",
@@ -23,13 +23,13 @@
       "const": "checkpoint-lineage-health-schema-catalog"
     },
     "schemaVersion": {
-      "const": "aljabr.checkpoint-lineage-health-schema-catalog.v1"
+      "const": "alkhawarizm.checkpoint-lineage-health-schema-catalog.v1"
     },
     "catalogSchemaId": {
-      "const": "https://aljabr.ai/schemas/training/checkpoint-lineage-health-schema-catalog.v1.schema.json"
+      "const": "https://alkhawarizm.ai/schemas/training/checkpoint-lineage-health-schema-catalog.v1.schema.json"
     },
     "catalogSchemaResource": {
-      "const": "tech/kayys/aljabr/ml/reasoning/schemas/checkpoint-lineage-health-schema-catalog.v1.schema.json"
+      "const": "tech/kayys/alkhawarizm/ml/reasoning/schemas/checkpoint-lineage-health-schema-catalog.v1.schema.json"
     },
     "catalogSchemaSha256": {
       "$ref": "#/$defs/sha256"

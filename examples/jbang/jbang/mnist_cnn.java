@@ -1,7 +1,7 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 25
-//DEPS tech.kayys.tafkir:tafkir-ml-aljabr:0.3.0-SNAPSHOT
-//DEPS tech.kayys.tafkir:tafkir-trainer-aljabr:0.3.0-SNAPSHOT
+//DEPS tech.kayys.tafkir:tafkir-ml-alkhawarizm:0.3.0-SNAPSHOT
+//DEPS tech.kayys.tafkir:tafkir-trainer-alkhawarizm:0.3.0-SNAPSHOT
 //DEPS tech.kayys.tafkir:tafkir-data:0.3.0-SNAPSHOT
 //COMPILE_OPTIONS --enable-preview --add-modules jdk.incubator.vector
 //RUNTIME_OPTIONS --enable-preview --add-modules jdk.incubator.vector
@@ -27,19 +27,18 @@ public class mnist_cnn {
 
         // CNN: [B, 1, 28, 28] -> Conv -> Pool -> Conv -> Pool -> Flatten -> FC
         TafkirSequential model = new TafkirSequential(
-            // Input needs to be reshaped from [B, 784] to [B, 1, 28, 28]
-            // For now, we use a wrapper or reshape in the training loop
-            new TafkirConv2d(1, 32, 3, 1, 1, 1, 1),
-            new TafkirReLU(),
-            new TafkirMaxPool2d(2, 2, 0),
-            new TafkirConv2d(32, 64, 3, 1, 1, 1, 1),
-            new TafkirReLU(),
-            new TafkirMaxPool2d(2, 2, 0),
-            new TafkirFlatten(),
-            new TafkirLinear(3136, 128),
-            new TafkirReLU(),
-            new TafkirLinear(128, 10)
-        );
+                // Input needs to be reshaped from [B, 784] to [B, 1, 28, 28]
+                // For now, we use a wrapper or reshape in the training loop
+                new TafkirConv2d(1, 32, 3, 1, 1, 1, 1),
+                new TafkirReLU(),
+                new TafkirMaxPool2d(2, 2, 0),
+                new TafkirConv2d(32, 64, 3, 1, 1, 1, 1),
+                new TafkirReLU(),
+                new TafkirMaxPool2d(2, 2, 0),
+                new TafkirFlatten(),
+                new TafkirLinear(3136, 128),
+                new TafkirReLU(),
+                new TafkirLinear(128, 10));
 
         System.out.println("\n" + model);
 

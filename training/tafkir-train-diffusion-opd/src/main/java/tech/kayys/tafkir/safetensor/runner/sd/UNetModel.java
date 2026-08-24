@@ -1,12 +1,14 @@
-package tech.kayys.aljabr.safetensor.runner.sd;
+package tech.kayys.alkhawarizm.safetensor.runner.sd;
 
-import tech.kayys.aljabr.safetensor.core.tensor.AccelTensor;
+import tech.kayys.alkhawarizm.safetensor.core.tensor.AccelTensor;
 
 /**
  * Stub — UNet model from the safetensor Stable Diffusion runner.
  *
- * <p>The real implementation is in the safetensor runner module and binds to
- * native GGUF / safetensor weights. This stub unblocks compilation of the adapter layer.
+ * <p>
+ * The real implementation is in the safetensor runner module and binds to
+ * native GGUF / safetensor weights. This stub unblocks compilation of the
+ * adapter layer.
  */
 public abstract class UNetModel implements AutoCloseable {
 

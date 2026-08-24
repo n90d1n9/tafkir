@@ -14,8 +14,9 @@ final class TrainingReportQualityProfileCatalogValidatorJUnitXml {
         String markdown = result.markdown();
         StringBuilder xml = new StringBuilder();
         appendLine(xml, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        appendLine(xml, "<testsuite name=\"aljabr.training.quality-profile-catalog.validation\" tests=\"1\" failures=\""
-                + (result.passed() ? "0" : "1") + "\" errors=\"0\" skipped=\"0\">");
+        appendLine(xml,
+                "<testsuite name=\"alkhawarizm.training.quality-profile-catalog.validation\" tests=\"1\" failures=\""
+                        + (result.passed() ? "0" : "1") + "\" errors=\"0\" skipped=\"0\">");
         appendLine(xml, "  <properties>");
         property(xml, "catalog.validJson", Boolean.toString(result.validJson()));
         property(xml, "catalog.passed", Boolean.toString(result.passed()));
@@ -25,7 +26,7 @@ final class TrainingReportQualityProfileCatalogValidatorJUnitXml {
         property(xml, "catalog.warningCount", Integer.toString(result.warnings().size()));
         property(xml, "catalog.issueCodes", issueCodes(result));
         appendLine(xml, "  </properties>");
-        appendLine(xml, "  <testcase classname=\"aljabr.training.quality-profile-catalog\" "
+        appendLine(xml, "  <testcase classname=\"alkhawarizm.training.quality-profile-catalog\" "
                 + "name=\"validate quality profile catalog\" time=\"0\">");
         if (!result.passed()) {
             appendLine(xml, "    <failure type=\"" + escapeXml(failureType(result))

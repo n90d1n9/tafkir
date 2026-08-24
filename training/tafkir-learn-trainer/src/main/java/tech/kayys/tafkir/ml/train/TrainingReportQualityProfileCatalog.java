@@ -12,10 +12,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Export-friendly catalog for built-in and custom trainer report quality profiles.
+ * Export-friendly catalog for built-in and custom trainer report quality
+ * profiles.
  */
 public record TrainingReportQualityProfileCatalog(List<TrainingReportQualityProfile> profiles) {
-    public static final String FORMAT = "aljabr.training-report.quality-profiles.v1";
+    public static final String FORMAT = "alkhawarizm.training-report.quality-profiles.v1";
 
     public TrainingReportQualityProfileCatalog {
         profiles = profiles == null || profiles.isEmpty()
@@ -29,8 +30,8 @@ public record TrainingReportQualityProfileCatalog(List<TrainingReportQualityProf
 
     public static TrainingReportQualityProfileCatalog fromMap(Map<String, ?> map) {
         Objects.requireNonNull(map, "map must not be null");
-        TrainingReportQualityProfileCatalogValidator.Result validation =
-                TrainingReportQualityProfileCatalogValidator.validate(map);
+        TrainingReportQualityProfileCatalogValidator.Result validation = TrainingReportQualityProfileCatalogValidator
+                .validate(map);
         if (!validation.passed()) {
             throw new IllegalArgumentException(validation.message());
         }

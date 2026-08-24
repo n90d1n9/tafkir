@@ -1,7 +1,8 @@
-package tech.kayys.aljabr.hub;
+package tech.kayys.alkhawarizm.hub;
 
 /**
- * @deprecated Use standard I/O exceptions or {@link tech.kayys.tafkir.ml.hub.ModelHub}
+ * @deprecated Use standard I/O exceptions or
+ *             {@link tech.kayys.tafkir.ml.hub.ModelHub}
  *             directly.
  */
 @Deprecated(since = "0.1.1", forRemoval = true)

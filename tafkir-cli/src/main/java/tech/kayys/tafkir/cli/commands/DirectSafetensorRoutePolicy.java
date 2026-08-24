@@ -118,7 +118,7 @@ final class DirectSafetensorRoutePolicy {
             return false;
         }
         DirectSafetensorRunProfile profile = DirectSafetensorRunProfile.load(checkpointPath);
-        if (profile.gemma4Text() && !allowGuardedGemma4TextDirectRun(checkpointPath, profile)) {
+        if (profile.nativeBf16Matvec() && !allowGuardedGemma4TextDirectRun(checkpointPath, profile)) {
             return false;
         }
         if (hasText(sessionId) || hasText(grammar)) {
@@ -135,7 +135,7 @@ final class DirectSafetensorRoutePolicy {
     }
 
     private static boolean allowGuardedGemma4TextDirectRun(Path checkpointPath, DirectSafetensorRunProfile profile) {
-        if (checkpointPath == null || profile == null || !profile.gemma4Text()) {
+        if (checkpointPath == null || profile == null || !profile.nativeBf16Matvec()) {
             return false;
         }
         if (!isGemma4Unified(profile) || isGemma4MobileQat(checkpointPath)) {
@@ -365,7 +365,7 @@ final class DirectSafetensorRoutePolicy {
                 return AlternateRuntimeSelection.none();
             }
             DirectSafetensorRunProfile profile = DirectSafetensorRunProfile.load(modelDir.get());
-            if (!profile.gemma4Text()
+            if (!profile.nativeBf16Matvec()
                     || isGemma4Unified(profile)
                     || isGemma4MobileQat(modelDir.get())) {
                 return AlternateRuntimeSelection.none();
@@ -1255,7 +1255,7 @@ final class DirectSafetensorRoutePolicy {
                 GEMMA4_TEXT_GGUF_CACHE_DIR_PROPERTY,
                 GEMMA4_TEXT_GGUF_CACHE_ENABLED_PROPERTY,
                 GEMMA4_TEXT_GGUF_CACHE_FILE,
-                gemma4TextGgufCacheKey(requestedModelId, localPath, requestedKeys),
+                nativeBf16MatvecGgufCacheKey(requestedModelId, localPath, requestedKeys),
                 cached -> Files.isRegularFile(cached)
                         && hasAnySuffix(cached, GGUF_SUFFIXES)
                         && gemma4GgufPathMatches(requestedKeys, cached));
@@ -1270,14 +1270,14 @@ final class DirectSafetensorRoutePolicy {
                 GEMMA4_TEXT_GGUF_CACHE_DIR_PROPERTY,
                 GEMMA4_TEXT_GGUF_CACHE_ENABLED_PROPERTY,
                 GEMMA4_TEXT_GGUF_CACHE_FILE,
-                gemma4TextGgufCacheKey(requestedModelId, localPath, requestedKeys),
+                nativeBf16MatvecGgufCacheKey(requestedModelId, localPath, requestedKeys),
                 selected,
                 path -> Files.isRegularFile(path)
                         && hasAnySuffix(path, GGUF_SUFFIXES)
                         && gemma4GgufPathMatches(requestedKeys, path));
     }
 
-    private static String gemma4TextGgufCacheKey(
+    private static String nativeBf16MatvecGgufCacheKey(
             String requestedModelId,
             String localPath,
             Set<String> requestedKeys) {

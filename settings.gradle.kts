@@ -1,6 +1,6 @@
 rootProject.name = "tafkir-engine"
 
-includeBuild("../aljabr")
+includeBuild("../alkhawarizm")
 
 fun includeOptionalProject(projectPath: String, vararg candidatePaths: String) {
     val projectDir = candidatePaths
@@ -30,6 +30,7 @@ if (file("sdk/tafkir-sdk-session").isDirectory) {
 
 include("ml:tafkir-ml-core")
 include("ml:tafkir-ml-autograd")
+include("ml:tafkir-ml-timeseries")
 
 
 includeOptionalProject("training:tafkir-train-strategy", "training/tafkir-train-strategy")

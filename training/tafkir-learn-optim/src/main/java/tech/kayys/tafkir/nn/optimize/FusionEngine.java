@@ -2,7 +2,7 @@ package tech.kayys.tafkir.ml.optimize;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import tech.kayys.aljabr.core.tensor.DeviceType;
+import tech.kayys.alkhawarizm.core.tensor.DeviceType;
 
 /**
  * Graph-level operation fusion engine that combines multiple operations

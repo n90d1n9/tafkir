@@ -1,9 +1,9 @@
 package tech.kayys.tafkir.nlp;
 
-import tech.kayys.aljabr.sdk.api.AljabrSdk;
-import tech.kayys.aljabr.sdk.api.AljabrSdkProvider;
-import tech.kayys.aljabr.spi.embedding.EmbeddingRequest;
-import tech.kayys.aljabr.spi.embedding.EmbeddingResponse;
+import tech.kayys.alkhawarizm.sdk.api.AljabrSdk;
+import tech.kayys.alkhawarizm.sdk.api.AljabrSdkProvider;
+import tech.kayys.alkhawarizm.spi.embedding.EmbeddingRequest;
+import tech.kayys.alkhawarizm.spi.embedding.EmbeddingResponse;
 
 import java.util.List;
 
